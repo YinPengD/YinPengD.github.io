@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Unity3D,反编译,脚本,资源," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在Unity的脚本代码的学习之中，我们除了通过看教程中的脚本演示，Unity博客，论坛，知识板块等网站的学习,还可以通过看已上线的游戏的源码，通过这种看已上线游戏源码方式的优点在于相比上述的方式要更加的规范，深入，全面（毕竟是已完成的游戏）,当我们缺少优质素材用于练习时我们也可以通过提取游戏资源的方式，提取你想要的风格的游戏资源，这将会大大方便我们在学习游戏开发中的进程。">
+<meta name="keywords" content="Unity3D,反编译,脚本,资源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity中反编译脚本代码与提取游戏资源">
+<meta property="og:url" content="http://yoursite.com/2017/12/23/Unity中反编译脚本代码与提取游戏资源/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="在Unity的脚本代码的学习之中，我们除了通过看教程中的脚本演示，Unity博客，论坛，知识板块等网站的学习,还可以通过看已上线的游戏的源码，通过这种看已上线游戏源码方式的优点在于相比上述的方式要更加的规范，深入，全面（毕竟是已完成的游戏）,当我们缺少优质素材用于练习时我们也可以通过提取游戏资源的方式，提取你想要的风格的游戏资源，这将会大大方便我们在学习游戏开发中的进程。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://otxqcugty.bkt.clouddn.com/unity/notes%E5%8F%8D%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81.png">
+<meta property="og:image" content="http://otxqcugty.bkt.clouddn.com/unity/notes%E6%8F%90%E5%8F%96%E8%B5%84%E6%BA%90.png">
+<meta property="og:updated_time" content="2017-12-23T10:47:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity中反编译脚本代码与提取游戏资源">
+<meta name="twitter:description" content="在Unity的脚本代码的学习之中，我们除了通过看教程中的脚本演示，Unity博客，论坛，知识板块等网站的学习,还可以通过看已上线的游戏的源码，通过这种看已上线游戏源码方式的优点在于相比上述的方式要更加的规范，深入，全面（毕竟是已完成的游戏）,当我们缺少优质素材用于练习时我们也可以通过提取游戏资源的方式，提取你想要的风格的游戏资源，这将会大大方便我们在学习游戏开发中的进程。">
+<meta name="twitter:image" content="http://otxqcugty.bkt.clouddn.com/unity/notes%E5%8F%8D%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/23/Unity中反编译脚本代码与提取游戏资源/"/>
+
+
+
+
+
+  <title>Unity中反编译脚本代码与提取游戏资源 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/23/Unity中反编译脚本代码与提取游戏资源/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unity中反编译脚本代码与提取游戏资源</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-23T18:55:34+08:00">
+                2017-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity3D/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity3D</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Unity的脚本代码的学习之中，我们除了通过看教程中的脚本演示，Unity博客，论坛，知识板块等网站的学习,还可以通过看已上线的游戏的源码，通过这种看已上线游戏源码方式的优点在于相比上述的方式要更加的<strong>规范</strong>，<strong>深入</strong>，<strong>全面</strong>（毕竟是已完成的游戏）,当我们缺少优质素材用于练习时我们也可以通过提取游戏资源的方式，提取你想要的风格的游戏资源，这将会大大方便我们在学习游戏开发中的进程。<br><a id="more"></a></p>
+<h2 id="1-Unity中反编译脚本代码"><a href="#1-Unity中反编译脚本代码" class="headerlink" title="1.Unity中反编译脚本代码"></a>1.Unity中反编译脚本代码</h2><h4 id="1-1-、反编译工具"><a href="#1-1-、反编译工具" class="headerlink" title="1.1 、反编译工具"></a>1.1 、反编译工具</h4><p><strong>dnSpy</strong> 是一款针对 .NET 程序的逆向工程工具,基于 ILSpy 发展而来的 .net 程序集的编辑，反编译，调试神器。。该项目包含了反编译器，调试器和汇编编辑器等功能组件，而且可以通过自己编写扩展插件的形式轻松实现扩展。该项目使用 dnlib 读取和写入程序集，以便处理有混淆代码的程序（比如恶意程序）而不会崩溃。</p>
+<h4 id="1-2、Unity源码文件位置"><a href="#1-2、Unity源码文件位置" class="headerlink" title="1.2、Unity源码文件位置"></a>1.2、Unity源码文件位置</h4><p>unity的源码都存放在dll中，那么反编译的工作就是把从dll 中提取出源码，基本上我们的代码都在<strong>Assembly-CSharp.dll</strong>这个文件中</p>
+<h4 id="1-3、破解Unity源码文件"><a href="#1-3、破解Unity源码文件" class="headerlink" title="1.3、破解Unity源码文件"></a>1.3、破解Unity源码文件</h4><blockquote>
+<p>将Assembly-CSharp.dll文件拖动到dnspy反编译工具中就实现了破解</p>
+</blockquote>
+<p>我用一个的独立游戏做的示例：</p>
+<p><img src="http://otxqcugty.bkt.clouddn.com/unity/notes%E5%8F%8D%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81.png" alt="反编译源码"></p>
+<p><em>上图可以看出反编译出了编码者完整的代码逻辑</em></p>
+<h2 id="2-提取游戏中的资源"><a href="#2-提取游戏中的资源" class="headerlink" title="2.提取游戏中的资源"></a>2.提取游戏中的资源</h2><blockquote>
+<p>游戏中的美术资源没法完全加密，即便使用特别复杂的加密方式，也有办法将其中的资源提出来,这里只借助现成的工具，做些浅显的资源提取。</p>
+</blockquote>
+<h4 id="2-1、资源提取工具"><a href="#2-1、资源提取工具" class="headerlink" title="2.1、资源提取工具"></a>2.1、资源提取工具</h4><blockquote>
+<p>相比于Disunity与UnityAssetsExplorer工具，UnityStudio 拥有可视化界面，可以批量导出贴图，模型，字体，音频等，可以预览，最新版支持Unity5.x，所以在这使用<strong>UnityStudio</strong>作为资源提取工具。</p>
+</blockquote>
+<h4 id="2-2、下载地址"><a href="#2-2、下载地址" class="headerlink" title="2.2、下载地址"></a>2.2、下载地址</h4><blockquote>
+<p><a href="https://github.com/Perfare/UnityStudio" target="_blank" rel="noopener">https://github.com/Perfare/UnityStudio</a></p>
+</blockquote>
+<h4 id="2-3、Unity中资源位置"><a href="#2-3、Unity中资源位置" class="headerlink" title="2.3、Unity中资源位置"></a>2.3、Unity中资源位置</h4><blockquote>
+<p>点击菜单 File 中的“Load folder…”，载入 unity 游戏的 Assets -&gt; bin -&gt; data 文件夹。也可以选择“Load file…”，载入 .unity3d 或者 .boundle ，.assets文件。</p>
+</blockquote>
+<h4 id="2-4、预览资源"><a href="#2-4、预览资源" class="headerlink" title="2.4、预览资源"></a>2.4、预览资源</h4><blockquote>
+<p>选择 Assets List，可以看到里面有很多资源文件。点击即可在右侧窗口进行预览，可以预览贴图，Shader，模型的资源,还可以直接播放音频。</p>
+</blockquote>
+<h4 id="2-5、保存资源"><a href="#2-5、保存资源" class="headerlink" title="2.5、保存资源"></a>2.5、保存资源</h4><blockquote>
+<p>选中需要的资源，点击菜单工具栏里的 Export -&gt; Selected assets，即可将选中的资源保存到本地。</p>
+</blockquote>
+<p>用一个的独立游戏做的示例：<br><img src="http://otxqcugty.bkt.clouddn.com/unity/notes%E6%8F%90%E5%8F%96%E8%B5%84%E6%BA%90.png" alt="提取资源"></p>
+<p><em>上图中在seneHierarghy界面中可以查看资源的结构目录，资源中的音乐文件都可以直接播放测试，在右边的视图中可以使用wsad将对模型进行旋转查看</em></p>
+<h3 id="其他相关博客："><a href="#其他相关博客：" class="headerlink" title="其他相关博客："></a>其他相关博客：</h3><p>如何避免代码被反编译 ： <a href="http://www.xuanyusong.com/archives/2664" target="_blank" rel="noopener">http://www.xuanyusong.com/archives/2664</a><br>Unity3d 反编译破解游戏 简单示例: <a href="http://blog.csdn.net/huutu/article/details/46573327" target="_blank" rel="noopener">http://blog.csdn.net/huutu/article/details/46573327</a>)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unity3D/" rel="tag"># Unity3D</a>
+          
+            <a href="/tags/反编译/" rel="tag"># 反编译</a>
+          
+            <a href="/tags/脚本/" rel="tag"># 脚本</a>
+          
+            <a href="/tags/资源/" rel="tag"># 资源</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/08/Unity动画插件DoTween/" rel="next" title="Unity 动画插件DoTween">
+                <i class="fa fa-chevron-left"></i> Unity 动画插件DoTween
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/icon.jpg"
+                alt="YinPengD" />
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Unity中反编译脚本代码"><span class="nav-number">1.</span> <span class="nav-text">1.Unity中反编译脚本代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-、反编译工具"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.1 、反编译工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2、Unity源码文件位置"><span class="nav-number">1.0.2.</span> <span class="nav-text">1.2、Unity源码文件位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3、破解Unity源码文件"><span class="nav-number">1.0.3.</span> <span class="nav-text">1.3、破解Unity源码文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-提取游戏中的资源"><span class="nav-number">2.</span> <span class="nav-text">2.提取游戏中的资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1、资源提取工具"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1、资源提取工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2、下载地址"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2、下载地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3、Unity中资源位置"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3、Unity中资源位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4、预览资源"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.4、预览资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5、保存资源"><span class="nav-number">2.0.5.</span> <span class="nav-text">2.5、保存资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他相关博客："><span class="nav-number">2.1.</span> <span class="nav-text">其他相关博客：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ios," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。">
+<meta name="keywords" content="ios">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KVC&amp;KVO的初步认识">
+<meta property="og:url" content="http://yoursite.com/2017/07/15/kvc&kvo/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-12-08T04:24:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KVC&amp;KVO的初步认识">
+<meta name="twitter:description" content="KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/15/kvc&kvo/"/>
+
+
+
+
+
+  <title>KVC&KVO的初步认识 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/15/kvc&kvo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">KVC&KVO的初步认识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-15T11:46:34+08:00">
+                2017-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ios/" itemprop="url" rel="index">
+                    <span itemprop="name">ios</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。</p>
+<a id="more"></a>
+<h2 id="KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制"><a href="#KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制" class="headerlink" title="KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制"></a>KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制</h2><h3 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h3><h5 id="利用KVC进行简单赋值："><a href="#利用KVC进行简单赋值：" class="headerlink" title="利用KVC进行简单赋值："></a>利用KVC进行简单赋值：</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void test()&#123;</span><br><span class="line">    YPPerson *person = [[YPPerson alloc] init];</span><br><span class="line">    [person setValue:@&quot;王五&quot; forKey:@&quot;name&quot;];                   //KVC赋值</span><br><span class="line">    [person setValue:@&quot;19&quot; forKeyPath:@&quot;money&quot;];                //自动类型转换</span><br><span class="line">    NSLog(@&quot;%@-------%.2f&quot;,person.name,person.money);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="利用KVC修改私有成员变量"><a href="#利用KVC修改私有成员变量" class="headerlink" title="利用KVC修改私有成员变量"></a>利用KVC修改私有成员变量</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void text2()&#123;</span><br><span class="line">    YPPerson *person = [[YPPerson alloc]init];</span><br><span class="line">    [person setValue:@&quot;88&quot; forKeyPath:@&quot;_age&quot;];              //私有变量</span><br><span class="line">    NSLog(@&quot;%@&quot;,person);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="利用KVC将模型转为字典"><a href="#利用KVC将模型转为字典" class="headerlink" title="利用KVC将模型转为字典"></a>利用KVC将模型转为字典</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">普通的将模型转为字典：</span><br><span class="line">self.name =dict[@&quot;name&quot;];</span><br><span class="line">self.money = [dict[@&quot;money&quot;] floatValue];      //floatValue 装换为float类</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用kVCV将模型转为字典</span><br><span class="line">- (instancetype)initWithDict:(NSDictionary *)dict&#123;</span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        [self setValuesForKeysWithDictionary:dict]；           ／／优点：一行代码就把所有的模型转为了字典</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  使用场景：简单的字典转模型</span><br><span class="line"></span><br><span class="line">  开发中不建议使用setValuesForKeyWithDictionary:</span><br><span class="line"></span><br><span class="line">         1.字典中的KEY必须在模型的属性中找到</span><br><span class="line"></span><br><span class="line">          2.如果模型中带有模型就不好用</span><br></pre></td></tr></table></figure>
+<h5 id="取出所有模型的属性值"><a href="#取出所有模型的属性值" class="headerlink" title="取出所有模型的属性值"></a>取出所有模型的属性值</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">YPPerson *person1 = [[YPPerson alloc ]init];</span><br><span class="line">       person1.name = @&quot;zhangsan&quot;;</span><br><span class="line">       person1.money  = 12.99;</span><br><span class="line">       person2.name = @&quot;wangwu&quot;</span><br><span class="line">       person2.money = 13.45;</span><br><span class="line">     </span><br><span class="line">       NSArray allPersons = @[person1,person2];</span><br><span class="line">       NSArray allPersonName = [allPersons valueForKey:@&quot;naem&quot;];</span><br><span class="line">       NSLog(@&quot;%@&quot;,allPersonName);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"><a href="#KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者" class="headerlink" title="KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"></a>KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者</h2><blockquote>
+<p>允许对象观察另一个对象的属性。该属性值改变时，会通知观察对象,</p>
+</blockquote>
+<h5 id="如何监听："><a href="#如何监听：" class="headerlink" title="如何监听："></a>如何监听：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-（void)viewDidLoad];</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    YPPerson *person = [[YPPerson alloc] init];</span><br><span class="line">    person.name = @&quot;zs&quot;;</span><br></pre></td></tr></table></figure>
+<h5 id="作用：给对象绑定一个监听器（观察者）"><a href="#作用：给对象绑定一个监听器（观察者）" class="headerlink" title="作用：给对象绑定一个监听器（观察者）"></a>作用：给对象绑定一个监听器（观察者）</h5><p>Oberver : 观察者</p>
+<p>KeyPath :要监听的属性</p>
+<p>Options : 选项（方便在方法中拿到属性值）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Person addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObserveringOptionNew | NSKeyValueObservingOptionOld context:nil];</span><br><span class="line">person.naem = @&quot;ls&quot;;</span><br><span class="line">person.name = @&quot;ww&quot;;</span><br><span class="line">//移除监听</span><br></pre></td></tr></table></figure>
+<h5 id="当监听的属性值发改变是就调用这个方法"><a href="#当监听的属性值发改变是就调用这个方法" class="headerlink" title="当监听的属性值发改变是就调用这个方法"></a>当监听的属性值发改变是就调用这个方法</h5><p>keyPath 要改变的属性</p>
+<p>Object 要改变的属性的对象</p>
+<p>chang 改变的内容</p>
+<p>context 上下文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-（void)observeValueForKeyPath:(NSString *)KeyPath ofObject:(id)Object change:(NSDictionary&lt;NSString *,id&gt; *)chang context&#123;</span><br><span class="line">    NSLog(@&quot;%@---------%@---------%@&quot;, keyPath, object, change);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会打印出：</p>
+<p>new = ww;</p>
+<p>old = ls;</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ios/" rel="tag"># ios</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/17/我的第一篇博客/" rel="next" title="我的第一篇博客">
+                <i class="fa fa-chevron-left"></i> 我的第一篇博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/31/打砖块Demo的代码与演示/" rel="prev" title="打砖块Demo的代码与演示">
+                打砖块Demo的代码与演示 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/icon.jpg"
+                alt="YinPengD" />
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制"><span class="nav-number">1.</span> <span class="nav-text">KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用："><span class="nav-number">1.1.</span> <span class="nav-text">使用：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC进行简单赋值："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">利用KVC进行简单赋值：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC修改私有成员变量"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">利用KVC修改私有成员变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC将模型转为字典"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">利用KVC将模型转为字典</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#取出所有模型的属性值"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">取出所有模型的属性值</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"><span class="nav-number">2.</span> <span class="nav-text">KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何监听："><span class="nav-number">2.0.0.1.</span> <span class="nav-text">如何监听：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#作用：给对象绑定一个监听器（观察者）"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">作用：给对象绑定一个监听器（观察者）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#当监听的属性值发改变是就调用这个方法"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">当监听的属性值发改变是就调用这个方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
