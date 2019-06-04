@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -64,15 +64,33 @@
   
 
   
+    
+      
+    
 
+    
   
 
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.loli.net/css?family=Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -116,10 +134,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="UE4碰撞解析">
 <meta property="og:url" content="http://yoursite.com/2018/12/16/UE4碰撞解析/index.html">
-<meta property="og:site_name" content="Roc Ying">
+<meta property="og:site_name" content="Roc Yin">
 <meta property="og:description" content="在游戏中常见的带有物理的物体一般有5种，胶囊体一类、静态网格物体StaticMesh、骨骼网格物体SkeletalMesh、Landscape地形以及PhysicsVolume（BrushComponent），UE4继承了PhysX物理引擎，来模拟刚体的物理行为，包括碰撞响应，由于碰撞检测所出现的BUG不在少数，我也是在解决类似绝地求生经常有的碰撞之后飞天的BUG中加深对物体碰撞的理解的。">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-02T06:24:44.756Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-04T07:48:52.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UE4碰撞解析">
 <meta name="twitter:description" content="在游戏中常见的带有物理的物体一般有5种，胶囊体一类、静态网格物体StaticMesh、骨骼网格物体SkeletalMesh、Landscape地形以及PhysicsVolume（BrushComponent），UE4继承了PhysX物理引擎，来模拟刚体的物理行为，包括碰撞响应，由于碰撞检测所出现的BUG不在少数，我也是在解决类似绝地求生经常有的碰撞之后飞天的BUG中加深对物体碰撞的理解的。">
@@ -158,7 +176,7 @@
 
 
 
-  <title>UE4碰撞解析 | Roc Ying</title>
+  <title>UE4碰撞解析 | Roc Yin</title>
   
 
 
@@ -170,7 +188,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -188,7 +206,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Roc Ying</span>
+        <span class="site-title">Roc Yin</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -304,7 +322,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roc Ying">
+      <meta itemprop="name" content="Roc Yin">
     </span>
 
     
@@ -442,7 +460,7 @@
 <p>7.有时不可避免的也会出现穿墙现象，是因为检测是按照帧来的，所以当你速度够快或者正好卡在某个帧检测之间碰撞了，是会出现穿墙现象，可以另外写逻辑来判断解决，例如：绝地求生穿到地底或者墙里面的情况。</p>
 <h3 id="特殊使用场景"><a href="#特殊使用场景" class="headerlink" title="特殊使用场景"></a>特殊使用场景</h3><h5 id="1-当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时"><a href="#1-当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时" class="headerlink" title="1.当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时"></a>1.当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时</h5><p>使用基础组价的BlockingVolume即可</p>
 <h5 id="2-当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞"><a href="#2-当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞" class="headerlink" title="2.当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞"></a>2.当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞</h5><p>在StaticMash物体的StaticMash组件下拉隐藏界面中有一个（CreateBlockingVolume)选项，点击此选项将会将会根据此物体的不同形态常见不同的透明碰撞盒</p>
-<p>physics:<a href="https://blog.csdn.net/u012999985/article/details/51078906" target="_blank" rel="noopener">https://blog.csdn.net/u012999985/article/details/51078906</a></p>
+<h3 id="参考博客"><a href="#参考博客" class="headerlink" title="参考博客"></a>参考博客</h3><p>physics:<a href="https://blog.csdn.net/u012999985/article/details/51078906" target="_blank" rel="noopener">https://blog.csdn.net/u012999985/article/details/51078906</a></p>
 <p>UE4中的Collision（碰撞）规则梳理  <a href="https://blog.csdn.net/SittingAtThisMoment/article/details/80118748" target="_blank" rel="noopener">https://blog.csdn.net/SittingAtThisMoment/article/details/80118748</a></p>
 <p>碰撞参考指南    <a href="http://api.unrealengine.com/CHN/Engine/Physics/Collision/index.html" target="_blank" rel="noopener">http://api.unrealengine.com/CHN/Engine/Physics/Collision/index.html</a></p>
 <p>UE4蓝图碰撞检测解析   <a href="https://blog.csdn.net/u012999985/article/details/51113853" target="_blank" rel="noopener">https://blog.csdn.net/u012999985/article/details/51113853</a></p>
@@ -587,7 +605,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -598,7 +616,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -633,7 +651,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-任意两个物体碰撞的条件有："><span class="nav-number">1.</span> <span class="nav-text">一.任意两个物体碰撞的条件有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collision组件"><span class="nav-number">2.</span> <span class="nav-text">Collision组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性："><span class="nav-number">2.1.</span> <span class="nav-text">属性：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Physics组件"><span class="nav-number">3.</span> <span class="nav-text">Physics组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性"><span class="nav-number">3.1.</span> <span class="nav-text">属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小技巧："><span class="nav-number">4.</span> <span class="nav-text">小技巧：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意："><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊使用场景"><span class="nav-number">6.</span> <span class="nav-text">特殊使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时"><span class="nav-number">6.0.1.</span> <span class="nav-text">1.当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞"><span class="nav-number">6.0.2.</span> <span class="nav-text">2.当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-任意两个物体碰撞的条件有："><span class="nav-number">1.</span> <span class="nav-text">一.任意两个物体碰撞的条件有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collision组件"><span class="nav-number">2.</span> <span class="nav-text">Collision组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性："><span class="nav-number">2.1.</span> <span class="nav-text">属性：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Physics组件"><span class="nav-number">3.</span> <span class="nav-text">Physics组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性"><span class="nav-number">3.1.</span> <span class="nav-text">属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小技巧："><span class="nav-number">4.</span> <span class="nav-text">小技巧：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意："><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊使用场景"><span class="nav-number">6.</span> <span class="nav-text">特殊使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时"><span class="nav-number">6.0.1.</span> <span class="nav-text">1.当我们要创建一个透明的墙，或者做某个复杂Actor的碰撞体积时</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞"><span class="nav-number">6.0.2.</span> <span class="nav-text">2.当我们要为一些使用画刷工具创建出来的StaticMash物体时，想要为其添加体积碰撞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考博客"><span class="nav-number">7.</span> <span class="nav-text">参考博客</span></a></li></ol></div>
             
 
           </div>

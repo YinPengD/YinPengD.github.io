@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -64,15 +64,33 @@
   
 
   
+    
+      
+    
 
+    
   
 
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.loli.net/css?family=Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -116,10 +134,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVC&amp;KVO的初步认识">
 <meta property="og:url" content="http://yoursite.com/2017/07/15/kvc&kvo/index.html">
-<meta property="og:site_name" content="Roc Ying">
+<meta property="og:site_name" content="Roc Yin">
 <meta property="og:description" content="KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-12-08T04:24:12.000Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-04T07:58:31.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVC&amp;KVO的初步认识">
 <meta name="twitter:description" content="KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。">
@@ -158,7 +176,7 @@
 
 
 
-  <title>KVC&KVO的初步认识 | Roc Ying</title>
+  <title>KVC&KVO的初步认识 | Roc Yin</title>
   
 
 
@@ -170,7 +188,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -188,7 +206,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Roc Ying</span>
+        <span class="site-title">Roc Yin</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -304,7 +322,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roc Ying">
+      <meta itemprop="name" content="Roc Yin">
     </span>
 
     
@@ -386,13 +404,12 @@
       
         <p>KVO/KVC 是观察者模式在 Objective-C 中的实现，以非正式协议（Category）的形式被定义在 NSObject 中。从协议的角度看，是定义了一套让开发者遵守的规范和使用的方法。在 Cocoa 的 MVC 框架中，架起 ViewController 和 Model 沟通的桥梁。</p>
 <a id="more"></a>
-<h2 id="KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制"><a href="#KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制" class="headerlink" title="KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制"></a>KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制</h2><h3 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h3><h5 id="利用KVC进行简单赋值："><a href="#利用KVC进行简单赋值：" class="headerlink" title="利用KVC进行简单赋值："></a>利用KVC进行简单赋值：</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void test()&#123;</span><br><span class="line">    YPPerson *person = [[YPPerson alloc] init];</span><br><span class="line">    [person setValue:@&quot;王五&quot; forKey:@&quot;name&quot;];                   //KVC赋值</span><br><span class="line">    [person setValue:@&quot;19&quot; forKeyPath:@&quot;money&quot;];                //自动类型转换</span><br><span class="line">    NSLog(@&quot;%@-------%.2f&quot;,person.name,person.money);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制"><a href="#KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制" class="headerlink" title="KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制"></a>KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制</h3><h4 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h4><h5 id="利用KVC进行简单赋值："><a href="#利用KVC进行简单赋值：" class="headerlink" title="利用KVC进行简单赋值："></a>利用KVC进行简单赋值：</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void test()&#123;</span><br><span class="line">    YPPerson *person = [[YPPerson alloc] init];</span><br><span class="line">    [person setValue:@&quot;王五&quot; forKey:@&quot;name&quot;];                   //KVC赋值</span><br><span class="line">    [person setValue:@&quot;19&quot; forKeyPath:@&quot;money&quot;];                //自动类型转换</span><br><span class="line">    NSLog(@&quot;%@-------%.2f&quot;,person.name,person.money);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h5 id="利用KVC修改私有成员变量"><a href="#利用KVC修改私有成员变量" class="headerlink" title="利用KVC修改私有成员变量"></a>利用KVC修改私有成员变量</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void text2()&#123;</span><br><span class="line">    YPPerson *person = [[YPPerson alloc]init];</span><br><span class="line">    [person setValue:@&quot;88&quot; forKeyPath:@&quot;_age&quot;];              //私有变量</span><br><span class="line">    NSLog(@&quot;%@&quot;,person);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="利用KVC将模型转为字典"><a href="#利用KVC将模型转为字典" class="headerlink" title="利用KVC将模型转为字典"></a>利用KVC将模型转为字典</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">普通的将模型转为字典：</span><br><span class="line">self.name =dict[@&quot;name&quot;];</span><br><span class="line">self.money = [dict[@&quot;money&quot;] floatValue];      //floatValue 装换为float类</span><br></pre></td></tr></table></figure>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用kVCV将模型转为字典</span><br><span class="line">- (instancetype)initWithDict:(NSDictionary *)dict&#123;</span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        [self setValuesForKeysWithDictionary:dict]；           ／／优点：一行代码就把所有的模型转为了字典</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  使用场景：简单的字典转模型</span><br><span class="line"></span><br><span class="line">  开发中不建议使用setValuesForKeyWithDictionary:</span><br><span class="line"></span><br><span class="line">         1.字典中的KEY必须在模型的属性中找到</span><br><span class="line"></span><br><span class="line">          2.如果模型中带有模型就不好用</span><br></pre></td></tr></table></figure>
 <h5 id="取出所有模型的属性值"><a href="#取出所有模型的属性值" class="headerlink" title="取出所有模型的属性值"></a>取出所有模型的属性值</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">YPPerson *person1 = [[YPPerson alloc ]init];</span><br><span class="line">       person1.name = @&quot;zhangsan&quot;;</span><br><span class="line">       person1.money  = 12.99;</span><br><span class="line">       person2.name = @&quot;wangwu&quot;</span><br><span class="line">       person2.money = 13.45;</span><br><span class="line">     </span><br><span class="line">       NSArray allPersons = @[person1,person2];</span><br><span class="line">       NSArray allPersonName = [allPersons valueForKey:@&quot;naem&quot;];</span><br><span class="line">       NSLog(@&quot;%@&quot;,allPersonName);</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"><a href="#KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者" class="headerlink" title="KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"></a>KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者</h2><blockquote>
+<h3 id="KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"><a href="#KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者" class="headerlink" title="KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"></a>KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者</h3><blockquote>
 <p>允许对象观察另一个对象的属性。该属性值改变时，会通知观察对象,</p>
 </blockquote>
 <h5 id="如何监听："><a href="#如何监听：" class="headerlink" title="如何监听："></a>如何监听：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-（void)viewDidLoad];</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    YPPerson *person = [[YPPerson alloc] init];</span><br><span class="line">    person.name = @&quot;zs&quot;;</span><br></pre></td></tr></table></figure>
@@ -438,8 +455,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/17/我的第一篇博客/" rel="next" title="我的第一篇博客">
-                <i class="fa fa-chevron-left"></i> 我的第一篇博客
+              <a href="/2017/06/17/我的第一篇博客/" rel="next" title="初次见面">
+                <i class="fa fa-chevron-left"></i> 初次见面
               </a>
             
           </div>
@@ -542,7 +559,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -553,7 +570,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -588,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制"><span class="nav-number">1.</span> <span class="nav-text">KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用："><span class="nav-number">1.1.</span> <span class="nav-text">使用：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC进行简单赋值："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">利用KVC进行简单赋值：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC修改私有成员变量"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">利用KVC修改私有成员变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC将模型转为字典"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">利用KVC将模型转为字典</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#取出所有模型的属性值"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">取出所有模型的属性值</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"><span class="nav-number">2.</span> <span class="nav-text">KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何监听："><span class="nav-number">2.0.0.1.</span> <span class="nav-text">如何监听：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#作用：给对象绑定一个监听器（观察者）"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">作用：给对象绑定一个监听器（观察者）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#当监听的属性值发改变是就调用这个方法"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">当监听的属性值发改变是就调用这个方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#KVC概述：即-Key-value-coding-它是一种使用字符串标识符，间接访问对象属性的机制"><span class="nav-number">1.</span> <span class="nav-text">KVC概述：即:Key-value coding,它是一种使用字符串标识符，间接访问对象属性的机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用："><span class="nav-number">1.1.</span> <span class="nav-text">使用：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC进行简单赋值："><span class="nav-number">1.1.1.</span> <span class="nav-text">利用KVC进行简单赋值：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC修改私有成员变量"><span class="nav-number">1.1.2.</span> <span class="nav-text">利用KVC修改私有成员变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#利用KVC将模型转为字典"><span class="nav-number">1.1.3.</span> <span class="nav-text">利用KVC将模型转为字典</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#取出所有模型的属性值"><span class="nav-number">1.1.4.</span> <span class="nav-text">取出所有模型的属性值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KVO概述：即-Key-value-Observing-当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者"><span class="nav-number">2.</span> <span class="nav-text">KVO概述：即:Key-value Observing,当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何监听："><span class="nav-number">2.0.1.</span> <span class="nav-text">如何监听：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#作用：给对象绑定一个监听器（观察者）"><span class="nav-number">2.0.2.</span> <span class="nav-text">作用：给对象绑定一个监听器（观察者）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#当监听的属性值发改变是就调用这个方法"><span class="nav-number">2.0.3.</span> <span class="nav-text">当监听的属性值发改变是就调用这个方法</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

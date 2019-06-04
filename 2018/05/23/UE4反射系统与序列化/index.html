@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -64,15 +64,33 @@
   
 
   
+    
+      
+    
 
+    
   
 
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.loli.net/css?family=Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -116,10 +134,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="UE4反射系统与序列化整理">
 <meta property="og:url" content="http://yoursite.com/2018/05/23/UE4反射系统与序列化/index.html">
-<meta property="og:site_name" content="Roc Ying">
+<meta property="og:site_name" content="Roc Yin">
 <meta property="og:description" content="什么是UE4反射？在UE4里面，你无时无刻都会看到类似UFUNCTION（）这样的宏。官方文档告诉你，只要在一个函数的前面加上这个宏，然后在括号里面加上BlueprintCallable就可以在编辑器里面调用了。按照他的指示，我们就能让我们的函数实现各种各样特别的功能，那这个效果就是通过UE4的反射系统来实现的。这看起来确实非常棒，不过同时给UE4的反射系统增添了一点神秘感。我们可能一开始尝试着去">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-02T06:45:18.261Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-04T08:14:53.417Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UE4反射系统与序列化整理">
 <meta name="twitter:description" content="什么是UE4反射？在UE4里面，你无时无刻都会看到类似UFUNCTION（）这样的宏。官方文档告诉你，只要在一个函数的前面加上这个宏，然后在括号里面加上BlueprintCallable就可以在编辑器里面调用了。按照他的指示，我们就能让我们的函数实现各种各样特别的功能，那这个效果就是通过UE4的反射系统来实现的。这看起来确实非常棒，不过同时给UE4的反射系统增添了一点神秘感。我们可能一开始尝试着去">
@@ -158,7 +176,7 @@
 
 
 
-  <title>UE4反射系统与序列化整理 | Roc Ying</title>
+  <title>UE4反射系统与序列化整理 | Roc Yin</title>
   
 
 
@@ -170,7 +188,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -188,7 +206,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Roc Ying</span>
+        <span class="site-title">Roc Yin</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -304,7 +322,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roc Ying">
+      <meta itemprop="name" content="Roc Yin">
     </span>
 
     
@@ -384,7 +402,7 @@
       
 
       
-        <h5 id="什么是UE4反射？"><a href="#什么是UE4反射？" class="headerlink" title="什么是UE4反射？"></a>什么是UE4反射？</h5><p>在UE4里面，你无时无刻都会看到类似UFUNCTION（）这样的宏。官方文档告诉你，只要在一个函数的前面加上这个宏，然后在括号里面加上BlueprintCallable就可以在编辑器里面调用了。按照他的指示，我们就能让我们的函数实现各种各样特别的功能，那这个效果就是通过UE4的反射系统来实现的。这看起来确实非常棒，不过同时给UE4的反射系统增添了一点神秘感。我们可能一开始尝试着去找一下这个宏的定义，但是翻了几层发现没有头绪，可能也就懒得再去研究他是怎么实现的了。</p>
+        <h4 id="什么是UE4反射？"><a href="#什么是UE4反射？" class="headerlink" title="什么是UE4反射？"></a>什么是UE4反射？</h4><p>在UE4里面，你无时无刻都会看到类似UFUNCTION（）这样的宏。官方文档告诉你，只要在一个函数的前面加上这个宏，然后在括号里面加上BlueprintCallable就可以在编辑器里面调用了。按照他的指示，我们就能让我们的函数实现各种各样特别的功能，那这个效果就是通过UE4的反射系统来实现的。这看起来确实非常棒，不过同时给UE4的反射系统增添了一点神秘感。我们可能一开始尝试着去找一下这个宏的定义，但是翻了几层发现没有头绪，可能也就懒得再去研究他是怎么实现的了。</p>
 <p>其实，所谓反射，是程序在运行时进行自检的一种能力，自检什么呢？我认为就是检查自己的C++类，函数，成员变量，结构体等等（对应起来也就是大家在UE4能看到的UCLASS，UFUNCTON，UPROPERTY，USTRUCT后面还会提到）。</p>
 <a id="more"></a>
 <p>C++本来是不支持反射的，只有一个基本的RTTI（运行时类型信息）特性，仅能在运行时获取对象的类型信息，无法得到成员变量和函数列表信息。如果我们要对成员变量进行序列化（存档/读档），需要自己写很多辅助的读取和写入方法，非常麻烦。<strong>反射就是，运行时获取成员变量，成员函数等的机制</strong></p>
@@ -397,7 +415,7 @@
 <p><strong>UENUM()</strong>：告诉UE4生成枚举的反射数据</p>
 <p><strong>GENERATED_BODY()</strong> - UE4 使用它替代为类型生成的所有必需样板文件代码</p>
 <p>那检查这些东西做什么呢？最明显的就是支持蓝图和C++的交互功能，说的更通俗一点，就是可以更自由的控制这些结构，让他在我们想出现的地方出现，让他在我们想使用的地方使用。要知道我们在虚幻4中声明的任意一个类，都是继承于UObject类的，所以他远远不是我们所以为的那个普通的C++类。我们可以使用这个类进行网络复制，执行垃圾回收，让他和蓝图交互等等。而这一切原生的C++是并不支持的，也正是因此虚幻4才构建了一个这样的反射系统。</p>
-<h4 id="反射一般用于哪些地方？"><a href="#反射一般用于哪些地方？" class="headerlink" title="反射一般用于哪些地方？"></a>反射一般用于哪些地方？</h4><p>在UE4里面， 基本上所有的游戏工程的类都需要用到。比如，你用编辑器新建一个类，类的前面会自动添加UCLASS()；新建一个结构体，需要使用USTRUCT()；新建一个枚举变量，需要在前面声明UENUM()；在类的里面，也必须要加上GENERATED_UCLASS_BODY()才行。</p>
+<h3 id="反射一般用于哪些地方？"><a href="#反射一般用于哪些地方？" class="headerlink" title="反射一般用于哪些地方？"></a>反射一般用于哪些地方？</h3><p>在UE4里面， 基本上所有的游戏工程的类都需要用到。比如，你用编辑器新建一个类，类的前面会自动添加UCLASS()；新建一个结构体，需要使用USTRUCT()；新建一个枚举变量，需要在前面声明UENUM()；在类的里面，也必须要加上GENERATED_UCLASS_BODY()才行。</p>
 <p>如果你的类继承自UObject,的的类名上方需要加入UCASS()宏，同时需要在类体的第一行添加GENERATED_UCLASS_BODY宏，或者GENERATED_BODY()宏，</p>
 <p>如果是GENERATED_UCLASS_BODY，则需要手动实现一个带有const FObjectInitializer&amp;参数的构造函数，</p>
 <p>如果是GENERATED_BODY()则需要手动实现一个无非参数构造函数</p>
@@ -475,9 +493,7 @@
 </tbody>
 </table>
 <h5 id="实例"><a href="#实例" class="headerlink" title="实例:"></a>实例:</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UFUNCTION(BlueprintCallable,Category = &quot;Sanwu|TestFuncLib&quot;)</span><br></pre></td></tr></table></figure>
-<blockquote>
 <p>Category是函数的分类，点击鼠标右键会打开上下文菜单，“SanWu|TestFunLib”的意思是指Say Hello函数放在sanwu分类下的Test Func Lib类目下   </p>
-</blockquote>
 <h3 id="类修饰符（UCLASS）："><a href="#类修饰符（UCLASS）：" class="headerlink" title="类修饰符（UCLASS）："></a>类修饰符（UCLASS）：</h3><p>​    <strong>abstract（抽象）</strong>：</p>
 <p>将类声明为抽象基类，这样会阻止用户实例化这个类。</p>
 <p>​    <strong>advancedclassdisplay（高级显示）</strong>：</p>
@@ -800,7 +816,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -811,7 +827,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -846,7 +862,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是UE4反射？"><span class="nav-number">1.</span> <span class="nav-text">什么是UE4反射？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反射一般用于哪些地方？"><span class="nav-number"></span> <span class="nav-text">反射一般用于哪些地方？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化"><span class="nav-number"></span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实例"><span class="nav-number">1.</span> <span class="nav-text">实例:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类修饰符（UCLASS）："><span class="nav-number"></span> <span class="nav-text">类修饰符（UCLASS）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数修饰符（UFUNCTION）："><span class="nav-number"></span> <span class="nav-text">函数修饰符（UFUNCTION）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据修饰符（meta-）："><span class="nav-number"></span> <span class="nav-text">元数据修饰符（meta=）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性修饰符（UPROPERTY）："><span class="nav-number"></span> <span class="nav-text">属性修饰符（UPROPERTY）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体修饰符（USTRUCT）："><span class="nav-number"></span> <span class="nav-text">结构体修饰符（USTRUCT）：</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是UE4反射？"><span class="nav-number">1.</span> <span class="nav-text">什么是UE4反射？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射一般用于哪些地方？"><span class="nav-number"></span> <span class="nav-text">反射一般用于哪些地方？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化"><span class="nav-number"></span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实例"><span class="nav-number">0.1.</span> <span class="nav-text">实例:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类修饰符（UCLASS）："><span class="nav-number"></span> <span class="nav-text">类修饰符（UCLASS）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数修饰符（UFUNCTION）："><span class="nav-number"></span> <span class="nav-text">函数修饰符（UFUNCTION）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元数据修饰符（meta-）："><span class="nav-number"></span> <span class="nav-text">元数据修饰符（meta=）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性修饰符（UPROPERTY）："><span class="nav-number"></span> <span class="nav-text">属性修饰符（UPROPERTY）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体修饰符（USTRUCT）："><span class="nav-number"></span> <span class="nav-text">结构体修饰符（USTRUCT）：</span></a></div>
             
 
           </div>

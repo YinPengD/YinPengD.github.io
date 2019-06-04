@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -64,15 +64,33 @@
   
 
   
+    
+      
+    
 
+    
   
 
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
   
 
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.loli.net/css?family=Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic|Palatino Linotype:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -116,9 +134,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shadowsocks原理和通过VPS自搭代理服务器">
 <meta property="og:url" content="http://yoursite.com/2017/11/11/Shadowsocks原理和通过VPS自搭代理服务器/index.html">
-<meta property="og:site_name" content="Roc Ying">
+<meta property="og:site_name" content="Roc Yin">
 <meta property="og:description" content="Shadowsocks是一个轻量级socks5代理插件，最初用 Python 编写,主要用于翻越GFW(中国国家防火墙),ShadowSocks支持远程DNS解析，可以防止DNS污染。所有数据流量全部经过加密，加密算法可选并支持自定义算法，隐蔽性很强， 相比于传统的VPN方式，ShadowSocks支持PAC列表，根据PAC中的规则进行智能切换，兼顾了访问速度与访问效率。">
-<meta property="og:locale" content="en">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yp.guohaonan.cn/Shadowsocks原理tu.jpg">
 <meta property="og:image" content="http://yp.guohaonan.cn/ping.png">
 <meta property="og:image" content="http://yp.guohaonan.cn/86D4C942-9CD4-472B-89FD-3EAD49837CB0.png">
@@ -127,7 +145,7 @@
 <meta property="og:image" content="http://yp.guohaonan.cn/搭建环境.png">
 <meta property="og:image" content="http://yp.guohaonan.cn/开启端口.png">
 <meta property="og:image" content="http://yp.guohaonan.cn/检查端口.png">
-<meta property="og:updated_time" content="2019-03-02T10:24:11.448Z">
+<meta property="og:updated_time" content="2019-06-04T07:53:48.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shadowsocks原理和通过VPS自搭代理服务器">
 <meta name="twitter:description" content="Shadowsocks是一个轻量级socks5代理插件，最初用 Python 编写,主要用于翻越GFW(中国国家防火墙),ShadowSocks支持远程DNS解析，可以防止DNS污染。所有数据流量全部经过加密，加密算法可选并支持自定义算法，隐蔽性很强， 相比于传统的VPN方式，ShadowSocks支持PAC列表，根据PAC中的规则进行智能切换，兼顾了访问速度与访问效率。">
@@ -167,7 +185,7 @@
 
 
 
-  <title>Shadowsocks原理和通过VPS自搭代理服务器 | Roc Ying</title>
+  <title>Shadowsocks原理和通过VPS自搭代理服务器 | Roc Yin</title>
   
 
 
@@ -179,7 +197,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -197,7 +215,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Roc Ying</span>
+        <span class="site-title">Roc Yin</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -313,7 +331,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Roc Ying">
+      <meta itemprop="name" content="Roc Yin">
     </span>
 
     
@@ -445,8 +463,7 @@
 <p>着这里可以通过站长工具网站检查站点是否开通，开启前：<br><img src="http://yp.guohaonan.cn/开启端口.png" alt="开启端口"><br>开启后：<br><img src="http://yp.guohaonan.cn/检查端口.png" alt="开启站点"></p>
 <h4 id="启动shadowsocs"><a href="#启动shadowsocs" class="headerlink" title="启动shadowsocs"></a>启动shadowsocs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
 <h5 id="如果需要关闭就输入："><a href="#如果需要关闭就输入：" class="headerlink" title="如果需要关闭就输入："></a>如果需要关闭就输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
-<h3 id="至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"><a href="#至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了" class="headerlink" title="至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"></a><strong>至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了</strong></h3><hr>
-<h4 id="涉及的知识："><a href="#涉及的知识：" class="headerlink" title="涉及的知识："></a>涉及的知识：</h4><h5 id="Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98"><a href="#Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98" class="headerlink" title="Shadowsocks原理和搭建 :     http://blog.021xt.cc/archives/98"></a>Shadowsocks原理和搭建 :     <a href="http://blog.021xt.cc/archives/98" target="_blank" rel="noopener">http://blog.021xt.cc/archives/98</a></h5><h5 id="Vim入门基础-www-jianshu-com-p-bcbe916f97e1"><a href="#Vim入门基础-www-jianshu-com-p-bcbe916f97e1" class="headerlink" title="Vim入门基础:       www.jianshu.com/p/bcbe916f97e1"></a>Vim入门基础:      <a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="noopener"> www.jianshu.com/p/bcbe916f97e1</a></h5><h5 id="CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html"><a href="#CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html" class="headerlink" title="CentOS7使用firewalld打开关闭防火墙与端口:     http://www.cnblogs.com/moxiaoan/p/5683743.html"></a>CentOS7使用firewalld打开关闭防火墙与端口:     <a href="http://www.cnblogs.com/moxiaoan/p/5683743.html" target="_blank" rel="noopener">http://www.cnblogs.com/moxiaoan/p/5683743.html</a></h5>
+<h4 id="至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"><a href="#至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了" class="headerlink" title="至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"></a><strong>至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了</strong></h4><h3 id="涉及的知识："><a href="#涉及的知识：" class="headerlink" title="涉及的知识："></a>涉及的知识：</h3><h5 id="Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98"><a href="#Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98" class="headerlink" title="Shadowsocks原理和搭建 :     http://blog.021xt.cc/archives/98"></a>Shadowsocks原理和搭建 :     <a href="http://blog.021xt.cc/archives/98" target="_blank" rel="noopener">http://blog.021xt.cc/archives/98</a></h5><h5 id="Vim入门基础-www-jianshu-com-p-bcbe916f97e1"><a href="#Vim入门基础-www-jianshu-com-p-bcbe916f97e1" class="headerlink" title="Vim入门基础:       www.jianshu.com/p/bcbe916f97e1"></a>Vim入门基础:      <a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="noopener"> www.jianshu.com/p/bcbe916f97e1</a></h5><h5 id="CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html"><a href="#CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html" class="headerlink" title="CentOS7使用firewalld打开关闭防火墙与端口:     http://www.cnblogs.com/moxiaoan/p/5683743.html"></a>CentOS7使用firewalld打开关闭防火墙与端口:     <a href="http://www.cnblogs.com/moxiaoan/p/5683743.html" target="_blank" rel="noopener">http://www.cnblogs.com/moxiaoan/p/5683743.html</a></h5>
       
     </div>
     
@@ -480,8 +497,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/06/property的参数分析/" rel="next" title="ios中property的参数分析">
-                <i class="fa fa-chevron-left"></i> ios中property的参数分析
+              <a href="/2017/11/06/property的参数分析/" rel="next" title="iOS中property的参数分析">
+                <i class="fa fa-chevron-left"></i> iOS中property的参数分析
               </a>
             
           </div>
@@ -584,7 +601,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -595,7 +612,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -630,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1Shadowsocks的翻墙原理："><span class="nav-number">1.</span> <span class="nav-text">1.1Shadowsocks的翻墙原理：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如-HTTP-HTTPS-这类请求，会很明确地告诉-GFW-它们要请求哪个域名；再比如-TCP-请求，它只会告诉-GFW-它们要请求哪个-IP。-GFW-封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP-黑白名单也是这个道理。如果你有一台国外服务器不在-GFW-的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被-GFW-怀疑和窃听"><span class="nav-number">1.0.1.</span> <span class="nav-text">天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如 HTTP/HTTPS 这类请求，会很明确地告诉 GFW 它们要请求哪个域名；再比如 TCP 请求，它只会告诉 GFW 它们要请求哪个 IP。 GFW 封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP 黑白名单也是这个道理。如果你有一台国外服务器不在 GFW 的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被 GFW 怀疑和窃听</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理图："><span class="nav-number">2.</span> <span class="nav-text">原理图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VPN-与-Shadowsocks-的区别："><span class="nav-number">3.</span> <span class="nav-text">VPN 与 Shadowsocks 的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shadowsocks中全局模式与PAC模式之间的区别："><span class="nav-number">4.</span> <span class="nav-text">Shadowsocks中全局模式与PAC模式之间的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意："><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CentOS系统建立完成之后进入到server-Inormation界面，单击右上角一个像显示器的图标“View-Console”即可进入控制台"><span class="nav-number">5.1.</span> <span class="nav-text">CentOS系统建立完成之后进入到server Inormation界面，单击右上角一个像显示器的图标“View Console”即可进入控制台</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接"><span class="nav-number">6.</span> <span class="nav-text">安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置环景："><span class="nav-number">7.</span> <span class="nav-text">配置环景：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入一下命令"><span class="nav-number">7.1.</span> <span class="nav-text">输入一下命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接着会询问你是否安装，输入："><span class="nav-number">7.2.</span> <span class="nav-text">接着会询问你是否安装，输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装shadowsocks"><span class="nav-number">8.</span> <span class="nav-text">安装shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#接着，创建一个Shadowsocks配置文件-输入以下命令："><span class="nav-number">8.1.</span> <span class="nav-text">接着，创建一个Shadowsocks配置文件,输入以下命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#然后进入文件编辑界面，按i开始编辑，输入："><span class="nav-number">8.2.</span> <span class="nav-text">然后进入文件编辑界面，按i开始编辑，输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开通你的登录端口："><span class="nav-number">9.</span> <span class="nav-text">开通你的登录端口：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动shadowsocs"><span class="nav-number">10.</span> <span class="nav-text">启动shadowsocs</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果需要关闭就输入："><span class="nav-number">10.1.</span> <span class="nav-text">如果需要关闭就输入：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"><span class="nav-number"></span> <span class="nav-text">至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#涉及的知识："><span class="nav-number">1.</span> <span class="nav-text">涉及的知识：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98"><span class="nav-number">1.1.</span> <span class="nav-text">Shadowsocks原理和搭建 :     http://blog.021xt.cc/archives/98</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vim入门基础-www-jianshu-com-p-bcbe916f97e1"><span class="nav-number">1.2.</span> <span class="nav-text">Vim入门基础:       www.jianshu.com/p/bcbe916f97e1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html"><span class="nav-number">1.3.</span> <span class="nav-text">CentOS7使用firewalld打开关闭防火墙与端口:     http://www.cnblogs.com/moxiaoan/p/5683743.html</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1Shadowsocks的翻墙原理："><span class="nav-number">1.</span> <span class="nav-text">1.1Shadowsocks的翻墙原理：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如-HTTP-HTTPS-这类请求，会很明确地告诉-GFW-它们要请求哪个域名；再比如-TCP-请求，它只会告诉-GFW-它们要请求哪个-IP。-GFW-封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP-黑白名单也是这个道理。如果你有一台国外服务器不在-GFW-的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被-GFW-怀疑和窃听"><span class="nav-number">1.0.1.</span> <span class="nav-text">天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如 HTTP/HTTPS 这类请求，会很明确地告诉 GFW 它们要请求哪个域名；再比如 TCP 请求，它只会告诉 GFW 它们要请求哪个 IP。 GFW 封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP 黑白名单也是这个道理。如果你有一台国外服务器不在 GFW 的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被 GFW 怀疑和窃听</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理图："><span class="nav-number">2.</span> <span class="nav-text">原理图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VPN-与-Shadowsocks-的区别："><span class="nav-number">3.</span> <span class="nav-text">VPN 与 Shadowsocks 的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shadowsocks中全局模式与PAC模式之间的区别："><span class="nav-number">4.</span> <span class="nav-text">Shadowsocks中全局模式与PAC模式之间的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意："><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CentOS系统建立完成之后进入到server-Inormation界面，单击右上角一个像显示器的图标“View-Console”即可进入控制台"><span class="nav-number">5.1.</span> <span class="nav-text">CentOS系统建立完成之后进入到server Inormation界面，单击右上角一个像显示器的图标“View Console”即可进入控制台</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接"><span class="nav-number">6.</span> <span class="nav-text">安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置环景："><span class="nav-number">7.</span> <span class="nav-text">配置环景：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入一下命令"><span class="nav-number">7.1.</span> <span class="nav-text">输入一下命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接着会询问你是否安装，输入："><span class="nav-number">7.2.</span> <span class="nav-text">接着会询问你是否安装，输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装shadowsocks"><span class="nav-number">8.</span> <span class="nav-text">安装shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#接着，创建一个Shadowsocks配置文件-输入以下命令："><span class="nav-number">8.1.</span> <span class="nav-text">接着，创建一个Shadowsocks配置文件,输入以下命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#然后进入文件编辑界面，按i开始编辑，输入："><span class="nav-number">8.2.</span> <span class="nav-text">然后进入文件编辑界面，按i开始编辑，输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开通你的登录端口："><span class="nav-number">9.</span> <span class="nav-text">开通你的登录端口：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动shadowsocs"><span class="nav-number">10.</span> <span class="nav-text">启动shadowsocs</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果需要关闭就输入："><span class="nav-number">10.1.</span> <span class="nav-text">如果需要关闭就输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"><span class="nav-number">11.</span> <span class="nav-text">至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#涉及的知识："><span class="nav-number"></span> <span class="nav-text">涉及的知识：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98"><span class="nav-number">0.1.</span> <span class="nav-text">Shadowsocks原理和搭建 :     http://blog.021xt.cc/archives/98</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vim入门基础-www-jianshu-com-p-bcbe916f97e1"><span class="nav-number">0.2.</span> <span class="nav-text">Vim入门基础:       www.jianshu.com/p/bcbe916f97e1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html"><span class="nav-number">0.3.</span> <span class="nav-text">CentOS7使用firewalld打开关闭防火墙与端口:     http://www.cnblogs.com/moxiaoan/p/5683743.html</span></a></li></ol></li></ol></div>
             
 
           </div>

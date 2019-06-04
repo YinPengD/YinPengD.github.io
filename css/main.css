@@ -185,7 +185,7 @@ th {
 }
 body {
   position: relative;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Palatino Linotype', "Palatino Linotype", "Microsoft YaHei", sans-serif;
   font-size: 14px;
   line-height: 2;
   color: #555;
@@ -216,7 +216,7 @@ h6 {
   padding: 0;
   font-weight: bold;
   line-height: 1.5;
-  font-family: 'Anto', 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Palatino Linotype', 'Palatino Linotype', "Palatino Linotype", "Microsoft YaHei", sans-serif;
 }
 h2,
 h3,
@@ -493,7 +493,7 @@ pre,
 }
 pre,
 code {
-  font-family: consolas, Menlo, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: 'Palatino Linotype', consolas, Menlo, "Palatino Linotype", "Microsoft YaHei", monospace;
 }
 code {
   padding: 2px 4px;
@@ -1131,7 +1131,7 @@ pre .javascript .function {
   line-height: 36px;
   font-size: 20px;
   font-weight: normal;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Palatino Linotype', 'Palatino Linotype', "Palatino Linotype", "Microsoft YaHei", sans-serif;
 }
 .site-subtitle {
   margin-top: 10px;
@@ -1219,7 +1219,7 @@ pre .javascript .function {
   opacity: 0;
 }
 .post-body {
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Palatino Linotype', 'Palatino Linotype', "Palatino Linotype", "Microsoft YaHei", sans-serif;
 }
 @media (max-width: 767px) {
   .post-body {
@@ -1497,7 +1497,7 @@ pre .javascript .function {
 .posts-expand .post-meta {
   margin: 3px 0 60px 0;
   color: #999;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Palatino Linotype', 'Palatino Linotype', "Palatino Linotype", "Microsoft YaHei", sans-serif;
   font-size: 12px;
   text-align: center;
 }
@@ -1822,7 +1822,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #1105e7;
+  background: #61ff20;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2658,4 +2658,84 @@ embed {
 }
 .links-of-blogroll-inline .links-of-blogroll-item {
   display: inline-block;
+}
+body {
+  position: relative;
+  font-family: "Palatino Linotype", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  padding: 2% 5% 5% 5%;
+  color: #666;
+  margin: 5% 10% 5% 10%;
+  background: #fff;
+}
+h1 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  font-size: 26px;
+}
+h2 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  margin-bottom: 60px;
+  margin-bottom: 40px;
+  padding: 5px;
+  border-bottom: 2px LightGrey solid;
+  width: 90%;
+  line-height: 150%;
+  font-size: 25px;
+  color: #666;
+}
+h3 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  border-bottom: 1px LightGrey solid;
+  width: 80%;
+  line-height: 150%;
+  color: #666;
+  font-size: 24px;
+}
+h4 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  font-size: 22px;
+  width: 80%;
+  line-height: 150%;
+  color: #666;
+}
+h5 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  width: 80%;
+  line-height: 150%;
+  font-size: 20px;
+  color: #666;
+}
+article p {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  margin-top: 30px;
+  width: 100%;
+  line-height: 150%;
+  color: #000;
+}
+.post-body {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+  color: #000;
+  width: 100%;
+}
+p {
+  text-indent: 2em;
+}
+code {
+  font-family: "Input Mono", "PT Mono", Consolas, Monaco, Menlo, monospace;
+  padding: 0.5em;
+  line-height: 200%;
+}
+.posts-expand .post-body ul li {
+  list-style: disc;
+}
+.posts-expand .post-body img {
+  border: none;
+  padding: 0px;
 }
