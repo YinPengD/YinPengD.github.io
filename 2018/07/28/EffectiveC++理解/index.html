@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Effective,C++,程序优化,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在看Effective C++，个人认为这是一本很好的书，因为这是一本好书，并且偏向于实际实用，看着看着里面改善程序的做法，有些特别具有实际意义，但是还有些做法都并不能理解与实际使用，就害怕像大二读《C++Primer Plus》一样花一个月死磕这本书却因为没有去实际使用体会而逐渐淡忘其中细节，所以决定慢慢的读这本书，一个条款一个条款的去领会，尽量做到领会一个条款就一直遵从这条条款去改善代码，">
+<meta name="keywords" content="Effective,C++,程序优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EffectiveC++理解">
+<meta property="og:url" content="http://yoursite.com/2018/07/28/EffectiveC++理解/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="最近在看Effective C++，个人认为这是一本很好的书，因为这是一本好书，并且偏向于实际实用，看着看着里面改善程序的做法，有些特别具有实际意义，但是还有些做法都并不能理解与实际使用，就害怕像大二读《C++Primer Plus》一样花一个月死磕这本书却因为没有去实际使用体会而逐渐淡忘其中细节，所以决定慢慢的读这本书，一个条款一个条款的去领会，尽量做到领会一个条款就一直遵从这条条款去改善代码，">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-16T08:54:13.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EffectiveC++理解">
+<meta name="twitter:description" content="最近在看Effective C++，个人认为这是一本很好的书，因为这是一本好书，并且偏向于实际实用，看着看着里面改善程序的做法，有些特别具有实际意义，但是还有些做法都并不能理解与实际使用，就害怕像大二读《C++Primer Plus》一样花一个月死磕这本书却因为没有去实际使用体会而逐渐淡忘其中细节，所以决定慢慢的读这本书，一个条款一个条款的去领会，尽量做到领会一个条款就一直遵从这条条款去改善代码，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/28/EffectiveC++理解/">
+
+
+
+
+
+  <title>EffectiveC++理解 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/28/EffectiveC++理解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">EffectiveC++理解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-28T16:33:21+08:00">
+                2018-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在看Effective C++，个人认为这是一本很好的书，因为这是一本好书，并且偏向于实际实用，看着看着里面改善程序的做法，有些特别具有实际意义，但是还有些做法都并不能理解与实际使用，就害怕像大二读《C++Primer Plus》一样花一个月死磕这本书却因为没有去实际使用体会而逐渐淡忘其中细节，所以决定慢慢的读这本书，一个条款一个条款的去领会，尽量做到领会一个条款就一直遵从这条条款去改善代码，所以这篇博客会一直更新至看完这本书为止，并会加入自己在UE4中的体会与理解，与UE4是如何遵从这些条款的案例的。</p>
+<a id="more"></a>
+<h3 id="条款2：尽量用const-enum-inline替换-define"><a href="#条款2：尽量用const-enum-inline替换-define" class="headerlink" title="条款2：尽量用const,enum,inline替换 #define"></a>条款2：尽量用const,enum,inline替换 #define</h3><blockquote>
+<p>原因是使用#deine的时候只是单纯的替换，它并不会被编译器编译，报错的时候也不会报宏的定义错误，会增加查BUG的难度，不便于程序调试。（相当于#define处于编译的规则外，想办法使它处在规则内）</p>
+</blockquote>
+<h5 id="关键："><a href="#关键：" class="headerlink" title="关键："></a>关键：</h5><h5 id="1-对于单纯常量，最耗以const对象或enums-或者enums代替-defines"><a href="#1-对于单纯常量，最耗以const对象或enums-或者enums代替-defines" class="headerlink" title="1.对于单纯常量，最耗以const对象或enums 或者enums代替#defines"></a>1.对于单纯常量，最耗以const对象或enums 或者enums代替#defines</h5><h5 id="2-对于形似函数的宏（macros-，最好改用inline函数代替"><a href="#2-对于形似函数的宏（macros-，最好改用inline函数代替" class="headerlink" title="2.对于形似函数的宏（macros)，最好改用inline函数代替"></a>2.对于形似函数的宏（macros)，最好改用inline函数代替</h5><h5 id="例如："><a href="#例如：" class="headerlink" title="例如："></a>例如：</h5><h5 id="1-将-defines-常量替换为const"><a href="#1-将-defines-常量替换为const" class="headerlink" title="1.将#defines 常量替换为const"></a>1.将#defines 常量替换为const</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define ASPECT_RATTO 1.653     -------&gt;    const double AspectRotio = 1.653</span><br></pre></td></tr></table></figure>
+<h5 id="2-将-defines-常量替换为inlines函数"><a href="#2-将-defines-常量替换为inlines函数" class="headerlink" title="2.将#defines 常量替换为inlines函数"></a>2.将#defines 常量替换为inlines函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#define CALL_WITH_MAX(a,b) f((a) &gt; (b) ?(a)：(b))</span><br><span class="line">--------&gt;</span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">inline void callWithMax(const T&amp; a, const T&amp; b)    //直接调用函数，遵守作用域和访问规则</span><br><span class="line">&#123;</span><br><span class="line">    f(a &gt; b ？ a ： b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="条款3：尽可能的使用const"><a href="#条款3：尽可能的使用const" class="headerlink" title="条款3：尽可能的使用const"></a>条款3：尽可能的使用const</h3><blockquote>
+<p>只要当某值不变时你就应该告诉编译器，因为告诉了它将会获得它在编译上的帮助</p>
+</blockquote>
+<h4 id="关键：-1"><a href="#关键：-1" class="headerlink" title="关键："></a>关键：</h4><h5 id="1-关键字const出现在星号左边，表示被指物是常量，在星号右边，表示指针自身是常量"><a href="#1-关键字const出现在星号左边，表示被指物是常量，在星号右边，表示指针自身是常量" class="headerlink" title="1.关键字const出现在星号左边，表示被指物是常量，在星号右边，表示指针自身是常量"></a>1.关键字const出现在星号左边，表示被指物是常量，在星号右边，表示指针自身是常量</h5><h5 id="2-将不需要修改的引用形参定义为const"><a href="#2-将不需要修改的引用形参定义为const" class="headerlink" title="2.将不需要修改的引用形参定义为const"></a>2.将不需要修改的引用形参定义为const</h5><h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><h5 id="const写在类型之前之后都是一样的意思"><a href="#const写在类型之前之后都是一样的意思" class="headerlink" title="const写在类型之前之后都是一样的意思"></a>const写在类型之前之后都是一样的意思</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void f1(const Widget* pw);</span><br><span class="line">void f2(Widget const* pw);   //都是指向一个不变的对象</span><br></pre></td></tr></table></figure>
+<h5 id="如果想要使迭代器所指的对象不被改变，则将迭代器写为const-iterator"><a href="#如果想要使迭代器所指的对象不被改变，则将迭代器写为const-iterator" class="headerlink" title="如果想要使迭代器所指的对象不被改变，则将迭代器写为const_iterator"></a>如果想要使迭代器所指的对象不被改变，则将迭代器写为const_iterator</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;::const_iterator iter     //  *iter = 10; error   // iter ++; ok</span><br></pre></td></tr></table></figure>
+<h3 id="条款04：确定对象被使用前已先被初始化"><a href="#条款04：确定对象被使用前已先被初始化" class="headerlink" title="条款04：确定对象被使用前已先被初始化"></a>条款04：确定对象被使用前已先被初始化</h3><blockquote>
+<p>在对象被使用前将其初始化会减少一定的错误情况，和增加一些效率</p>
+</blockquote>
+<h4 id="关键"><a href="#关键" class="headerlink" title="关键"></a>关键</h4><h5 id="1-为内置型对象进行手动初始化，即定义时进行初始化"><a href="#1-为内置型对象进行手动初始化，即定义时进行初始化" class="headerlink" title="1.为内置型对象进行手动初始化，即定义时进行初始化"></a>1.为内置型对象进行手动初始化，即定义时进行初始化</h5><h5 id="2-使用初始化列表对成员变量在构造函数中进行初始化"><a href="#2-使用初始化列表对成员变量在构造函数中进行初始化" class="headerlink" title="2.使用初始化列表对成员变量在构造函数中进行初始化"></a>2.使用初始化列表对成员变量在构造函数中进行初始化</h5><h5 id="3-因为在不同的编译单元，不知道对象的初始化次序，所以使用本地静态对象替换全局静态对象"><a href="#3-因为在不同的编译单元，不知道对象的初始化次序，所以使用本地静态对象替换全局静态对象" class="headerlink" title="3.因为在不同的编译单元，不知道对象的初始化次序，所以使用本地静态对象替换全局静态对象"></a>3.因为在不同的编译单元，不知道对象的初始化次序，所以使用本地静态对象替换全局静态对象</h5><h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>1.关于这条条款，我翻了一下UE4的源码，发现UE4几乎不会在定义时进行初始化，后面查阅了一下原因，可能是由于这样做会从一定程度上破坏类的抽象性，而且会增加代码编译的时间，所以可能UE4官方就没有这么做。</p>
+<p>2.C++对象的成员变量的初始化动作发生在进入构造函数本体之前，所以在构造函数中变量的定义并不是初始化，而是赋值，成员变量在这之前就已经初始化完成了。</p>
+<p>3.如果成员变量是const或references,那他们就一定需要在定义时进行初始化，不能被赋值。</p>
+<p>4初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class foo</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">foo(string s, int i):name(s), id(i)&#123;&#125; ; // 初始化列表</span><br><span class="line">private:</span><br><span class="line">string name ;int id ;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于内置类型，初始化表和在构造函数类初始化差别不大，但是对于类或者struct类型来说，最好使用初始化列表，因为使用初始化列表就不会调用默认构造函数，是较为高效的。所以没有默认构造函数的类类型就可以使用初始化表进行初始化。</p>
+</blockquote>
+<h3 id="条款05：了解C-默默编写并调用了哪些函数"><a href="#条款05：了解C-默默编写并调用了哪些函数" class="headerlink" title="条款05：了解C++默默编写并调用了哪些函数"></a>条款05：了解C++默默编写并调用了哪些函数</h3><h4 id="了解："><a href="#了解：" class="headerlink" title="了解："></a>了解：</h4><h5 id="当你创建一个类的时候，编译器会自动帮你声明一个复制构造函数，一个赋值运算符，一个析构函数，和一个默认构造函数，这些函数都是public和inline的。"><a href="#当你创建一个类的时候，编译器会自动帮你声明一个复制构造函数，一个赋值运算符，一个析构函数，和一个默认构造函数，这些函数都是public和inline的。" class="headerlink" title="当你创建一个类的时候，编译器会自动帮你声明一个复制构造函数，一个赋值运算符，一个析构函数，和一个默认构造函数，这些函数都是public和inline的。"></a>当你创建一个类的时候，编译器会自动帮你声明一个复制构造函数，一个赋值运算符，一个析构函数，和一个默认构造函数，这些函数都是public和inline的。</h5><h4 id="相关："><a href="#相关：" class="headerlink" title="相关："></a>相关：</h4><p>当你声明了一个构造函数或者其他函数时，编译器就不会再为它创建默认构造函数了。</p>
+<h3 id="条款06：若不想使用编译器自动生成的函数，那就该明确拒绝"><a href="#条款06：若不想使用编译器自动生成的函数，那就该明确拒绝" class="headerlink" title="条款06：若不想使用编译器自动生成的函数，那就该明确拒绝"></a>条款06：若不想使用编译器自动生成的函数，那就该明确拒绝</h3><h4 id="关键：-2"><a href="#关键：-2" class="headerlink" title="关键："></a>关键：</h4><h5 id="当你不想一个类被拷贝或者赋值时，你可以声明一个基类，然后将它的复制构造函数和赋值运算符声明为private-这样继承这个类之后派生类就不会玩被拷贝或者赋值了。"><a href="#当你不想一个类被拷贝或者赋值时，你可以声明一个基类，然后将它的复制构造函数和赋值运算符声明为private-这样继承这个类之后派生类就不会玩被拷贝或者赋值了。" class="headerlink" title="当你不想一个类被拷贝或者赋值时，你可以声明一个基类，然后将它的复制构造函数和赋值运算符声明为private,这样继承这个类之后派生类就不会玩被拷贝或者赋值了。"></a>当你不想一个类被拷贝或者赋值时，你可以声明一个基类，然后将它的复制构造函数和赋值运算符声明为private,这样继承这个类之后派生类就不会玩被拷贝或者赋值了。</h5><h5 id="这个基类："><a href="#这个基类：" class="headerlink" title="这个基类："></a>这个基类：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Uncopyabel&#123;</span><br><span class="line">    protected:</span><br><span class="line">    	Uncopyable()&#123;&#125;</span><br><span class="line">    	~uncopyable()&#123;&#125;</span><br><span class="line">    private:</span><br><span class="line">    	Uncopyable(const Uncopyables&amp;);  // 不写函数参数也行</span><br><span class="line">    	Uncopyable&amp; operator=(const Uncopyable&amp;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="条款07：具有多态性质的基类应该为析构函数添加virtual"><a href="#条款07：具有多态性质的基类应该为析构函数添加virtual" class="headerlink" title="条款07：具有多态性质的基类应该为析构函数添加virtual"></a>条款07：具有多态性质的基类应该为析构函数添加virtual</h3><blockquote>
+<p>因为当删除多态的基类对象指针时，如果不为虚构函数添加virtual就不能够销毁其子类，只销毁了父类对象，会造成资源泄露</p>
+</blockquote>
+<h4 id="关键：-3"><a href="#关键：-3" class="headerlink" title="关键："></a>关键：</h4><h5 id="1-具有多态性质的基类应该声明一个virtual虚构函数，如果类带有任何virtual函数，它就应该拥有一个virtual析构函数"><a href="#1-具有多态性质的基类应该声明一个virtual虚构函数，如果类带有任何virtual函数，它就应该拥有一个virtual析构函数" class="headerlink" title="1.具有多态性质的基类应该声明一个virtual虚构函数，如果类带有任何virtual函数，它就应该拥有一个virtual析构函数"></a>1.具有多态性质的基类应该声明一个virtual虚构函数，如果类带有任何virtual函数，它就应该拥有一个virtual析构函数</h5><h5 id="2-如果类不具有多态性质就不应该声明virtual析构函数"><a href="#2-如果类不具有多态性质就不应该声明virtual析构函数" class="headerlink" title="2.如果类不具有多态性质就不应该声明virtual析构函数"></a>2.如果类不具有多态性质就不应该声明virtual析构函数</h5><h4 id="相关"><a href="#相关" class="headerlink" title="相关:"></a>相关:</h4><h5 id="1-决定对象被哪一个虚函数调用的信息被一个vptr-函数地址数组指针-指出，它指向一个由函数指针构成的数组，被称为虚函数表，每一个虚函数都有这个虚函数表，当对象调用某虚函数时，编译器会在虚函数表中为该对象选取应该被调用的虚函数。"><a href="#1-决定对象被哪一个虚函数调用的信息被一个vptr-函数地址数组指针-指出，它指向一个由函数指针构成的数组，被称为虚函数表，每一个虚函数都有这个虚函数表，当对象调用某虚函数时，编译器会在虚函数表中为该对象选取应该被调用的虚函数。" class="headerlink" title="1.决定对象被哪一个虚函数调用的信息被一个vptr(函数地址数组指针)指出，它指向一个由函数指针构成的数组，被称为虚函数表，每一个虚函数都有这个虚函数表，当对象调用某虚函数时，编译器会在虚函数表中为该对象选取应该被调用的虚函数。"></a>1.决定对象被哪一个虚函数调用的信息被一个vptr(函数地址数组指针)指出，它指向一个由函数指针构成的数组，被称为虚函数表，每一个虚函数都有这个虚函数表，当对象调用某虚函数时，编译器会在虚函数表中为该对象选取应该被调用的虚函数。</h5><h5 id="2-虚函数的调用顺序：先调用最深层的派生类，最后调用父类和基类。"><a href="#2-虚函数的调用顺序：先调用最深层的派生类，最后调用父类和基类。" class="headerlink" title="2.虚函数的调用顺序：先调用最深层的派生类，最后调用父类和基类。"></a>2.虚函数的调用顺序：先调用最深层的派生类，最后调用父类和基类。</h5><h3 id="条款8-别让异常逃离析构函数"><a href="#条款8-别让异常逃离析构函数" class="headerlink" title="条款8:别让异常逃离析构函数"></a>条款8:别让异常逃离析构函数</h3><blockquote>
+<p>当在使用析构函数去做一些处理的时候，不要忘记对异常进行处理</p>
+</blockquote>
+<h4 id="关键：-4"><a href="#关键：-4" class="headerlink" title="关键："></a>关键：</h4><h5 id="1-析构函数绝对不要吐出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞掉它们（不传播）或结束程序。"><a href="#1-析构函数绝对不要吐出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞掉它们（不传播）或结束程序。" class="headerlink" title="1.析构函数绝对不要吐出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞掉它们（不传播）或结束程序。"></a>1.析构函数绝对不要吐出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞掉它们（不传播）或结束程序。</h5><h5 id="2-如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。"><a href="#2-如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。" class="headerlink" title="2.如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。"></a>2.如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。</h5><h4 id="异常处理实例："><a href="#异常处理实例：" class="headerlink" title="异常处理实例："></a>异常处理实例：</h4><h5 id="1-有异常就结束程序"><a href="#1-有异常就结束程序" class="headerlink" title="1.有异常就结束程序"></a>1.有异常就结束程序</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DBConn::~DBConn() </span><br><span class="line">&#123; </span><br><span class="line">    try &#123; db.close(); &#125; </span><br><span class="line">    catch (...) </span><br><span class="line">    &#123; </span><br><span class="line">        std::abort();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-吞下异常，并记录"><a href="#2-吞下异常，并记录" class="headerlink" title="2.吞下异常，并记录"></a>2.吞下异常，并记录</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DBConn::~DBConn() </span><br><span class="line">&#123; </span><br><span class="line">    try &#123; db.close(); &#125; </span><br><span class="line">    catch (...) </span><br><span class="line">    &#123; </span><br><span class="line">        //制作运转记录，记下对close的调用失败</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-将异常检测作为双保险，对用户没有调用的函数，在析构函数中进行调用"><a href="#3-将异常检测作为双保险，对用户没有调用的函数，在析构函数中进行调用" class="headerlink" title="3.将异常检测作为双保险，对用户没有调用的函数，在析构函数中进行调用"></a>3.将异常检测作为双保险，对用户没有调用的函数，在析构函数中进行调用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class DBConn</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ~DBConn()</span><br><span class="line">    &#123;</span><br><span class="line">        if (!closed)</span><br><span class="line">        &#123;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                db.close();  //如果用户没有调用将会在析构函数中调用</span><br><span class="line">            &#125;</span><br><span class="line">            catch (...)</span><br><span class="line">            &#123;</span><br><span class="line">                //制作运转记录，记下对close的调用失败</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    void close()            </span><br><span class="line">    &#123;  </span><br><span class="line">        db.close();</span><br><span class="line">        closed = true; </span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    DBConnection db;</span><br><span class="line">    bool closed;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="条款09：绝不在构造和析构过程中调用virtual函数"><a href="#条款09：绝不在构造和析构过程中调用virtual函数" class="headerlink" title="条款09：绝不在构造和析构过程中调用virtual函数"></a>条款09：绝不在构造和析构过程中调用virtual函数</h3><h4 id="关键-1"><a href="#关键-1" class="headerlink" title="关键"></a>关键</h4><h5 id="在构造和析构期间不要调用virtual函数，因为这类调用从不下降至派生类"><a href="#在构造和析构期间不要调用virtual函数，因为这类调用从不下降至派生类" class="headerlink" title="在构造和析构期间不要调用virtual函数，因为这类调用从不下降至派生类"></a>在构造和析构期间不要调用virtual函数，因为这类调用从不下降至派生类</h5><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>1.构造函数的执行顺序：先执行基类的构造函数后执行派生类构造函数</p>
+<p>2.因为在基类构造期间，virtual不是virtual，它只会调用基类的的virtual函数，而不会调用派生类的virtual函数</p>
+<p>3.而且在执行基类的构造函数时，派生类构造函数还没有被执行，有些变量还未被初始化，所以不允许C++执行派生类中的virtual函数</p>
+<h4 id="条款10：令operator-返回一个reference-to-this-可以实现连锁赋值"><a href="#条款10：令operator-返回一个reference-to-this-可以实现连锁赋值" class="headerlink" title="条款10：令operator=返回一个reference to *this(可以实现连锁赋值)"></a>条款10：令operator=返回一个reference to *this(可以实现连锁赋值)</h4><h3 id="条款11：在operator-中处理“自我赋值”"><a href="#条款11：在operator-中处理“自我赋值”" class="headerlink" title="条款11：在operator=中处理“自我赋值”"></a>条款11：在operator=中处理“自我赋值”</h3><h4 id="关键-2"><a href="#关键-2" class="headerlink" title="关键"></a>关键</h4><h5 id="1-确保当对象自我赋值operator-有良好行为。"><a href="#1-确保当对象自我赋值operator-有良好行为。" class="headerlink" title="1.确保当对象自我赋值operator=有良好行为。"></a>1.确保当对象自我赋值operator=有良好行为。</h5><h5 id="2-确定任何函数如果操作多个对象时，而其中多个对象时同一对象时，其行为仍然正确"><a href="#2-确定任何函数如果操作多个对象时，而其中多个对象时同一对象时，其行为仍然正确" class="headerlink" title="2.确定任何函数如果操作多个对象时，而其中多个对象时同一对象时，其行为仍然正确"></a>2.确定任何函数如果操作多个对象时，而其中多个对象时同一对象时，其行为仍然正确</h5><h4 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h4><p>在赋值是会经常遇到“自我赋值”的情况，将对象赋值给自己，这样很容易使得自己持有一个指针指向一个已经被删除的对象，这样是十分不安全的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 当i ， j 值相同时                   // px 和 py指向同一地址</span><br><span class="line">a[i] = a[j];   // 自我赋值              *px = *py;  // 自我赋值</span><br></pre></td></tr></table></figure>
+<h4 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h4><h5 id="常见“证同测试”："><a href="#常见“证同测试”：" class="headerlink" title="常见“证同测试”："></a>常见“证同测试”：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Widget&amp; Widget::operator(const Widget&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    if(this = &amp;rhs) return *this; //如果是自我赋值，就不做任何事</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>除此之外还有“异常处理”，copy and swap技术等不同的处理</p>
+</blockquote>
+<h3 id="条款12：复制对象时勿忘其每一个成分"><a href="#条款12：复制对象时勿忘其每一个成分" class="headerlink" title="条款12：复制对象时勿忘其每一个成分"></a>条款12：复制对象时勿忘其每一个成分</h3><h4 id="关键-3"><a href="#关键-3" class="headerlink" title="关键"></a>关键</h4><ol>
+<li><h5 id="复制函数应该确保复制所有local变量"><a href="#复制函数应该确保复制所有local变量" class="headerlink" title="复制函数应该确保复制所有local变量"></a>复制函数应该确保复制所有local变量</h5></li>
+<li><h5 id="不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数，并由两个coping函数共同调用。"><a href="#不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数，并由两个coping函数共同调用。" class="headerlink" title="不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数，并由两个coping函数共同调用。"></a>不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数，并由两个coping函数共同调用。</h5></li>
+</ol>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h4><p>1.当你为class添加一个成员变量，你必须同时修改复制函数</p>
+<p>2.当你为派生类写复制构造函数时，因为父类的成员有些可能是private成员，所以无法直接访问，所有要调用相应的父类函数获取父类成员</p>
+<h3 id="条款13：以对象管理资源"><a href="#条款13：以对象管理资源" class="headerlink" title="条款13：以对象管理资源"></a>条款13：以对象管理资源</h3><blockquote>
+<p>所谓资源就是，一旦用了它，将来必须还给系统</p>
+</blockquote>
+<h4 id="关键-4"><a href="#关键-4" class="headerlink" title="关键"></a>关键</h4><h5 id="1-为了防止资源泄露，应该使用智能指针去管理资源，因为他们会在自动去调用析构函数，释放资源"><a href="#1-为了防止资源泄露，应该使用智能指针去管理资源，因为他们会在自动去调用析构函数，释放资源" class="headerlink" title="1.为了防止资源泄露，应该使用智能指针去管理资源，因为他们会在自动去调用析构函数，释放资源"></a>1.为了防止资源泄露，应该使用智能指针去管理资源，因为他们会在自动去调用析构函数，释放资源</h5><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>1.单纯靠用户去调用delete语句是行不通的，因为这也不一定保证资源被释放。</p>
+<p>2.智能指针管理对象时一旦对象被销毁或者对象离开作用域时，其析构函数会被自动调用，于是资源被释放。</p>
+<p>3.当使用auto_ptr时，如果进行复制和赋值操作，那么被复制物会被置NULL，因为auro_ptr保证资源的唯一拥有权。</p>
+<p>4.智能指针的底层是使用引用计数管理资源，用于追踪有多少对象指向某资源，并在无人指向它时自动删除该资源。不同于垃圾回收，引用计数并不能解决循环引用。</p>
+<h3 id="条款14-在资源管理类中小心Copying行为"><a href="#条款14-在资源管理类中小心Copying行为" class="headerlink" title="条款14:在资源管理类中小心Copying行为"></a>条款14:在资源管理类中小心Copying行为</h3><blockquote>
+<p>应该根据不同的资源行为与需求定义不提供的复制行为</p>
+</blockquote>
+<h4 id="关键-5"><a href="#关键-5" class="headerlink" title="关键"></a>关键</h4><h5 id="1-复制RAii对象必须一并复制它所管理的资源，资源的copying行为决定RAII对象的copying行为。"><a href="#1-复制RAii对象必须一并复制它所管理的资源，资源的copying行为决定RAII对象的copying行为。" class="headerlink" title="1.复制RAii对象必须一并复制它所管理的资源，资源的copying行为决定RAII对象的copying行为。"></a>1.复制RAii对象必须一并复制它所管理的资源，资源的copying行为决定RAII对象的copying行为。</h5><h5 id="2-普通常见的RAII-class-copying行为有：禁止复制，使用引用计数，复制底部资源，转移资源的拥有权"><a href="#2-普通常见的RAII-class-copying行为有：禁止复制，使用引用计数，复制底部资源，转移资源的拥有权" class="headerlink" title="2.普通常见的RAII class copying行为有：禁止复制，使用引用计数，复制底部资源，转移资源的拥有权"></a>2.普通常见的RAII class copying行为有：禁止复制，使用引用计数，复制底部资源，转移资源的拥有权</h5><h4 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h4><h5 id="1-禁止复制"><a href="#1-禁止复制" class="headerlink" title="1.禁止复制"></a>1.禁止复制</h5><p>很多时候RAII不应该被复制。</p>
+<h5 id="2-对底部资源使用引用计数"><a href="#2-对底部资源使用引用计数" class="headerlink" title="2.对底部资源使用引用计数"></a>2.对底部资源使用引用计数</h5><h5 id="3-可以对其进行深拷贝，拥有任意数量的副本"><a href="#3-可以对其进行深拷贝，拥有任意数量的副本" class="headerlink" title="3.可以对其进行深拷贝，拥有任意数量的副本"></a>3.可以对其进行深拷贝，拥有任意数量的副本</h5><h5 id="4-希望只有一个未加工资源（raw-recource-复制时将资源的拥有权转移给目标对象。（auto-ptr就是这样做的）"><a href="#4-希望只有一个未加工资源（raw-recource-复制时将资源的拥有权转移给目标对象。（auto-ptr就是这样做的）" class="headerlink" title="4.希望只有一个未加工资源（raw recource),复制时将资源的拥有权转移给目标对象。（auto_ptr就是这样做的）"></a>4.希望只有一个未加工资源（raw recource),复制时将资源的拥有权转移给目标对象。（auto_ptr就是这样做的）</h5><h3 id="条款15：在资源管理类中提供对原始资源的访问"><a href="#条款15：在资源管理类中提供对原始资源的访问" class="headerlink" title="条款15：在资源管理类中提供对原始资源的访问"></a>条款15：在资源管理类中提供对原始资源的访问</h3><blockquote>
+<p>使用智能指针管理资源虽然挺好，但是有时候会直接访问原始资源（普通指针）的需求，这是后就会产生一些问题</p>
+</blockquote>
+<h4 id="关键-6"><a href="#关键-6" class="headerlink" title="关键"></a>关键</h4><p>1.有时候有访问原始资源的需求，所以应该为其提供取得其所管理资源的方法</p>
+<p>2.对原始资源的访问可能经由显式转换成隐式转换，一般而言显式转换比较安全，当隐式转换对客户比较方便。</p>
+<h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><h5 id="需要进行转换的例子："><a href="#需要进行转换的例子：" class="headerlink" title="需要进行转换的例子："></a>需要进行转换的例子：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::tr1::shared_ptr&lt;Investment&gt; pInv(createInvestment());   </span><br><span class="line"></span><br><span class="line">int daysHeld(const Investment* pi);   </span><br><span class="line">int days = daysHeld(PInv)  //错误的调用</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>编译不通过，是因为deysheld需要的是Investment* 指针，你传递给它的却是个trl::shared_ptr对象</p>
+</blockquote>
+<h5 id="这时候就需要进行转换，一般有显式转换和隐式转换"><a href="#这时候就需要进行转换，一般有显式转换和隐式转换" class="headerlink" title="这时候就需要进行转换，一般有显式转换和隐式转换"></a>这时候就需要进行转换，一般有显式转换和隐式转换</h5><h5 id="显式转换"><a href="#显式转换" class="headerlink" title="显式转换"></a>显式转换</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Font&#123;</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	FontHandle get() const &#123;return f&#125;;</span><br><span class="line">private:</span><br><span class="line">	FontHandle f;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="条款16：成对使用new和delete时要采取相同形式"><a href="#条款16：成对使用new和delete时要采取相同形式" class="headerlink" title="条款16：成对使用new和delete时要采取相同形式"></a>条款16：成对使用new和delete时要采取相同形式</h3><h4 id="关键-7"><a href="#关键-7" class="headerlink" title="关键"></a>关键</h4><h5 id="如果你在new表达式中使用-必须在相应的delete表达式中也使用-如果你在new表达式中不使用-一定不要在相应的delete表达式中使用"><a href="#如果你在new表达式中使用-必须在相应的delete表达式中也使用-如果你在new表达式中不使用-一定不要在相应的delete表达式中使用" class="headerlink" title="如果你在new表达式中使用[],必须在相应的delete表达式中也使用[].如果你在new表达式中不使用[],一定不要在相应的delete表达式中使用[]"></a>如果你在new表达式中使用[],必须在相应的delete表达式中也使用[].如果你在new表达式中不使用[],一定不要在相应的delete表达式中使用[]</h5><h4 id="原因-1"><a href="#原因-1" class="headerlink" title="原因"></a>原因</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete stringPtr1;     //删除一个对象</span><br><span class="line">delete [] stringPtr2;   //删除一个由对象组成的数组</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果不加括号，delete认定指针指向单一对象，加括号之后之后只能认定指针指向一个数组</p>
+</blockquote>
+<h3 id="条款17：以独立语句将newed对象置入智能指针"><a href="#条款17：以独立语句将newed对象置入智能指针" class="headerlink" title="条款17：以独立语句将newed对象置入智能指针"></a>条款17：以独立语句将newed对象置入智能指针</h3><blockquote>
+<p>创建智能指针时应该以单独的语句进行声明，而不是在函数调用是进行声明</p>
+</blockquote>
+<h4 id="关键-8"><a href="#关键-8" class="headerlink" title="关键"></a>关键</h4><h5 id="以独立语句将newed对象存储于智能指针内，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露"><a href="#以独立语句将newed对象存储于智能指针内，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露" class="headerlink" title="以独立语句将newed对象存储于智能指针内，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露"></a>以独立语句将newed对象存储于智能指针内，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露</h5><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>当编译器：执行“”new Widget“” –&gt;调用prioruty–&gt;trl::shared_otr构造函数次序时，如果对priority函数调用异常，则newWidget返回的指针会遗失，因为它尚未被置入shared_ptr内。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">processWidget(std::trl::shared_ptr&lt;Widget&gt;(new Widget), priority());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>因为priority()调用的顺序是不定的</p>
+</blockquote>
+<h4 id="解决：分离语句"><a href="#解决：分离语句" class="headerlink" title="解决：分离语句"></a>解决：分离语句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::trl::shared_ptr&lt;Widget&gt;(new Widget);</span><br><span class="line">processWidget(pw, priority());</span><br></pre></td></tr></table></figure>
+<h2 id="设计与声明"><a href="#设计与声明" class="headerlink" title="设计与声明"></a>设计与声明</h2><h3 id="条款18：让接口容易被正确使用，不易被误用"><a href="#条款18：让接口容易被正确使用，不易被误用" class="headerlink" title="条款18：让接口容易被正确使用，不易被误用"></a>条款18：让接口容易被正确使用，不易被误用</h3><blockquote>
+<p>一个没有考虑全面的接口很容易被用户错误的使用</p>
+</blockquote>
+<h4 id="关键-9"><a href="#关键-9" class="headerlink" title="关键"></a>关键</h4><h5 id="1-你应该在你的所有接口中努力达成容易被正确使用，不容易被误用的目标"><a href="#1-你应该在你的所有接口中努力达成容易被正确使用，不容易被误用的目标" class="headerlink" title="1.你应该在你的所有接口中努力达成容易被正确使用，不容易被误用的目标"></a>1.你应该在你的所有接口中努力达成容易被正确使用，不容易被误用的目标</h5><h5 id="2-促进正确使用：1-保证接口的一致性-2-使得内置的类型一致"><a href="#2-促进正确使用：1-保证接口的一致性-2-使得内置的类型一致" class="headerlink" title="2.促进正确使用：1.保证接口的一致性 2.使得内置的类型一致"></a>2.促进正确使用：1.保证接口的一致性 2.使得内置的类型一致</h5><h5 id="3-阻止误用：1-通过建立新的类型，然后去限制用户对类型上的操作-2-束缚对象值的范围-3-消除客户的资源管理责任"><a href="#3-阻止误用：1-通过建立新的类型，然后去限制用户对类型上的操作-2-束缚对象值的范围-3-消除客户的资源管理责任" class="headerlink" title="3.阻止误用：1.通过建立新的类型，然后去限制用户对类型上的操作 2.束缚对象值的范围 3.消除客户的资源管理责任"></a>3.阻止误用：1.通过建立新的类型，然后去限制用户对类型上的操作 2.束缚对象值的范围 3.消除客户的资源管理责任</h5><h5 id="4-智能指针shared-ptr支持定制删除器，这可以防止DLL问题（不同动态链接库销毁指针问题），可以被用来自动解除互斥锁。"><a href="#4-智能指针shared-ptr支持定制删除器，这可以防止DLL问题（不同动态链接库销毁指针问题），可以被用来自动解除互斥锁。" class="headerlink" title="4.智能指针shared_ptr支持定制删除器，这可以防止DLL问题（不同动态链接库销毁指针问题），可以被用来自动解除互斥锁。"></a>4.智能指针shared_ptr支持定制删除器，这可以防止DLL问题（不同动态链接库销毁指针问题），可以被用来自动解除互斥锁。</h5><h4 id="常见用户错误的使用与预防"><a href="#常见用户错误的使用与预防" class="headerlink" title="常见用户错误的使用与预防"></a>常见用户错误的使用与预防</h4><h5 id="问题：输入数据类型的不正确？"><a href="#问题：输入数据类型的不正确？" class="headerlink" title="问题：输入数据类型的不正确？"></a>问题：输入数据类型的不正确？</h5><h5 id="解决：1-将要输入的类型用struct或者函数进行封装，然后对其调用-2-限制输入的类型"><a href="#解决：1-将要输入的类型用struct或者函数进行封装，然后对其调用-2-限制输入的类型" class="headerlink" title="解决：1.将要输入的类型用struct或者函数进行封装，然后对其调用 2. 限制输入的类型"></a>解决：1.将要输入的类型用struct或者函数进行封装，然后对其调用 2. 限制输入的类型</h5><h5 id="问题：用户没有删除指针或者删除已经删除过得指针？"><a href="#问题：用户没有删除指针或者删除已经删除过得指针？" class="headerlink" title="问题：用户没有删除指针或者删除已经删除过得指针？"></a>问题：用户没有删除指针或者删除已经删除过得指针？</h5><h5 id="解决：使用智能指针对其资源进行管理"><a href="#解决：使用智能指针对其资源进行管理" class="headerlink" title="解决：使用智能指针对其资源进行管理"></a>解决：使用智能指针对其资源进行管理</h5><h5 id="问题：用户忘记使用智能指针？"><a href="#问题：用户忘记使用智能指针？" class="headerlink" title="问题：用户忘记使用智能指针？"></a>问题：用户忘记使用智能指针？</h5><h5 id="解决：接口设计时就先发制人，令函数返回一个指针指针，这样用户就必须使用指针指针了"><a href="#解决：接口设计时就先发制人，令函数返回一个指针指针，这样用户就必须使用指针指针了" class="headerlink" title="解决：接口设计时就先发制人，令函数返回一个指针指针，这样用户就必须使用指针指针了"></a>解决：接口设计时就先发制人，令函数返回一个指针指针，这样用户就必须使用指针指针了</h5><h5 id="问题：用户想要对智能指针下的原始指针进行delete，企图使用错误的资源析构机制？"><a href="#问题：用户想要对智能指针下的原始指针进行delete，企图使用错误的资源析构机制？" class="headerlink" title="问题：用户想要对智能指针下的原始指针进行delete，企图使用错误的资源析构机制？"></a>问题：用户想要对智能指针下的原始指针进行delete，企图使用错误的资源析构机制？</h5><h5 id="解决：在接口设计时，令函数返回一个绑定删除器函数的智能指针，这样用户就只能去销毁智能至指针而不是原始指针了"><a href="#解决：在接口设计时，令函数返回一个绑定删除器函数的智能指针，这样用户就只能去销毁智能至指针而不是原始指针了" class="headerlink" title="解决：在接口设计时，令函数返回一个绑定删除器函数的智能指针，这样用户就只能去销毁智能至指针而不是原始指针了"></a>解决：在接口设计时，令函数返回一个绑定删除器函数的智能指针，这样用户就只能去销毁智能至指针而不是原始指针了</h5><h3 id="条款19：设计class犹如设计type"><a href="#条款19：设计class犹如设计type" class="headerlink" title="条款19：设计class犹如设计type"></a>条款19：设计class犹如设计type</h3><blockquote>
+<p>在设计一个类时应该考虑的问题</p>
+</blockquote>
+<h4 id="关键-10"><a href="#关键-10" class="headerlink" title="关键"></a>关键</h4><p>当你定义了一个新的class，你应该严谨来考虑class的设计，尝试着回答下面几个问题：</p>
+<p><strong>（1）</strong>新type的对象该如何被创建和销毁？</p>
+<p><strong>（2）</strong>对象的初始化和赋值该有什么区别？</p>
+<p><strong>（3）</strong>新type对象如果被“值传递”会发生什么？</p>
+<p><strong>（4）</strong>什么是新type的合法值？</p>
+<p><strong>（5）</strong>你的新type需要配合某个继承体系吗？</p>
+<p><strong>（6）</strong>你的新type需要什么样的转换？你的类对象转换为其他对象或者其他类型对象隐式或显式转换为你的对象。</p>
+<p><strong>（7）</strong>什么样的操作符和函数对此新type是合理的？</p>
+<p><strong>（8）</strong>什么样的标准函数应该驳回？</p>
+<p><strong>（9）</strong>谁该取用新type成员？</p>
+<p><strong>（10）</strong>什么是新type的“未声明接口”？</p>
+<p><strong>（11）</strong>你的新type有多么一般化？你是定义一个class还是一个新的class template？。</p>
+<p><strong>（12）</strong>你真的需要一个新的type吗？</p>
+<blockquote>
+<p>这些问题都是十分细节的，不好回答的，但是这种在类设计前就对类进行全面思考的思维是指的学习的</p>
+</blockquote>
+<h3 id="条款20：宁以pass-by-reference-to-const替换pass-by-value"><a href="#条款20：宁以pass-by-reference-to-const替换pass-by-value" class="headerlink" title="条款20：宁以pass-by-reference-to-const替换pass-by-value"></a>条款20：宁以pass-by-reference-to-const替换pass-by-value</h3><blockquote>
+<p>函数类对象传参时引用传递要比值传递效率高</p>
+</blockquote>
+<h4 id="关键-11"><a href="#关键-11" class="headerlink" title="关键"></a>关键</h4><h5 id="函数参数传递的时候，如果参数是内置类型使用值传递，如果是自定义类型就使用引用传递"><a href="#函数参数传递的时候，如果参数是内置类型使用值传递，如果是自定义类型就使用引用传递" class="headerlink" title="函数参数传递的时候，如果参数是内置类型使用值传递，如果是自定义类型就使用引用传递"></a>函数参数传递的时候，如果参数是内置类型使用值传递，如果是自定义类型就使用引用传递</h5><h4 id="说明-2"><a href="#说明-2" class="headerlink" title="说明"></a>说明</h4><h5 id="1-对于自定义类型而言，引用传递比值传递效率搞。例如有参数是继承的函数中，值传递会调用6次构造函数和6次析构函数，而对于引用传递，没有任何新对象被创建，没有调用任何析构函数和构造函数！从这才知道值传递对于引用传递的效率之差这么大"><a href="#1-对于自定义类型而言，引用传递比值传递效率搞。例如有参数是继承的函数中，值传递会调用6次构造函数和6次析构函数，而对于引用传递，没有任何新对象被创建，没有调用任何析构函数和构造函数！从这才知道值传递对于引用传递的效率之差这么大" class="headerlink" title="1.对于自定义类型而言，引用传递比值传递效率搞。例如有参数是继承的函数中，值传递会调用6次构造函数和6次析构函数，而对于引用传递，没有任何新对象被创建，没有调用任何析构函数和构造函数！从这才知道值传递对于引用传递的效率之差这么大"></a>1.对于自定义类型而言，引用传递比值传递效率搞。例如有参数是继承的函数中，值传递会调用6次构造函数和6次析构函数，而对于引用传递，没有任何新对象被创建，没有调用任何析构函数和构造函数！从这才知道值传递对于引用传递的效率之差这么大</h5><h5 id="2-如果函数中不对参数进行修改，应该定义为const类型"><a href="#2-如果函数中不对参数进行修改，应该定义为const类型" class="headerlink" title="2.如果函数中不对参数进行修改，应该定义为const类型"></a>2.如果函数中不对参数进行修改，应该定义为const类型</h5><h5 id="3-引用传递还会解决函数“切割”问题（如果在值传递一个派生类，那么派生类将会变成基类，而没有多态性质）"><a href="#3-引用传递还会解决函数“切割”问题（如果在值传递一个派生类，那么派生类将会变成基类，而没有多态性质）" class="headerlink" title="3.引用传递还会解决函数“切割”问题（如果在值传递一个派生类，那么派生类将会变成基类，而没有多态性质）"></a>3.引用传递还会解决函数“切割”问题（如果在值传递一个派生类，那么派生类将会变成基类，而没有多态性质）</h5><h4 id="UE4中的使用"><a href="#UE4中的使用" class="headerlink" title="UE4中的使用"></a>UE4中的使用</h4><p> 在UE4的源码中也遵守者这条条款，但却做了一些改变，UE4中基础数据对象使用值传递，继承自UObject的类使用指针传递（实质上是值传递），大概是UE4官方对UObject类做了一些优化吧，F开头和自定义的类都使用引用传递参数。</p>
+<h3 id="条款21：必须返回对象是，别妄想返回其reference"><a href="#条款21：必须返回对象是，别妄想返回其reference" class="headerlink" title="条款21：必须返回对象是，别妄想返回其reference"></a>条款21：必须返回对象是，别妄想返回其reference</h3><blockquote>
+<p>在程序中不能玩盲目的返回引用</p>
+</blockquote>
+<h4 id="关键-12"><a href="#关键-12" class="headerlink" title="关键"></a>关键</h4><p> 不要返回一个指向局部变量的指针或者引用；不能返回一个指向heap_allocated对象的引用；</p>
+<h4 id="原因-2"><a href="#原因-2" class="headerlink" title="原因"></a>原因</h4><p> 1.因为局部变量在函数退出前就被销毁了</p>
+<p> 2.在堆中没有合理的方法让operator* 使用者进行delete调用</p>
+<h3 id="条款22：将成员变量声明为private"><a href="#条款22：将成员变量声明为private" class="headerlink" title="条款22：将成员变量声明为private"></a>条款22：将成员变量声明为private</h3><blockquote>
+<p>在成员变量声明的时候应该考虑变量将会被谁使用</p>
+</blockquote>
+<h4 id="关键-13"><a href="#关键-13" class="headerlink" title="关键"></a>关键</h4><h5 id="1-切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允诺约束条件获得保证，并提供class作者以充分的弹性。"><a href="#1-切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允诺约束条件获得保证，并提供class作者以充分的弹性。" class="headerlink" title="1.切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允诺约束条件获得保证，并提供class作者以充分的弹性。"></a>1.切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允诺约束条件获得保证，并提供class作者以充分的弹性。</h5><h5 id="2-protected并不比public更具封装性。"><a href="#2-protected并不比public更具封装性。" class="headerlink" title="2.protected并不比public更具封装性。"></a>2.protected并不比public更具封装性。</h5><h4 id="原因-3"><a href="#原因-3" class="headerlink" title="原因"></a>原因</h4><h5 id="1-接口一致"><a href="#1-接口一致" class="headerlink" title="1.接口一致"></a>1.接口一致</h5><h5 id="2-精准的访问控制"><a href="#2-精准的访问控制" class="headerlink" title="2.精准的访问控制"></a>2.精准的访问控制</h5><h5 id="3-良好的封装性，可以使得当我们改变这个成员的时候不会影响太多的代码，客户也不会知道类中的变化。"><a href="#3-良好的封装性，可以使得当我们改变这个成员的时候不会影响太多的代码，客户也不会知道类中的变化。" class="headerlink" title="3.良好的封装性，可以使得当我们改变这个成员的时候不会影响太多的代码，客户也不会知道类中的变化。"></a>3.良好的封装性，可以使得当我们改变这个成员的时候不会影响太多的代码，客户也不会知道类中的变化。</h5><h3 id="条款23：宁以non-member、non-friend函数替换member函数"><a href="#条款23：宁以non-member、non-friend函数替换member函数" class="headerlink" title="条款23：宁以non-member、non-friend函数替换member函数"></a>条款23：宁以non-member、non-friend函数替换member函数</h3><blockquote>
+<p>当要调用一个类的多个函数时，应该声明为非成员函数，主要从封装性考虑</p>
+</blockquote>
+<h4 id="关键-14"><a href="#关键-14" class="headerlink" title="关键"></a>关键</h4><h5 id="宁可拿non-member-non-friend函数替换member函数-这样做可以增加封装性-包裹弹性和机能扩充性。"><a href="#宁可拿non-member-non-friend函数替换member函数-这样做可以增加封装性-包裹弹性和机能扩充性。" class="headerlink" title="宁可拿non-member non-friend函数替换member函数.这样做可以增加封装性,包裹弹性和机能扩充性。"></a>宁可拿non-member non-friend函数替换member函数.这样做可以增加封装性,包裹弹性和机能扩充性。</h5><h4 id="解释-1"><a href="#解释-1" class="headerlink" title="解释"></a>解释</h4><h5 id="如果只是单纯的调用函数，那么就应该使用非成员函数去调用成员函数7，因为成员函数能够访问类中的私有成员，封装性比非成员函数要低"><a href="#如果只是单纯的调用函数，那么就应该使用非成员函数去调用成员函数7，因为成员函数能够访问类中的私有成员，封装性比非成员函数要低" class="headerlink" title="如果只是单纯的调用函数，那么就应该使用非成员函数去调用成员函数7，因为成员函数能够访问类中的私有成员，封装性比非成员函数要低"></a>如果只是单纯的调用函数，那么就应该使用非成员函数去调用成员函数7，因为成员函数能够访问类中的私有成员，封装性比非成员函数要低</h5><h3 id="条款25：考虑写出一个不抛出异常的swap函数"><a href="#条款25：考虑写出一个不抛出异常的swap函数" class="headerlink" title="条款25：考虑写出一个不抛出异常的swap函数"></a>条款25：考虑写出一个不抛出异常的swap函数</h3><blockquote>
+<p>swap的使用很多时候是效率不高的，这个条款可以使得swap函数变得效率高</p>
+</blockquote>
+<h4 id="关键-15"><a href="#关键-15" class="headerlink" title="关键"></a>关键</h4><h5 id="当std-swap对你的类型效率不高时，提供一个swap成员函数，并确定这个函数不抛出异常"><a href="#当std-swap对你的类型效率不高时，提供一个swap成员函数，并确定这个函数不抛出异常" class="headerlink" title="当std::swap对你的类型效率不高时，提供一个swap成员函数，并确定这个函数不抛出异常"></a>当std::swap对你的类型效率不高时，提供一个swap成员函数，并确定这个函数不抛出异常</h5><h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><h5 id="1-常规的置换将会创建3个原来对象和三个指针对象，效率低，效率很低，实际上，我们只用置换指针的指向就行了。"><a href="#1-常规的置换将会创建3个原来对象和三个指针对象，效率低，效率很低，实际上，我们只用置换指针的指向就行了。" class="headerlink" title="1.常规的置换将会创建3个原来对象和三个指针对象，效率低，效率很低，实际上，我们只用置换指针的指向就行了。"></a>1.常规的置换将会创建3个原来对象和三个指针对象，效率低，效率很低，实际上，我们只用置换指针的指向就行了。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">namespace std </span><br><span class="line">&#123;</span><br><span class="line">    template&lt;&gt;</span><br><span class="line">    void swap&lt;Widget&gt;(Widget&amp; a, Widget&amp; b)</span><br><span class="line">    &#123;</span><br><span class="line">        swap(a.pImpl, b.pImpl);            //交换指针值</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-我们不能修改std命名空间的任何东西，所以我们要声明一个非成员函数去调用成员函数"><a href="#2-我们不能修改std命名空间的任何东西，所以我们要声明一个非成员函数去调用成员函数" class="headerlink" title="2.我们不能修改std命名空间的任何东西，所以我们要声明一个非成员函数去调用成员函数"></a>2.我们不能修改std命名空间的任何东西，所以我们要声明一个非成员函数去调用成员函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Widget</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void swap(Widget&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        using std::swap;                // 调用成员函数</span><br><span class="line">        swap(pImpl, other.pImpl);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这就实现了对swap交换指针的优化</p>
+</blockquote>
+<h3 id="条款31：将文件的编译依存关系降至最低"><a href="#条款31：将文件的编译依存关系降至最低" class="headerlink" title="条款31：将文件的编译依存关系降至最低"></a>条款31：将文件的编译依存关系降至最低</h3><blockquote>
+<p>单例对某个类进行修改时，如果不将编译的依存关系降至最低，那将会基本重写编译和连接，将会大大影响开发效率</p>
+</blockquote>
+<h4 id="关键-16"><a href="#关键-16" class="headerlink" title="关键"></a>关键</h4><h5 id="1-为声明和定义提供不同的文件"><a href="#1-为声明和定义提供不同的文件" class="headerlink" title="1.为声明和定义提供不同的文件"></a>1.为声明和定义提供不同的文件</h5><h5 id="2-依赖于声明式不依赖与定义式"><a href="#2-依赖于声明式不依赖与定义式" class="headerlink" title="2.依赖于声明式不依赖与定义式"></a>2.依赖于声明式不依赖与定义式</h5><h4 id="说明-3"><a href="#说明-3" class="headerlink" title="说明"></a>说明</h4><p>在UE4中我们平时写代码就已经习惯性将声明和定义分开了，所以可以不用注意这部分，所以需要注意的是：<strong>要尽量使用”Class外部声明”代替”#include包含”</strong>，这样做的优点是可以不用去编译多余文件</p>
+<p>class外部声明使用：</p>
+<p>1.在AB类之间相互引用时使用class外部声明</p>
+<p>2.在类中只需要其他类的引用而不需要其内部的定义，变量，方法时使用</p>
+<p>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;StrategyGameMode.generated.h&quot;</span><br><span class="line"></span><br><span class="line">class AController;</span><br><span class="line"></span><br><span class="line">UCLASS(config=Game)</span><br><span class="line">class AStrategyGameMode : public AGameModeBase</span><br><span class="line">&#123;</span><br><span class="line">	GENERATED_UCLASS_BODY()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="UE4中特定的条款"><a href="#UE4中特定的条款" class="headerlink" title="UE4中特定的条款"></a>UE4中特定的条款</h2><h5 id="1-自己创建的非继承自UObject的类尽量使用智能指针TSharedPtr-TsharedRef来进行管理"><a href="#1-自己创建的非继承自UObject的类尽量使用智能指针TSharedPtr-TsharedRef来进行管理" class="headerlink" title="1.自己创建的非继承自UObject的类尽量使用智能指针TSharedPtr/TsharedRef来进行管理"></a>1.自己创建的非继承自UObject的类尽量使用智能指针TSharedPtr/TsharedRef来进行管理</h5><blockquote>
+<p>如果你的純C++類是使用new來分配內存，而且你直接傳遞類的指針，那麼你需要意识到：除非你手动删除，否则这一块内存将永远不会被释放，如果忘记了，会造成内存泄露，如果使用智能指针会使用引用技术来完成自动的内存释放。</p>
+</blockquote>
+<h5 id="关键：-5"><a href="#关键：-5" class="headerlink" title="关键："></a>关键：</h5><h5 id="注意：TSharedPtr与UObject是互不兼容的，UObject会自动加入GC标记"><a href="#注意：TSharedPtr与UObject是互不兼容的，UObject会自动加入GC标记" class="headerlink" title="注意：TSharedPtr与UObject是互不兼容的，UObject会自动加入GC标记"></a>注意：TSharedPtr与UObject是互不兼容的，UObject会自动加入GC标记</h5><h5 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h5><h5 id="1-自己定义的Struct结构体"><a href="#1-自己定义的Struct结构体" class="headerlink" title="1.自己定义的Struct结构体"></a>1.自己定义的Struct结构体</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TSharedPtr&lt;FActionButtonInfo&gt; GetActionButton(int32 Index) const;</span><br></pre></td></tr></table></figure>
+<h5 id="2-自己定义的类"><a href="#2-自己定义的类" class="headerlink" title="2.自己定义的类"></a>2.自己定义的类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TSharedPtr&lt;class SStrategySlateHUDWidget&gt; GetHUDWidget() const;</span><br></pre></td></tr></table></figure>
+<h5 id="3-结合使用"><a href="#3-结合使用" class="headerlink" title="3.结合使用"></a>3.结合使用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TSharedPtr&lt;TArray&lt;class FStrategyMenuItem&gt;&gt; MainMenu;      //一组自定义类</span><br><span class="line">TArray&lt;TSharedPtr&lt;TArray&lt;class FStrategyMenuItem&gt;&gt;&gt; MenuHistory;   //自定义类数组引用的数组</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Effective/" rel="tag"># Effective</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/程序优化/" rel="tag"># 程序优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/23/UE4反射系统与序列化整理/" rel="next" title="UE4反射系统与序列化整理">
+                <i class="fa fa-chevron-left"></i> UE4反射系统与序列化整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/24/大二暑假参赛or实习记录/" rel="prev" title="大二暑假参赛or实习记录">
+                大二暑假参赛or实习记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#条款2：尽量用const-enum-inline替换-define"><span class="nav-number">1.</span> <span class="nav-text">条款2：尽量用const,enum,inline替换 #define</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关键："><span class="nav-number">1.0.1.</span> <span class="nav-text">关键：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-对于单纯常量，最耗以const对象或enums-或者enums代替-defines"><span class="nav-number">1.0.2.</span> <span class="nav-text">1.对于单纯常量，最耗以const对象或enums 或者enums代替#defines</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-对于形似函数的宏（macros-，最好改用inline函数代替"><span class="nav-number">1.0.3.</span> <span class="nav-text">2.对于形似函数的宏（macros)，最好改用inline函数代替</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#例如："><span class="nav-number">1.0.4.</span> <span class="nav-text">例如：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-将-defines-常量替换为const"><span class="nav-number">1.0.5.</span> <span class="nav-text">1.将#defines 常量替换为const</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-将-defines-常量替换为inlines函数"><span class="nav-number">1.0.6.</span> <span class="nav-text">2.将#defines 常量替换为inlines函数</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#条款3：尽可能的使用const"><span class="nav-number">2.</span> <span class="nav-text">条款3：尽可能的使用const</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键：-1"><span class="nav-number">2.1.</span> <span class="nav-text">关键：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-关键字const出现在星号左边，表示被指物是常量，在星号右边，表示指针自身是常量"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.关键字const出现在星号左边，表示被指物是常量，在星号右边，表示指针自身是常量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-将不需要修改的引用形参定义为const"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.将不需要修改的引用形参定义为const</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意："><span class="nav-number">2.2.</span> <span class="nav-text">注意：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#const写在类型之前之后都是一样的意思"><span class="nav-number">2.2.1.</span> <span class="nav-text">const写在类型之前之后都是一样的意思</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如果想要使迭代器所指的对象不被改变，则将迭代器写为const-iterator"><span class="nav-number">2.2.2.</span> <span class="nav-text">如果想要使迭代器所指的对象不被改变，则将迭代器写为const_iterator</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款04：确定对象被使用前已先被初始化"><span class="nav-number">3.</span> <span class="nav-text">条款04：确定对象被使用前已先被初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键"><span class="nav-number">3.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-为内置型对象进行手动初始化，即定义时进行初始化"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.为内置型对象进行手动初始化，即定义时进行初始化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-使用初始化列表对成员变量在构造函数中进行初始化"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.使用初始化列表对成员变量在构造函数中进行初始化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-因为在不同的编译单元，不知道对象的初始化次序，所以使用本地静态对象替换全局静态对象"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.因为在不同的编译单元，不知道对象的初始化次序，所以使用本地静态对象替换全局静态对象</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">3.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款05：了解C-默默编写并调用了哪些函数"><span class="nav-number">4.</span> <span class="nav-text">条款05：了解C++默默编写并调用了哪些函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#了解："><span class="nav-number">4.1.</span> <span class="nav-text">了解：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#当你创建一个类的时候，编译器会自动帮你声明一个复制构造函数，一个赋值运算符，一个析构函数，和一个默认构造函数，这些函数都是public和inline的。"><span class="nav-number">4.1.1.</span> <span class="nav-text">当你创建一个类的时候，编译器会自动帮你声明一个复制构造函数，一个赋值运算符，一个析构函数，和一个默认构造函数，这些函数都是public和inline的。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关："><span class="nav-number">4.2.</span> <span class="nav-text">相关：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款06：若不想使用编译器自动生成的函数，那就该明确拒绝"><span class="nav-number">5.</span> <span class="nav-text">条款06：若不想使用编译器自动生成的函数，那就该明确拒绝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键：-2"><span class="nav-number">5.1.</span> <span class="nav-text">关键：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#当你不想一个类被拷贝或者赋值时，你可以声明一个基类，然后将它的复制构造函数和赋值运算符声明为private-这样继承这个类之后派生类就不会玩被拷贝或者赋值了。"><span class="nav-number">5.1.1.</span> <span class="nav-text">当你不想一个类被拷贝或者赋值时，你可以声明一个基类，然后将它的复制构造函数和赋值运算符声明为private,这样继承这个类之后派生类就不会玩被拷贝或者赋值了。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#这个基类："><span class="nav-number">5.1.2.</span> <span class="nav-text">这个基类：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款07：具有多态性质的基类应该为析构函数添加virtual"><span class="nav-number">6.</span> <span class="nav-text">条款07：具有多态性质的基类应该为析构函数添加virtual</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键：-3"><span class="nav-number">6.1.</span> <span class="nav-text">关键：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-具有多态性质的基类应该声明一个virtual虚构函数，如果类带有任何virtual函数，它就应该拥有一个virtual析构函数"><span class="nav-number">6.1.1.</span> <span class="nav-text">1.具有多态性质的基类应该声明一个virtual虚构函数，如果类带有任何virtual函数，它就应该拥有一个virtual析构函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-如果类不具有多态性质就不应该声明virtual析构函数"><span class="nav-number">6.1.2.</span> <span class="nav-text">2.如果类不具有多态性质就不应该声明virtual析构函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关"><span class="nav-number">6.2.</span> <span class="nav-text">相关:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-决定对象被哪一个虚函数调用的信息被一个vptr-函数地址数组指针-指出，它指向一个由函数指针构成的数组，被称为虚函数表，每一个虚函数都有这个虚函数表，当对象调用某虚函数时，编译器会在虚函数表中为该对象选取应该被调用的虚函数。"><span class="nav-number">6.2.1.</span> <span class="nav-text">1.决定对象被哪一个虚函数调用的信息被一个vptr(函数地址数组指针)指出，它指向一个由函数指针构成的数组，被称为虚函数表，每一个虚函数都有这个虚函数表，当对象调用某虚函数时，编译器会在虚函数表中为该对象选取应该被调用的虚函数。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-虚函数的调用顺序：先调用最深层的派生类，最后调用父类和基类。"><span class="nav-number">6.2.2.</span> <span class="nav-text">2.虚函数的调用顺序：先调用最深层的派生类，最后调用父类和基类。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款8-别让异常逃离析构函数"><span class="nav-number">7.</span> <span class="nav-text">条款8:别让异常逃离析构函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键：-4"><span class="nav-number">7.1.</span> <span class="nav-text">关键：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-析构函数绝对不要吐出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞掉它们（不传播）或结束程序。"><span class="nav-number">7.1.1.</span> <span class="nav-text">1.析构函数绝对不要吐出异常。如果一个被析构函数调用的函数可能抛出异常，析构函数应该捕捉任何异常，然后吞掉它们（不传播）或结束程序。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。"><span class="nav-number">7.1.2.</span> <span class="nav-text">2.如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么class应该提供一个普通函数（而非在析构函数中）执行该操作。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常处理实例："><span class="nav-number">7.2.</span> <span class="nav-text">异常处理实例：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-有异常就结束程序"><span class="nav-number">7.2.1.</span> <span class="nav-text">1.有异常就结束程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-吞下异常，并记录"><span class="nav-number">7.2.2.</span> <span class="nav-text">2.吞下异常，并记录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-将异常检测作为双保险，对用户没有调用的函数，在析构函数中进行调用"><span class="nav-number">7.2.3.</span> <span class="nav-text">3.将异常检测作为双保险，对用户没有调用的函数，在析构函数中进行调用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款09：绝不在构造和析构过程中调用virtual函数"><span class="nav-number">8.</span> <span class="nav-text">条款09：绝不在构造和析构过程中调用virtual函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-1"><span class="nav-number">8.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在构造和析构期间不要调用virtual函数，因为这类调用从不下降至派生类"><span class="nav-number">8.1.1.</span> <span class="nav-text">在构造和析构期间不要调用virtual函数，因为这类调用从不下降至派生类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">8.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条款10：令operator-返回一个reference-to-this-可以实现连锁赋值"><span class="nav-number">8.3.</span> <span class="nav-text">条款10：令operator=返回一个reference to *this(可以实现连锁赋值)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款11：在operator-中处理“自我赋值”"><span class="nav-number">9.</span> <span class="nav-text">条款11：在operator=中处理“自我赋值”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-2"><span class="nav-number">9.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-确保当对象自我赋值operator-有良好行为。"><span class="nav-number">9.1.1.</span> <span class="nav-text">1.确保当对象自我赋值operator=有良好行为。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-确定任何函数如果操作多个对象时，而其中多个对象时同一对象时，其行为仍然正确"><span class="nav-number">9.1.2.</span> <span class="nav-text">2.确定任何函数如果操作多个对象时，而其中多个对象时同一对象时，其行为仍然正确</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因"><span class="nav-number">9.2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理"><span class="nav-number">9.3.</span> <span class="nav-text">处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#常见“证同测试”："><span class="nav-number">9.3.1.</span> <span class="nav-text">常见“证同测试”：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款12：复制对象时勿忘其每一个成分"><span class="nav-number">10.</span> <span class="nav-text">条款12：复制对象时勿忘其每一个成分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-3"><span class="nav-number">10.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#复制函数应该确保复制所有local变量"><span class="nav-number">10.1.1.</span> <span class="nav-text">复制函数应该确保复制所有local变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数，并由两个coping函数共同调用。"><span class="nav-number">10.1.2.</span> <span class="nav-text">不要尝试以某个copying函数实现另一个copying函数。应该将共同机能放进第三个函数，并由两个coping函数共同调用。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">10.2.</span> <span class="nav-text">注意:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款13：以对象管理资源"><span class="nav-number">11.</span> <span class="nav-text">条款13：以对象管理资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-4"><span class="nav-number">11.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-为了防止资源泄露，应该使用智能指针去管理资源，因为他们会在自动去调用析构函数，释放资源"><span class="nav-number">11.1.1.</span> <span class="nav-text">1.为了防止资源泄露，应该使用智能指针去管理资源，因为他们会在自动去调用析构函数，释放资源</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">11.2.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款14-在资源管理类中小心Copying行为"><span class="nav-number">12.</span> <span class="nav-text">条款14:在资源管理类中小心Copying行为</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-5"><span class="nav-number">12.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-复制RAii对象必须一并复制它所管理的资源，资源的copying行为决定RAII对象的copying行为。"><span class="nav-number">12.1.1.</span> <span class="nav-text">1.复制RAii对象必须一并复制它所管理的资源，资源的copying行为决定RAII对象的copying行为。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-普通常见的RAII-class-copying行为有：禁止复制，使用引用计数，复制底部资源，转移资源的拥有权"><span class="nav-number">12.1.2.</span> <span class="nav-text">2.普通常见的RAII class copying行为有：禁止复制，使用引用计数，复制底部资源，转移资源的拥有权</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明-1"><span class="nav-number">12.2.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-禁止复制"><span class="nav-number">12.2.1.</span> <span class="nav-text">1.禁止复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-对底部资源使用引用计数"><span class="nav-number">12.2.2.</span> <span class="nav-text">2.对底部资源使用引用计数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-可以对其进行深拷贝，拥有任意数量的副本"><span class="nav-number">12.2.3.</span> <span class="nav-text">3.可以对其进行深拷贝，拥有任意数量的副本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-希望只有一个未加工资源（raw-recource-复制时将资源的拥有权转移给目标对象。（auto-ptr就是这样做的）"><span class="nav-number">12.2.4.</span> <span class="nav-text">4.希望只有一个未加工资源（raw recource),复制时将资源的拥有权转移给目标对象。（auto_ptr就是这样做的）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款15：在资源管理类中提供对原始资源的访问"><span class="nav-number">13.</span> <span class="nav-text">条款15：在资源管理类中提供对原始资源的访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-6"><span class="nav-number">13.1.</span> <span class="nav-text">关键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解释"><span class="nav-number">13.2.</span> <span class="nav-text">解释</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#需要进行转换的例子："><span class="nav-number">13.2.1.</span> <span class="nav-text">需要进行转换的例子：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#这时候就需要进行转换，一般有显式转换和隐式转换"><span class="nav-number">13.2.2.</span> <span class="nav-text">这时候就需要进行转换，一般有显式转换和隐式转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#显式转换"><span class="nav-number">13.2.3.</span> <span class="nav-text">显式转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#隐式转换"><span class="nav-number">13.2.4.</span> <span class="nav-text">隐式转换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款16：成对使用new和delete时要采取相同形式"><span class="nav-number">14.</span> <span class="nav-text">条款16：成对使用new和delete时要采取相同形式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-7"><span class="nav-number">14.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果你在new表达式中使用-必须在相应的delete表达式中也使用-如果你在new表达式中不使用-一定不要在相应的delete表达式中使用"><span class="nav-number">14.1.1.</span> <span class="nav-text">如果你在new表达式中使用[],必须在相应的delete表达式中也使用[].如果你在new表达式中不使用[],一定不要在相应的delete表达式中使用[]</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因-1"><span class="nav-number">14.2.</span> <span class="nav-text">原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款17：以独立语句将newed对象置入智能指针"><span class="nav-number">15.</span> <span class="nav-text">条款17：以独立语句将newed对象置入智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-8"><span class="nav-number">15.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#以独立语句将newed对象存储于智能指针内，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露"><span class="nav-number">15.1.1.</span> <span class="nav-text">以独立语句将newed对象存储于智能指针内，如果不这样做，一旦异常被抛出，有可能导致难以察觉的资源泄露</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">15.2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决：分离语句"><span class="nav-number">15.3.</span> <span class="nav-text">解决：分离语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计与声明"><span class="nav-number"></span> <span class="nav-text">设计与声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#条款18：让接口容易被正确使用，不易被误用"><span class="nav-number">1.</span> <span class="nav-text">条款18：让接口容易被正确使用，不易被误用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-9"><span class="nav-number">1.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-你应该在你的所有接口中努力达成容易被正确使用，不容易被误用的目标"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.你应该在你的所有接口中努力达成容易被正确使用，不容易被误用的目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-促进正确使用：1-保证接口的一致性-2-使得内置的类型一致"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.促进正确使用：1.保证接口的一致性 2.使得内置的类型一致</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-阻止误用：1-通过建立新的类型，然后去限制用户对类型上的操作-2-束缚对象值的范围-3-消除客户的资源管理责任"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.阻止误用：1.通过建立新的类型，然后去限制用户对类型上的操作 2.束缚对象值的范围 3.消除客户的资源管理责任</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-智能指针shared-ptr支持定制删除器，这可以防止DLL问题（不同动态链接库销毁指针问题），可以被用来自动解除互斥锁。"><span class="nav-number">1.1.4.</span> <span class="nav-text">4.智能指针shared_ptr支持定制删除器，这可以防止DLL问题（不同动态链接库销毁指针问题），可以被用来自动解除互斥锁。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见用户错误的使用与预防"><span class="nav-number">1.2.</span> <span class="nav-text">常见用户错误的使用与预防</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#问题：输入数据类型的不正确？"><span class="nav-number">1.2.1.</span> <span class="nav-text">问题：输入数据类型的不正确？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决：1-将要输入的类型用struct或者函数进行封装，然后对其调用-2-限制输入的类型"><span class="nav-number">1.2.2.</span> <span class="nav-text">解决：1.将要输入的类型用struct或者函数进行封装，然后对其调用 2. 限制输入的类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#问题：用户没有删除指针或者删除已经删除过得指针？"><span class="nav-number">1.2.3.</span> <span class="nav-text">问题：用户没有删除指针或者删除已经删除过得指针？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决：使用智能指针对其资源进行管理"><span class="nav-number">1.2.4.</span> <span class="nav-text">解决：使用智能指针对其资源进行管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#问题：用户忘记使用智能指针？"><span class="nav-number">1.2.5.</span> <span class="nav-text">问题：用户忘记使用智能指针？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决：接口设计时就先发制人，令函数返回一个指针指针，这样用户就必须使用指针指针了"><span class="nav-number">1.2.6.</span> <span class="nav-text">解决：接口设计时就先发制人，令函数返回一个指针指针，这样用户就必须使用指针指针了</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#问题：用户想要对智能指针下的原始指针进行delete，企图使用错误的资源析构机制？"><span class="nav-number">1.2.7.</span> <span class="nav-text">问题：用户想要对智能指针下的原始指针进行delete，企图使用错误的资源析构机制？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决：在接口设计时，令函数返回一个绑定删除器函数的智能指针，这样用户就只能去销毁智能至指针而不是原始指针了"><span class="nav-number">1.2.8.</span> <span class="nav-text">解决：在接口设计时，令函数返回一个绑定删除器函数的智能指针，这样用户就只能去销毁智能至指针而不是原始指针了</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款19：设计class犹如设计type"><span class="nav-number">2.</span> <span class="nav-text">条款19：设计class犹如设计type</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-10"><span class="nav-number">2.1.</span> <span class="nav-text">关键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款20：宁以pass-by-reference-to-const替换pass-by-value"><span class="nav-number">3.</span> <span class="nav-text">条款20：宁以pass-by-reference-to-const替换pass-by-value</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-11"><span class="nav-number">3.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#函数参数传递的时候，如果参数是内置类型使用值传递，如果是自定义类型就使用引用传递"><span class="nav-number">3.1.1.</span> <span class="nav-text">函数参数传递的时候，如果参数是内置类型使用值传递，如果是自定义类型就使用引用传递</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明-2"><span class="nav-number">3.2.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-对于自定义类型而言，引用传递比值传递效率搞。例如有参数是继承的函数中，值传递会调用6次构造函数和6次析构函数，而对于引用传递，没有任何新对象被创建，没有调用任何析构函数和构造函数！从这才知道值传递对于引用传递的效率之差这么大"><span class="nav-number">3.2.1.</span> <span class="nav-text">1.对于自定义类型而言，引用传递比值传递效率搞。例如有参数是继承的函数中，值传递会调用6次构造函数和6次析构函数，而对于引用传递，没有任何新对象被创建，没有调用任何析构函数和构造函数！从这才知道值传递对于引用传递的效率之差这么大</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-如果函数中不对参数进行修改，应该定义为const类型"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.如果函数中不对参数进行修改，应该定义为const类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-引用传递还会解决函数“切割”问题（如果在值传递一个派生类，那么派生类将会变成基类，而没有多态性质）"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.引用传递还会解决函数“切割”问题（如果在值传递一个派生类，那么派生类将会变成基类，而没有多态性质）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UE4中的使用"><span class="nav-number">3.3.</span> <span class="nav-text">UE4中的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款21：必须返回对象是，别妄想返回其reference"><span class="nav-number">4.</span> <span class="nav-text">条款21：必须返回对象是，别妄想返回其reference</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-12"><span class="nav-number">4.1.</span> <span class="nav-text">关键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因-2"><span class="nav-number">4.2.</span> <span class="nav-text">原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款22：将成员变量声明为private"><span class="nav-number">5.</span> <span class="nav-text">条款22：将成员变量声明为private</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-13"><span class="nav-number">5.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允诺约束条件获得保证，并提供class作者以充分的弹性。"><span class="nav-number">5.1.1.</span> <span class="nav-text">1.切记将成员变量声明为private。这可赋予客户访问数据的一致性、可细微划分访问控制、允诺约束条件获得保证，并提供class作者以充分的弹性。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-protected并不比public更具封装性。"><span class="nav-number">5.1.2.</span> <span class="nav-text">2.protected并不比public更具封装性。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原因-3"><span class="nav-number">5.2.</span> <span class="nav-text">原因</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-接口一致"><span class="nav-number">5.2.1.</span> <span class="nav-text">1.接口一致</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-精准的访问控制"><span class="nav-number">5.2.2.</span> <span class="nav-text">2.精准的访问控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-良好的封装性，可以使得当我们改变这个成员的时候不会影响太多的代码，客户也不会知道类中的变化。"><span class="nav-number">5.2.3.</span> <span class="nav-text">3.良好的封装性，可以使得当我们改变这个成员的时候不会影响太多的代码，客户也不会知道类中的变化。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款23：宁以non-member、non-friend函数替换member函数"><span class="nav-number">6.</span> <span class="nav-text">条款23：宁以non-member、non-friend函数替换member函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-14"><span class="nav-number">6.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#宁可拿non-member-non-friend函数替换member函数-这样做可以增加封装性-包裹弹性和机能扩充性。"><span class="nav-number">6.1.1.</span> <span class="nav-text">宁可拿non-member non-friend函数替换member函数.这样做可以增加封装性,包裹弹性和机能扩充性。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解释-1"><span class="nav-number">6.2.</span> <span class="nav-text">解释</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果只是单纯的调用函数，那么就应该使用非成员函数去调用成员函数7，因为成员函数能够访问类中的私有成员，封装性比非成员函数要低"><span class="nav-number">6.2.1.</span> <span class="nav-text">如果只是单纯的调用函数，那么就应该使用非成员函数去调用成员函数7，因为成员函数能够访问类中的私有成员，封装性比非成员函数要低</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款25：考虑写出一个不抛出异常的swap函数"><span class="nav-number">7.</span> <span class="nav-text">条款25：考虑写出一个不抛出异常的swap函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-15"><span class="nav-number">7.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#当std-swap对你的类型效率不高时，提供一个swap成员函数，并确定这个函数不抛出异常"><span class="nav-number">7.1.1.</span> <span class="nav-text">当std::swap对你的类型效率不高时，提供一个swap成员函数，并确定这个函数不抛出异常</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#细节"><span class="nav-number">7.2.</span> <span class="nav-text">细节</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-常规的置换将会创建3个原来对象和三个指针对象，效率低，效率很低，实际上，我们只用置换指针的指向就行了。"><span class="nav-number">7.2.1.</span> <span class="nav-text">1.常规的置换将会创建3个原来对象和三个指针对象，效率低，效率很低，实际上，我们只用置换指针的指向就行了。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-我们不能修改std命名空间的任何东西，所以我们要声明一个非成员函数去调用成员函数"><span class="nav-number">7.2.2.</span> <span class="nav-text">2.我们不能修改std命名空间的任何东西，所以我们要声明一个非成员函数去调用成员函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条款31：将文件的编译依存关系降至最低"><span class="nav-number">8.</span> <span class="nav-text">条款31：将文件的编译依存关系降至最低</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键-16"><span class="nav-number">8.1.</span> <span class="nav-text">关键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-为声明和定义提供不同的文件"><span class="nav-number">8.1.1.</span> <span class="nav-text">1.为声明和定义提供不同的文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-依赖于声明式不依赖与定义式"><span class="nav-number">8.1.2.</span> <span class="nav-text">2.依赖于声明式不依赖与定义式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明-3"><span class="nav-number">8.2.</span> <span class="nav-text">说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UE4中特定的条款"><span class="nav-number"></span> <span class="nav-text">UE4中特定的条款</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-自己创建的非继承自UObject的类尽量使用智能指针TSharedPtr-TsharedRef来进行管理"><span class="nav-number">0.0.1.</span> <span class="nav-text">1.自己创建的非继承自UObject的类尽量使用智能指针TSharedPtr/TsharedRef来进行管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关键：-5"><span class="nav-number">0.0.2.</span> <span class="nav-text">关键：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意：TSharedPtr与UObject是互不兼容的，UObject会自动加入GC标记"><span class="nav-number">0.0.3.</span> <span class="nav-text">注意：TSharedPtr与UObject是互不兼容的，UObject会自动加入GC标记</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#例如"><span class="nav-number">0.0.4.</span> <span class="nav-text">例如</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-自己定义的Struct结构体"><span class="nav-number">0.0.5.</span> <span class="nav-text">1.自己定义的Struct结构体</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-自己定义的类"><span class="nav-number">0.0.6.</span> <span class="nav-text">2.自己定义的类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-结合使用"><span class="nav-number">0.0.7.</span> <span class="nav-text">3.结合使用</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
