@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="UE4,编译原理,源码,UBT,UHT,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="网上UE4对于虚幻引擎的编译系统的理解大多是从UBT或是UHT的引擎构建工具单独的角度进行了解的，而这篇文章从虚幻引擎编译系统整体的角度，通过源码剖析的方式去详细的了解了虚幻引擎的整个编译系统。">
+<meta name="keywords" content="UE4,编译原理,源码,UBT,UHT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码剖析虚幻引擎编译原理">
+<meta property="og:url" content="http://yoursite.com/2019/08/13/从源码剖析虚幻引擎编译原理/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="网上UE4对于虚幻引擎的编译系统的理解大多是从UBT或是UHT的引擎构建工具单独的角度进行了解的，而这篇文章从虚幻引擎编译系统整体的角度，通过源码剖析的方式去详细的了解了虚幻引擎的整个编译系统。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://docs.unrealengine.com/Images/Programming/Development/ManagingGameCode/generate_project_files.jpg">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/uIoVRzVKpcDd.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/qXLSjHgIlo5G.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/CNR2YliUYA2t.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/xHBBVQxRgeeU.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/mAfFWt3W2jDs.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/fpju5p7bNEbw.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190803/ynbpzTgOzPYH.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190804/6DtRiKgR2giv.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190804/fgpGGCFpLVmm.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190804/yLKhVk5UsGaR.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190804/CueopcOpSexS.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/UC5jCFgk5k6U.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/iIAho0p3G78W.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/tz5M1dOQzzj6.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/CFJrYYlstyJD.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/JsfamjgnR9R9.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/lazIYupujUQq.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/GXgg1kKf7L83.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/02OChnJ0fc02.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/9ngCJSu25IeX.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/RXPcuCr1I42t.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/JlrnmIF43RVX.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190808/YzAE4FtRP7hY.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190804/GgU3gcM7sXP5.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190809/91k4s3OWNwTD.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190809/93TL0ccixYkh.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/blog/20190810/KwsF3mrg02m9.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190809/VGeMUHyUDsmu.png?imageslim">
+<meta property="og:updated_time" content="2019-08-15T13:07:47.487Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从源码剖析虚幻引擎编译原理">
+<meta name="twitter:description" content="网上UE4对于虚幻引擎的编译系统的理解大多是从UBT或是UHT的引擎构建工具单独的角度进行了解的，而这篇文章从虚幻引擎编译系统整体的角度，通过源码剖析的方式去详细的了解了虚幻引擎的整个编译系统。">
+<meta name="twitter:image" content="https://docs.unrealengine.com/Images/Programming/Development/ManagingGameCode/generate_project_files.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/13/从源码剖析虚幻引擎编译原理/">
+
+
+
+
+
+  <title>从源码剖析虚幻引擎编译原理 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/13/从源码剖析虚幻引擎编译原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从源码剖析虚幻引擎编译原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-13T21:33:21+08:00">
+                2019-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UE4/" itemprop="url" rel="index">
+                    <span itemprop="name">UE4</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>网上UE4对于虚幻引擎的编译系统的理解大多是从UBT或是UHT的引擎构建工具单独的角度进行了解的，而这篇文章从虚幻引擎编译系统整体的角度，通过源码剖析的方式去详细的了解了虚幻引擎的整个编译系统。</p>
+<a id="more"></a>
+<h3 id="1-解决方案工程的生成"><a href="#1-解决方案工程的生成" class="headerlink" title="1.解决方案工程的生成"></a>1.解决方案工程的生成</h3><p>我们点击右键UE4工程，点击Generate visual studio project 将会生成用于Visual studio进行调试的工程文件MyProject.sln,这一过程发生了什么其中的原理又是什么呢？</p>
+<h4 id="Generate-visual-studio-project-的实质"><a href="#Generate-visual-studio-project-的实质" class="headerlink" title="Generate visual studio project 的实质"></a>Generate visual studio project 的实质</h4><p>点击右键 并选择 生成Visual Studio文件的这个右键其实对应的就是执行UnrealBuildTool.exe的带参命令，” “引起来的中间部分是你虚幻项目文件的路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Running C:/Program Files/Epic Games/UE_4.15/Engine/Binaries/DotNET/UnrealBuildTool.exe  -projectfiles -project=&quot;C:/UnrealEngine4Project/GJM_Flying/GJM_Flying.uproject&quot; -game -rocket -progress</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果你的UE4是复制于其他电脑的，你右键UE4工程就会没有生成Visual Studio这个选项，那么这个你可以使用这个命令去手动的生成.sln工程</p>
+</blockquote>
+<h4 id="调用UnrelBuildTool做了些什么？"><a href="#调用UnrelBuildTool做了些什么？" class="headerlink" title="调用UnrelBuildTool做了些什么？"></a>调用UnrelBuildTool做了些什么？</h4><p>UnrealBuildTool扫描了解决方案目录中的模块,插件和源文件，更新项目文件和解决方案，还包括生成Intellisense数据（光标悬停在函数上时显示类定义和注释技术的数据)</p>
+<p><img src="https://docs.unrealengine.com/Images/Programming/Development/ManagingGameCode/generate_project_files.jpg" alt="数据"></p>
+<blockquote>
+<p>这也就是为什么当我们们在vs中添加了C++类没有用和添加第三方类没有用的原因，想要在本地添加类中就要删除Intermediate文件夹后重新生成.sln工程文件</p>
+</blockquote>
+<p>在这个过程中创建了2个目录.vs文件夹和.Intermediate文件夹</p>
+<h5 id="vs文件夹"><a href="#vs文件夹" class="headerlink" title=".vs文件夹"></a>.vs文件夹</h5><p>主要用来存储当前用户在解决方案中的工作配置，具体包括VS关闭前最后的窗口布局、最后打开的选项卡/操作记录/文件文档、某些自定义配置/开发环境、调试断点等这类设置信息和状态。这样每当用户关闭解决方案后再重新打开，就能继续之前的工作状态</p>
+<h5 id="Intermediate文件夹"><a href="#Intermediate文件夹" class="headerlink" title=".Intermediate文件夹"></a>.Intermediate文件夹</h5><p>主要初始化了一些马上要用的空文件夹，和在/Build/BuileRules文件夹下的UBT扫描模块时生成的地址（.txt)，动态库(.dll)，pdb(调试信息文件);还在ProjectFiles文件夹中生成了一些UE4和项目的工程配置文件。</p>
+<h5 id="涉及到的文件说明"><a href="#涉及到的文件说明" class="headerlink" title="涉及到的文件说明"></a>涉及到的文件说明</h5><ul>
+<li>sln是解决方案的配置，主要是管理这个方案里的多个vcxproj</li>
+<li>vcxproj是工程的配置文件，管理工程中细节比如包含的文件，引用库等<ul>
+<li>一般没有sln，也可以直接打开vcxproj，也可以重新生成sln，sln里有多个工程，当你移除某个工程时sln会有变化</li>
+</ul>
+</li>
+<li>vcxproj.filters文件是过滤信息文件，解决方案中的筛选器文件就保存在此文件中， 故一般我也将该文件添加到版本控制中，</li>
+<li>vcxproj.user是本地化用户配置，允许多个用户使用自己喜好的方式配置这个项目（例如打开项目时候窗体位置等与项目内容无关的配置）</li>
+<li>.suo（Solution User Opertion）：解决方案用户选项记录所有将与解决方案建立关联的选项，以便在每次打开时，它都包含您所做的自定义设置。比如VS布局,项目最后编译的而又没有关掉的文件(下次打开时用)。</li>
+<li>.PDB文件，程序数据库文件,它存储了被编译文件的调试信息</li>
+</ul>
+<h3 id="开始调试"><a href="#开始调试" class="headerlink" title="开始调试"></a>开始调试</h3><p>准确的生成了工程文件后，我们就可以在VS中对你的项目生成解决方案，也就是编译你的代码，我们来从编译输出的日志文件来了解UE4的整个编译过程。</p>
+<p><img src="http://yp.guohaonan.cn/blog/20190803/uIoVRzVKpcDd.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>这是一个用模板生成的项目，一个最简单的编译过程输出的日志</p>
+</blockquote>
+<h3 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h3><p>编译器在开始工作之前，需要知道当前的系统环境，比如标准库在哪里、软件的安装位置在哪里、需要安装哪些组件等等。这是因为不同计算机的系统环境不一样，通过指定编译参数，编译器就可以灵活适应环境，编译出各种环境都能运行的机器码。这个确定编译参数的步骤，就叫做”配置”（configure）。</p>
+<p>用文档编辑软件打开sln文件就可以看到这些配置信息了，我列举了一些其中配置信息：</p>
+<p><img src="http://yp.guohaonan.cn/blog/20190803/qXLSjHgIlo5G.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>编译器版本信息</p>
+</blockquote>
+<p><img src="http://yp.guohaonan.cn/blog/20190803/CNR2YliUYA2t.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>文件生成位置</p>
+</blockquote>
+<p><img src="http://yp.guohaonan.cn/blog/20190803/xHBBVQxRgeeU.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>依赖模块库位置</p>
+</blockquote>
+<h3 id="确定依赖关系"><a href="#确定依赖关系" class="headerlink" title="确定依赖关系"></a>确定依赖关系</h3><p>编译器需要确定编译的先后顺序，因为源码文件之间往往存在依赖关系，假定A文件依赖于B文件，编译器应该保证做到下面两点。</p>
+<p>（1）只有在B文件编译完成后，才开始编译A文件。</p>
+<p>（2）当B文件发生变化时，A文件会被重新编译。</p>
+<p>编译顺序保存在一个叫做makefile的文件中，里面列出哪个文件先编译，哪个文件后编译。在GCC编译器中makefile文件由configure脚本运行生成，这就是为什么编译时configure必须首先运行的原因。在确定依赖关系的同时，编译器也确定了，编译时会用到哪些头文件。</p>
+<p>当你点击项目-生成之后，VS会根据项目默认设置的构建生成命令行，去调用其中的批处理文件build.bat</p>
+<p><img src="http://yp.guohaonan.cn/blog/20190803/mAfFWt3W2jDs.png?imageslim" alt="mark"></p>
+<p>我们来看看这个批处理文件具体做了什么？</p>
+<p><img src="http://yp.guohaonan.cn/blog/20190803/fpju5p7bNEbw.png?imageslim" alt="mark"></p>
+<p>我们可以从上图得知，VS仅仅只是去调用了UBT就结束了</p>
+<p>而然后接下来重大的任务就交给了UBT,接着我们来分析UBT做了些什么？</p>
+<h3 id="UBT-引擎构建工具"><a href="#UBT-引擎构建工具" class="headerlink" title="UBT-引擎构建工具"></a>UBT-引擎构建工具</h3><h5 id="UBT职能介绍"><a href="#UBT职能介绍" class="headerlink" title="UBT职能介绍"></a>UBT职能介绍</h5><ul>
+<li>扫描解决方案目录中的模块和插件</li>
+<li>确定需要重新构建的所有模块</li>
+<li>调用UHT来解析c++头文件</li>
+<li>从.Build.cs和.Target.cs创建编译器和链接器选项</li>
+<li>执行特定于平台的编译器(VisualStudio, LLVM)</li>
+</ul>
+<p>UBT在这一阶段做的事的总结下来就算是收集信息，参数解析，生成makefile，调用UHT</p>
+<h5 id="收集信息，参数解析"><a href="#收集信息，参数解析" class="headerlink" title="收集信息，参数解析"></a>收集信息，参数解析</h5><p><img src="http://yp.guohaonan.cn/blog/20190803/ynbpzTgOzPYH.png?imageslim" alt="mark"></p>
+<h5 id="生成makfile"><a href="#生成makfile" class="headerlink" title="生成makfile"></a>生成makfile</h5><p><img src="http://yp.guohaonan.cn/blog/20190804/6DtRiKgR2giv.png?imageslim" alt="mark"></p>
+<h5 id="调用UHT"><a href="#调用UHT" class="headerlink" title="调用UHT"></a>调用UHT</h5><p><img src="http://yp.guohaonan.cn/blog/20190804/fgpGGCFpLVmm.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>这时红色方框处生成了一个.uhtmanifest文件，这个文件位于F:\UE4\Project\MyProject\Intermediate\Build\Win64\MyProjectEditor\Development</p>
+</blockquote>
+<p><img src="http://yp.guohaonan.cn/blog/20190804/yLKhVk5UsGaR.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>由上图内容可知这个我呢间保存了所有的模块编译路径，C++路径，预编译头路径</p>
+</blockquote>
+<h5 id="到此UBT的使命就结束了，它在编译原理所担负的任务是：确定库文件，头文件地址；生成makefile确定依赖关系，而在日志的输出中担负的是以下的任务"><a href="#到此UBT的使命就结束了，它在编译原理所担负的任务是：确定库文件，头文件地址；生成makefile确定依赖关系，而在日志的输出中担负的是以下的任务" class="headerlink" title="到此UBT的使命就结束了，它在编译原理所担负的任务是：确定库文件，头文件地址；生成makefile确定依赖关系，而在日志的输出中担负的是以下的任务"></a>到此UBT的使命就结束了，它在编译原理所担负的任务是：确定库文件，头文件地址；生成makefile确定依赖关系，而在日志的输出中担负的是以下的任务</h5><p><img src="http://yp.guohaonan.cn/blog/20190804/CueopcOpSexS.png?imageslim" alt="mark"></p>
+<h5 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h5><ol>
+<li>我们编写的Target.cs , Buile.cs 都是为了方便UBT识别并处理模块的依赖而服务的</li>
+<li>UBT是给UHT打工的，他们之间的关联靠一个.uhtmanifest文件</li>
+</ol>
+<h3 id="UHT-预编译预处理"><a href="#UHT-预编译预处理" class="headerlink" title="UHT-预编译预处理"></a>UHT-预编译预处理</h3><h5 id="UHT主要职能介绍："><a href="#UHT主要职能介绍：" class="headerlink" title="UHT主要职能介绍："></a>UHT主要职能介绍：</h5><ul>
+<li>初始化Log系统</li>
+<li>初始化文件系统</li>
+<li>编译反射代码</li>
+</ul>
+<p>UHT在这一阶段做的事的总结下来就算是与预初始化系统，解析生成反射代码</p>
+<h4 id="预初始化系统"><a href="#预初始化系统" class="headerlink" title="预初始化系统"></a>预初始化系统</h4><p>从UHT的入口函数我们可以看到这个初始化函数</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/UC5jCFgk5k6U.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>引擎的入口函数也会使用这个函数去做主循环的初始化</p>
+</blockquote>
+<h5 id="初始化日志系统"><a href="#初始化日志系统" class="headerlink" title="初始化日志系统"></a>初始化日志系统</h5><p>从初始化函数我们可以看到里面对日志系统进行了初始化，因为我们在编译中需要输出日志</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/iIAho0p3G78W.png?imageslim" alt="mark"></p>
+<h5 id="初始化文件系统"><a href="#初始化文件系统" class="headerlink" title="初始化文件系统"></a>初始化文件系统</h5><p>同理也初始化了文件系统</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/tz5M1dOQzzj6.png?imageslim" alt="mark"></p>
+<h4 id="生成反射代码"><a href="#生成反射代码" class="headerlink" title="生成反射代码"></a>生成反射代码</h4><p>在开始生成反射代码之前，我们还有一项重要的事情要做，就是去获取.uhtmanifest文件，用于之后解析</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/CFJrYYlstyJD.png?imageslim" alt="mark"></p>
+<h5 id="接着就来到了我们的重头戏，来看看UHT是如何去解析C-代码，生成-generated-h和-gen-cpp文件，实现反射机制的"><a href="#接着就来到了我们的重头戏，来看看UHT是如何去解析C-代码，生成-generated-h和-gen-cpp文件，实现反射机制的" class="headerlink" title="接着就来到了我们的重头戏，来看看UHT是如何去解析C++代码，生成.generated.h和 .gen.cpp文件，实现反射机制的"></a>接着就来到了我们的重头戏，来看看UHT是如何去解析C++代码，生成<em>.generated.h</em>和 <em>.gen.cpp</em>文件，实现反射机制的</h5><p>1.解析uhtmanifeest文件</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/JsfamjgnR9R9.png?imageslim" alt="mark"></p>
+<p>读取所有源码的头文件并保存在GWarn中</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/lazIYupujUQq.png?imageslim" alt="mark"></p>
+<p>对头文件进行解析</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/GXgg1kKf7L83.png?imageslim" alt="mark"></p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/02OChnJ0fc02.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>从上图可以看出分析解析头文件的模块，头文件，源文件，依赖文件</p>
+</blockquote>
+<p>UENUM()、UCLASS()、USTRUCT()、UFUNCTION()、以及UPROPERTY()等宏都被被展开成C++代码，展开后就会生成Generated文件，其中的展开过程可以参考这篇博客，<a href="https://zhuanlan.zhihu.com/p/46836554" target="_blank" rel="noopener">UHT编译</a> 里面有详细的记录</p>
+<h5 id="生成generated文件"><a href="#生成generated文件" class="headerlink" title="生成generated文件"></a>生成generated文件</h5><p><img src="http://yp.guohaonan.cn/unreal/20190808/9ngCJSu25IeX.png?imageslim" alt="mark"></p>
+<p>如果你使用了继承自UObject类的，那么你就会生成.generated.h文件，在编译中就会使用到这个文件所以得包含在内，而且.generated.h必须最后一个被包含，否则会报错，申明如下：</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/RXPcuCr1I42t.png?imageslim" alt="mark"></p>
+<p>生成的generated文件有以下几种：</p>
+<ol>
+<li>.generated.cpp 一个工程只有一个，这个文件是用来为每个支持反射的类生成反射信息的代码，比如注册属性、添加源数据等。</li>
+<li>.generated.dep.h 这个文件里面就是包含了上面.generated.cpp用到的头文件。</li>
+<li>Classes.h 存放着预编译的宏</li>
+<li>.generated.h 这个就是为每个支持反射的头文件生成的对应的宏的代码。</li>
+</ol>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/JlrnmIF43RVX.png?imageslim" alt="mark"></p>
+<p>实际上ue4的反射就是UBT和UHT联手打造，UBT负责收集信息，UHT负责生成反射信息并注册，生成反射数据之后UHT的作用就基本结束了，接下来就交给VS编译了。</p>
+<p>实际经历的过程：</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190808/YzAE4FtRP7hY.png?imageslim" alt="mark"></p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><blockquote>
+<p>UHT生成成功之后，就会调用VS编译工具进行编译了，编译器对源代码进行编译，是一个将以文本形式存在的源代码翻译为机器语言形式的目标文件的过程。</p>
+<p>分为两大步：</p>
+<p>1.编译 ：把文本形式的源代码翻译成机器语言，并形成目标文件</p>
+<p>2.连接 ：把目标文件 操作系统的启动代码和库文件组织起来形成可执行程序</p>
+</blockquote>
+<h4 id="LLVM—VisualStudio编译工具"><a href="#LLVM—VisualStudio编译工具" class="headerlink" title="LLVM—VisualStudio编译工具"></a>LLVM—VisualStudio编译工具</h4><h5 id="UE4实际编译过程"><a href="#UE4实际编译过程" class="headerlink" title="UE4实际编译过程"></a>UE4实际编译过程</h5><p>  <img src="http://yp.guohaonan.cn/blog/20190804/GgU3gcM7sXP5.png?imageslim" alt="mark"></p>
+<h4 id="VS会创建很多个actions事件，具体有哪些呢？"><a href="#VS会创建很多个actions事件，具体有哪些呢？" class="headerlink" title="VS会创建很多个actions事件，具体有哪些呢？"></a>VS会创建很多个actions事件，具体有哪些呢？</h4><h5 id="取出内联函数，模板函数，模板类，将其定义存放在inl文件中"><a href="#取出内联函数，模板函数，模板类，将其定义存放在inl文件中" class="headerlink" title="取出内联函数，模板函数，模板类，将其定义存放在inl文件中"></a>取出内联函数，模板函数，模板类，将其定义存放在inl文件中</h5><p><img src="http://yp.guohaonan.cn/unreal/20190809/91k4s3OWNwTD.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>主要为了避免头文件过长、版面混乱</p>
+</blockquote>
+<h5 id="调用登录时启动界面的图片资源（未验证）"><a href="#调用登录时启动界面的图片资源（未验证）" class="headerlink" title="调用登录时启动界面的图片资源（未验证）"></a>调用登录时启动界面的图片资源（未验证）</h5><p><img src="http://yp.guohaonan.cn/unreal/20190809/93TL0ccixYkh.png?imageslim" alt="mark"></p>
+<h5 id="编译所有的cpp文件（包含的Project-generated-cpp也在内-，并生成-obj的二进制文件"><a href="#编译所有的cpp文件（包含的Project-generated-cpp也在内-，并生成-obj的二进制文件" class="headerlink" title="编译所有的cpp文件（包含的Project.generated.cpp也在内)，并生成.obj的二进制文件"></a>编译所有的cpp文件（包含的Project.generated.cpp也在内)，并生成.obj的二进制文件</h5><p><img src="http://yp.guohaonan.cn/blog/20190810/KwsF3mrg02m9.png?imageslim" alt="mark"></p>
+<h5 id="将-obj文件链接生成-lib静态库和-dll动态库"><a href="#将-obj文件链接生成-lib静态库和-dll动态库" class="headerlink" title="将.obj文件链接生成.lib静态库和.dll动态库"></a>将.obj文件链接生成.lib静态库和.dll动态库</h5><p><img src="http://yp.guohaonan.cn/unreal/20190809/VGeMUHyUDsmu.png?imageslim" alt="mark"></p>
+<p>静态库会在链接程序（link.exe)在生成可执行文件拷贝到程序中，成为其中一部分，而动态链接所调用的函数代码并没有被拷贝到应用程序的可执行文件中去，而是仅仅在其中加入了所调用函数的描述信息，在需要的时候才会调用。能够节省内存</p>
+<p>至此，虚幻引擎的编译系统的探究就到此为止，如果有时间我我会把UHT是如何使用反射在网络通信的，是如何与蓝图交互的，在垃圾回收方面是发挥着什么样的作用。虚幻引擎的烘焙，部署，打包的底层原理都挺感兴趣，之后都会详细了解。</p>
+<p>之所以这么详细的去了解是因为之前一直以来编译调试UE4，都是出现VS中报错了，然后去复制错误，然后谷歌，或者去猜错误的原因，对于其中出错的实质却不胜了解，而且对于报错中的信息也是一知半解，然后前几天在拍错的过程中看到的一个博客中看到了一句话令我印象深刻。</p>
+<p>”不要成为编译器的奴隶“</p>
+<p>所以有了这篇经过整理，实践，体会的文章，虽然没有深入到最底层，但是也有了大概的框架轮廓。参考文章：</p>
+<p>UBT的底层原理：<a href="https://imzlp.me/posts/6362/" target="_blank" rel="noopener">https://imzlp.me/posts/6362/</a></p>
+<p>编译器的工作过程：<a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/11/compiler.html</a></p>
+<p>虚幻4反射:  <a href="https://www.cnblogs.com/ghl_carmack/p/5698438.html" target="_blank" rel="noopener">https://www.cnblogs.com/ghl_carmack/p/5698438.html</a></p>
+<p>UE4反射宏展开： <a href="https://zhuanlan.zhihu.com/p/46836554" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/46836554</a></p>
+<p>C++编译原理：<a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/11/compiler.html</a></p>
+<p>书籍：《大象无形 虚幻引擎程序设计浅析》 对象模型和蓝图部分</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+            <a href="/tags/编译原理/" rel="tag"># 编译原理</a>
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+            <a href="/tags/UBT/" rel="tag"># UBT</a>
+          
+            <a href="/tags/UHT/" rel="tag"># UHT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/05/自定义类型插件的创建/" rel="next" title="自定义类型插件的创建">
+                <i class="fa fa-chevron-left"></i> 自定义类型插件的创建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-解决方案工程的生成"><span class="nav-number">1.</span> <span class="nav-text">1.解决方案工程的生成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Generate-visual-studio-project-的实质"><span class="nav-number">1.1.</span> <span class="nav-text">Generate visual studio project 的实质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用UnrelBuildTool做了些什么？"><span class="nav-number">1.2.</span> <span class="nav-text">调用UnrelBuildTool做了些什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#vs文件夹"><span class="nav-number">1.2.1.</span> <span class="nav-text">.vs文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Intermediate文件夹"><span class="nav-number">1.2.2.</span> <span class="nav-text">.Intermediate文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#涉及到的文件说明"><span class="nav-number">1.2.3.</span> <span class="nav-text">涉及到的文件说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始调试"><span class="nav-number">2.</span> <span class="nav-text">开始调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置信息"><span class="nav-number">3.</span> <span class="nav-text">配置信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定依赖关系"><span class="nav-number">4.</span> <span class="nav-text">确定依赖关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UBT-引擎构建工具"><span class="nav-number">5.</span> <span class="nav-text">UBT-引擎构建工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UBT职能介绍"><span class="nav-number">5.0.1.</span> <span class="nav-text">UBT职能介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#收集信息，参数解析"><span class="nav-number">5.0.2.</span> <span class="nav-text">收集信息，参数解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#生成makfile"><span class="nav-number">5.0.3.</span> <span class="nav-text">生成makfile</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调用UHT"><span class="nav-number">5.0.4.</span> <span class="nav-text">调用UHT</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#到此UBT的使命就结束了，它在编译原理所担负的任务是：确定库文件，头文件地址；生成makefile确定依赖关系，而在日志的输出中担负的是以下的任务"><span class="nav-number">5.0.5.</span> <span class="nav-text">到此UBT的使命就结束了，它在编译原理所担负的任务是：确定库文件，头文件地址；生成makefile确定依赖关系，而在日志的输出中担负的是以下的任务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意"><span class="nav-number">5.0.6.</span> <span class="nav-text">注意</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#UHT-预编译预处理"><span class="nav-number">6.</span> <span class="nav-text">UHT-预编译预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UHT主要职能介绍："><span class="nav-number">6.0.1.</span> <span class="nav-text">UHT主要职能介绍：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预初始化系统"><span class="nav-number">6.1.</span> <span class="nav-text">预初始化系统</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化日志系统"><span class="nav-number">6.1.1.</span> <span class="nav-text">初始化日志系统</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化文件系统"><span class="nav-number">6.1.2.</span> <span class="nav-text">初始化文件系统</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成反射代码"><span class="nav-number">6.2.</span> <span class="nav-text">生成反射代码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#接着就来到了我们的重头戏，来看看UHT是如何去解析C-代码，生成-generated-h和-gen-cpp文件，实现反射机制的"><span class="nav-number">6.2.1.</span> <span class="nav-text">接着就来到了我们的重头戏，来看看UHT是如何去解析C++代码，生成.generated.h和 .gen.cpp文件，实现反射机制的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#生成generated文件"><span class="nav-number">6.2.2.</span> <span class="nav-text">生成generated文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译"><span class="nav-number">7.</span> <span class="nav-text">编译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LLVM—VisualStudio编译工具"><span class="nav-number">7.1.</span> <span class="nav-text">LLVM—VisualStudio编译工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UE4实际编译过程"><span class="nav-number">7.1.1.</span> <span class="nav-text">UE4实际编译过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VS会创建很多个actions事件，具体有哪些呢？"><span class="nav-number">7.2.</span> <span class="nav-text">VS会创建很多个actions事件，具体有哪些呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#取出内联函数，模板函数，模板类，将其定义存放在inl文件中"><span class="nav-number">7.2.1.</span> <span class="nav-text">取出内联函数，模板函数，模板类，将其定义存放在inl文件中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调用登录时启动界面的图片资源（未验证）"><span class="nav-number">7.2.2.</span> <span class="nav-text">调用登录时启动界面的图片资源（未验证）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译所有的cpp文件（包含的Project-generated-cpp也在内-，并生成-obj的二进制文件"><span class="nav-number">7.2.3.</span> <span class="nav-text">编译所有的cpp文件（包含的Project.generated.cpp也在内)，并生成.obj的二进制文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将-obj文件链接生成-lib静态库和-dll动态库"><span class="nav-number">7.2.4.</span> <span class="nav-text">将.obj文件链接生成.lib静态库和.dll动态库</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
