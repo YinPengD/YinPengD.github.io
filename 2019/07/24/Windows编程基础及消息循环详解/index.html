@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="UE4,Windows编程,消息,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在学DirectX和编写UE4和Windows交互插件时都使用到了Windows的许多API,顺便翻了下Windows核心编程，所以我将相关的Windows编程内容总结与整理下来，本文简要介绍了Windows的一些编程基础，还详细的了解了其中的消息循环。">
+<meta name="keywords" content="UE4,Windows编程,消息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows编程基础及消息循环详解">
+<meta property="og:url" content="http://yoursite.com/2019/07/24/Windows编程基础及消息循环详解/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="最近在学DirectX和编写UE4和Windows交互插件时都使用到了Windows的许多API,顺便翻了下Windows核心编程，所以我将相关的Windows编程内容总结与整理下来，本文简要介绍了Windows的一些编程基础，还详细的了解了其中的消息循环。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yp.guohaonan.cn/MPic/20190724/xGp32v2B5pDD.png?imageslim">
+<meta property="og:updated_time" content="2019-11-20T01:01:23.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows编程基础及消息循环详解">
+<meta name="twitter:description" content="最近在学DirectX和编写UE4和Windows交互插件时都使用到了Windows的许多API,顺便翻了下Windows核心编程，所以我将相关的Windows编程内容总结与整理下来，本文简要介绍了Windows的一些编程基础，还详细的了解了其中的消息循环。">
+<meta name="twitter:image" content="http://yp.guohaonan.cn/MPic/20190724/xGp32v2B5pDD.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/24/Windows编程基础及消息循环详解/">
+
+
+
+
+
+  <title>Windows编程基础及消息循环详解 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/Windows编程基础及消息循环详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Windows编程基础及消息循环详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-24T21:33:21+08:00">
+                2019-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows编程/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在学DirectX和编写UE4和Windows交互插件时都使用到了Windows的许多API,顺便翻了下Windows核心编程，所以我将相关的Windows编程内容总结与整理下来，本文简要介绍了Windows的一些编程基础，还详细的了解了其中的消息循环。</p>
+<a id="more"></a>
+<p>通俗地说， Win32 API 就是 Windows 系统按照 C 语言语法提供给用户的一个由诸多底层函数和结构组成的集合， 借助该集合， 我们就可实现应用程序与 Windows 操作系统之间的交互。 例如， 要想 通知 Windows 显示某一特定窗口，我们可以调用 Win32API 函数 ShowWindow。</p>
+<p>在Windows中，几个应用耜序可以并发运行。因此，硬件资源（如CPU时钟周期、内存、甚至显示器）必须为多个应用程序所共享，为了防止多个应用程序在无序状态下对某些资源访问或修改时所造成的冲突，Windows应用程序不具备直接访问硬件的能力。Windows系统的一个主要任务就是管理当前实例化的程片以及处理多个应用程序之间资源的分配。所以，如果我们想让某一应用程序对其他应用程序产生影响， 只能将该什务交由Windows系统来处理。例如，要想显示一个窗口，必须调用ShowWindow函数。我们无法对显存进行自接的写操作。</p>
+<h3 id="事件、消息队列、消息及消息循环介绍"><a href="#事件、消息队列、消息及消息循环介绍" class="headerlink" title="事件、消息队列、消息及消息循环介绍"></a>事件、消息队列、消息及消息循环介绍</h3><p>通常，Windows程序启动后只是等待某些事件的发生。<strong>事件</strong>有多种产生途径，一些常见的例子包括键盘中某些键被按下，鼠标单击，或当窗口被创建、尺寸发生变化、发生移动、被关闭、最小化、最大化或变为可见状态时。</p>
+<p>当某个事件发生时，Windows会为该驻件所针对的应用程序发送一条<strong>消息</strong>，表明该事件的发生，井在该应用程序的消息队列中增加一条消息，该<strong>消息队列</strong>只是一个保存了应用程序所接收到的消息的一个优先队列。应用程序在一个消息循环中不断地循环掉用GetMessage函数（或者是PeekMessage函数）来接受病检查消息队列，这个过程叫做<strong>消息循环</strong>。当接收到一条消息时，便将其分派给接收该消息的特定窗口的窗口过程。（不要忘记一个应用程序内部可能包含多个窗口）窗口过程是个与应用程序各窗口相关的特殊函数。（每个窗口都有一个窗口过程，但多个窗口可共亨同一个窗口过程。所以，我们就不必为每个窗口都编写一个窗口过程。）<strong>窗口过程</strong>负责该窗口的所有消息。</p>
+<h4 id="消息传递的过程"><a href="#消息传递的过程" class="headerlink" title="消息传递的过程"></a>消息传递的过程</h4><p>用户或应用程序的某些行为会产生一些事件。操作系统找到事件所属的应用程序，然后向该应用程序发送条相应的消息。然后，该消息就被加入到该引用程序的消息队列中。之后，应用程序不断地检杳消息队列，每当接收到一条消息时，应用程序就将该消息分发给与该消息所属窗口相关的窗口过程。最后，窗口过程执行与当前消息对应的指令。</p>
+<p><img src="http://yp.guohaonan.cn/MPic/20190724/xGp32v2B5pDD.png?imageslim" alt="mark"></p>
+<h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4><p>Windows操作系统的内核空间中有一个系统消息队列（system message queue），在内核空间中还为每个UI线程分配各自的线程消息队列(Thread message queue)。在发生输入事件之后，Windows操作系统的输入设备驱动程序将输入事件转换为一个“消息”投寄到系统消息队列；操作系统的一个专门线程从系统消息队列取出消息，分发到各个UI线程的输入消息队列中。</p>
+<p>Windows的事件驱动模式，并不是操作系统把消息主动分发给应用程序；而是由应用程序的每个UI线程通过“消息循环”代码从UI线程消息队列获取消息。</p>
+<h4 id="Windows消息类别"><a href="#Windows消息类别" class="headerlink" title="Windows消息类别"></a>Windows消息类别</h4><ul>
+<li>键盘消息</li>
+<li>字符消息</li>
+<li>鼠标消息</li>
+<li>定时器消息</li>
+<li>控件消息</li>
+<li>跨进程发送数据的消息</li>
+</ul>
+<h4 id="消息传递时传递的消息参数"><a href="#消息传递时传递的消息参数" class="headerlink" title="消息传递时传递的消息参数"></a>消息传递时传递的消息参数</h4><ul>
+<li>message<ul>
+<li>各种各样的消息值<a href="https://blog.csdn.net/zhangguofu2/article/details/19236081" target="_blank" rel="noopener">Windows常用消息大全</a></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>消息范围</th>
+<th>说 明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 ～ <strong>WM_USER</strong> – 1</td>
+<td>系统消息</td>
+</tr>
+<tr>
+<td><strong>WM_USER</strong> ～ 0x7FFF</td>
+<td>自定义窗口类整数消息</td>
+</tr>
+<tr>
+<td><strong>WM_APP</strong> ～ 0xBFFF</td>
+<td>应用程序自定义消息</td>
+</tr>
+<tr>
+<td>0xC000 ～ 0xFFFF</td>
+<td>应用程序字符串消息</td>
+</tr>
+<tr>
+<td>&gt; 0xFFFF</td>
+<td>为以后系统应用保留</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>wParam包含虚拟键码（virtual-key code），表示按下或释放的键</li>
+<li>lParam包含按键6个字段信息：<ul>
+<li>重复按键次数（Repeat Count，0～15 位）：通常设为1。大于1说明按键速度大于程序处理能力。可以根据实际需要忽略或处理。</li>
+<li>OEM扫描码(scan code，16～23位)：硬件产生的代码。</li>
+<li>扩充键标志（extended key，24位）：如果为扩充键（如右侧的Alt键或Ctrl键）按下时为1，否则为0。</li>
+<li>保留位（25～28位）：保留位是系统缺省保留的，一般不用。</li>
+<li>上下文代码（context code，29位）：如同时按下ALT，标志为1；否则为0。WM_SYSKEYUP或WM_SYSKEYDOWN常为1。WM_KEYUP或WM_KEYDOWN常为0。当所有程序都最小化时，没有窗口具有输入焦点，Windows仍将发送键盘消息给活动窗口；所有的按键都会产生WM_SYSKEYUP与WM_SYSKEYDOWN消息，此情况下如果没按下ALT，该字段为0，这样使最小化的活动窗口不处理这些按键。对于一些非英文键盘，有些字符是shift等组合键产生的，这时内容代码为1，但是其是非系统按键。</li>
+<li>键先前状态（previous key state，位30）：键此前是释放的，则为0，还则为1。很明显UP为1，DOWN可以为1或0，为1表示该键自动重复。</li>
+<li>转换状态（transition state，31位）：键被按下为0，键被松开时为1。如UP为1，DOWN为零。</li>
+</ul>
+</li>
+</ul>
+<h4 id="在Window程序中捕获消息"><a href="#在Window程序中捕获消息" class="headerlink" title="在Window程序中捕获消息"></a>在Window程序中捕获消息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 在程序窗口被初始化前绑定消息调用函数</span><br><span class="line">BOOL InitApplication(HINSTANCE hinstance, int nCmdShow)</span><br><span class="line">&#123;</span><br><span class="line">	HWND      hwnd;</span><br><span class="line">	WNDCLASS  wndclass;</span><br><span class="line">	wndclass.style       = CS_HREDRAW | CS_VREDRAW;</span><br><span class="line">	wndclass.lpfnWndProc = WndProc; //绑定消息调用函数</span><br><span class="line">	wndclass.cbClsExtra  = 0;</span><br><span class="line">	wndclass.cbWndExtra  = 0;</span><br><span class="line">	wndclass.hInstance   = 0;</span><br><span class="line">	wndclass.hIcon       = LoadIcon(NULL, IDI_APPLICATION);</span><br><span class="line">	wndclass.hCursor     = LoadCursor(NULL, IDC_ARROW);</span><br><span class="line">	wndclass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);</span><br><span class="line">	wndclass.lpszMenuName  = NULL;</span><br><span class="line">	wndclass.lpszClassName = szAppName;</span><br><span class="line">&#125;</span><br><span class="line">// 循环调用，并处理获得的消息</span><br><span class="line">LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">	switch (message)</span><br><span class="line">	&#123;</span><br><span class="line">	case WM_CREATE:</span><br><span class="line">		DragAcceptFiles(hwnd, TRUE);</span><br><span class="line">		return 0;</span><br><span class="line">	case WM_DESTROY:</span><br><span class="line">		PostQuitMessage(0);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">	return DefWindowProc(hwnd, message, wParam, lParam);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="在UE4中捕获Windows消息"><a href="#在UE4中捕获Windows消息" class="headerlink" title="在UE4中捕获Windows消息"></a>在UE4中捕获Windows消息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">static FExampleHandler Handlers;</span><br><span class="line">void UWindowsMessageHandlerBPLibrary::WindowsMessageHandlerSampleFunction()</span><br><span class="line">&#123;</span><br><span class="line">    /**获取UE4程序的应用窗口*/</span><br><span class="line">	FWindowsApplication* Application = (FWindowsApplication*)FSlateApplication::Get().GetPlatformApplication().Get();</span><br><span class="line">	if (Application != nullptr)</span><br><span class="line">	&#123;</span><br><span class="line">		Application-&gt;AddMessageHandler(Handlers); // 绑定消息调用函数</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class FExampleHandler</span><br><span class="line">	: public IWindowsMessageHandler</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	FString PP;</span><br><span class="line">	// 使用UE4处理windows消息</span><br><span class="line">	virtual bool ProcessMessage(HWND Hwnd, uint32 Message, WPARAM WParam, LPARAM LParam, int32&amp; OutResult) override</span><br><span class="line">	&#123;</span><br><span class="line">		if (Message == WM_CAPTURECHANGED)</span><br><span class="line">		&#123;</span><br><span class="line">			DragAcceptFiles(Hwnd, true);</span><br><span class="line">		&#125;</span><br><span class="line">	return false;	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="相关了解："><a href="#相关了解：" class="headerlink" title="相关了解："></a>相关了解：</h4><p><strong>句柄</strong>是一种指向指针的指针。由于windows是一种以虚拟内存为基础的操作系统，其内存管理器经常会在内存中来回的移动对象，以此来满足各种应用程序对内存的需求。而对象的移动意味着对象内存地址的变化，正是因为如此，如果直接使用指针，在内存地址被改变后，系统将不知道到哪里去再调用这个对象。windows系统为了解决这个问题，系统专门为各种应用程序腾出了一定的内存地址（句柄）专门用来记录这些变化的地址（这些内存地址就是指向指针的指针），这些内存地址本身是一直不变化的。windows内存管理器在移动某些对象之后，他会将这些对象新的内存地址传给句柄，告诉他移动后对象去了哪里。</p>
+<p><strong>HWND</strong>是窗口句柄，其中包含窗口的属性。例如，窗口的大小、显示位置、父窗口。</p>
+<p>HDC是图像的设备描述表，窗口显示上下文句柄，其中可以进行图形显示。</p>
+<h4 id="相关文章："><a href="#相关文章：" class="headerlink" title="相关文章："></a>相关文章：</h4><ul>
+<li><a href="[https://www.wikiwand.com/zh-sg/Microsoft_Windows%E7%9A%84%E8%A8%8A%E6%81%AF%E8%BF%B4%E5%9C%88#/Windows%E6%B6%88%E6%81%AF%E7%B1%BB%E5%88%AB](https://www.wikiwand.com/zh-sg/Microsoft_Windows的訊息迴圈#/Windows消息类别">Microsoft Windows的消息循环</a>)</li>
+<li><a href="https://blog.csdn.net/zhangguofu2/article/details/19236081" target="_blank" rel="noopener">Windows 常用消息大全</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+            <a href="/tags/Windows编程/" rel="tag"># Windows编程</a>
+          
+            <a href="/tags/消息/" rel="tag"># 消息</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/20/Window提高工作效率的技巧与工具总结/" rel="next" title="Window提高工作效率的技巧与工具总结">
+                <i class="fa fa-chevron-left"></i> Window提高工作效率的技巧与工具总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/05/自定义类型插件的创建/" rel="prev" title="自定义类型插件的创建">
+                自定义类型插件的创建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件、消息队列、消息及消息循环介绍"><span class="nav-number">1.</span> <span class="nav-text">事件、消息队列、消息及消息循环介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息传递的过程"><span class="nav-number">1.1.</span> <span class="nav-text">消息传递的过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息队列"><span class="nav-number">1.2.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows消息类别"><span class="nav-number">1.3.</span> <span class="nav-text">Windows消息类别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息传递时传递的消息参数"><span class="nav-number">1.4.</span> <span class="nav-text">消息传递时传递的消息参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在Window程序中捕获消息"><span class="nav-number">1.5.</span> <span class="nav-text">在Window程序中捕获消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在UE4中捕获Windows消息"><span class="nav-number">1.6.</span> <span class="nav-text">在UE4中捕获Windows消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关了解："><span class="nav-number">1.7.</span> <span class="nav-text">相关了解：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关文章："><span class="nav-number">1.8.</span> <span class="nav-text">相关文章：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

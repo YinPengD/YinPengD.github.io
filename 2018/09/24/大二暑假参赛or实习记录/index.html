@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="杂记,参赛,实习,中国大学生计算机大赛,中国软件杯,移动应用创新赛,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参赛缘由: 刚开始想要去参加比赛的缘由是因为在4月份的时刚刚通过公司面试，成为一名的UE4游戏开发实习生，心中感到高兴的同时却转念一想我好不容易和游戏开发一起学的iOS开发，积累到终于能随便实现各种功能的时候，却什么成果还没得到的时候却要换个开发方向了，心中难免有些有些不甘心（因为我认为做技术始终需要一个一个小的成果，来激励你不断地去学习，自己始终要觉得自己做的东西是很厉害，很酷炫的东西，而不是密">
+<meta name="keywords" content="杂记,参赛,实习,中国大学生计算机大赛,中国软件杯,移动应用创新赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大二暑假参赛or实习记录">
+<meta property="og:url" content="http://yoursite.com/2018/09/24/大二暑假参赛or实习记录/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="参赛缘由: 刚开始想要去参加比赛的缘由是因为在4月份的时刚刚通过公司面试，成为一名的UE4游戏开发实习生，心中感到高兴的同时却转念一想我好不容易和游戏开发一起学的iOS开发，积累到终于能随便实现各种功能的时候，却什么成果还没得到的时候却要换个开发方向了，心中难免有些有些不甘心（因为我认为做技术始终需要一个一个小的成果，来激励你不断地去学习，自己始终要觉得自己做的东西是很厉害，很酷炫的东西，而不是密">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/180924/f8FDd39l9h.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/180923/lh6hhf0fA7.PNG">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/180923/kBic6cAL42.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/180924/038bCgdE3F.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/180924/CL0IL3j5Ll.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/180924/5id7JHd0if.png?imageslim">
+<meta property="og:updated_time" content="2019-11-20T01:01:23.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大二暑假参赛or实习记录">
+<meta name="twitter:description" content="参赛缘由: 刚开始想要去参加比赛的缘由是因为在4月份的时刚刚通过公司面试，成为一名的UE4游戏开发实习生，心中感到高兴的同时却转念一想我好不容易和游戏开发一起学的iOS开发，积累到终于能随便实现各种功能的时候，却什么成果还没得到的时候却要换个开发方向了，心中难免有些有些不甘心（因为我认为做技术始终需要一个一个小的成果，来激励你不断地去学习，自己始终要觉得自己做的东西是很厉害，很酷炫的东西，而不是密">
+<meta name="twitter:image" content="http://yp.guohaonan.cn/unreal/180924/f8FDd39l9h.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/24/大二暑假参赛or实习记录/">
+
+
+
+
+
+  <title>大二暑假参赛or实习记录 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/24/大二暑假参赛or实习记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">大二暑假参赛or实习记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-24T16:33:21+08:00">
+                2018-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/杂记/" itemprop="url" rel="index">
+                    <span itemprop="name">杂记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="参赛缘由"><a href="#参赛缘由" class="headerlink" title="参赛缘由:"></a>参赛缘由:</h4><p> 刚开始想要去参加比赛的缘由是因为在4月份的时刚刚通过公司面试，成为一名的UE4游戏开发实习生，心中感到高兴的同时却转念一想我好不容易和游戏开发一起学的iOS开发，积累到终于能随便实现各种功能的时候，却什么成果还没得到的时候却要换个开发方向了，心中难免有些有些不甘心（因为我认为做技术始终需要一个一个小的成果，来激励你不断地去学习，自己始终要觉得自己做的东西是很厉害，很酷炫的东西，而不是密密麻麻的一行行代码，这种反馈的成就感对我很重要）而且自己对比赛的答辩和路演比较感兴趣，想借此提高自己的表达沟通能力，也想借此看看其他高校的作品，互相交流学习。</p>
+<a id="more"></a>
+<blockquote>
+<p>用精巧的逻辑砖块构筑庞大的虚拟世界 ——程序开发</p>
+</blockquote>
+<h4 id="参赛过程"><a href="#参赛过程" class="headerlink" title="参赛过程"></a>参赛过程</h4><h5 id="中国大学生计算机大赛省赛开始"><a href="#中国大学生计算机大赛省赛开始" class="headerlink" title="中国大学生计算机大赛省赛开始"></a>中国大学生计算机大赛省赛开始</h5><p> 既然决定要参赛了，就去看了当时适合的比赛有“ 中国软件杯中国大学生软件设计大赛”，“中国大学生计算机大赛“，”中国高校计算机大赛-移动应用创新赛“；刚好当时有个机电院的同学家威找到我们说他有个idea想要我们去实现成应用，他当时不仅把他想法的PPT做好了，而且连APP的界面都手绘画好了（以前也有人想找我们做东西，但是大部分人都止步于想法阶段，而没有去认真的分析，实施）我们介于他对这件事的用心，听了他的运动+社交的概念也觉得可以做，于是家威做app的产品经理，我负责ios端功能的开发， 和实验室做android开发的中诚同学负责android端功能的开发就准备去参加计算机设计大赛了，当时距离计算机大赛省赛截止时间只剩最后一星期了，我们赶紧加班加点写出个原型， 然后让家威去按照题目要求去准备材料和PPT,在准备的时候看了看我们学校别人的参赛项目都准备的那么全面，一个物联网项目连移动端的app都做了，仓促的提交之后本来都不太报有希望能够晋级，过了几天却峰回路转通知我们晋级了，在高兴之余我们不断的优化作品，之后参加省赛也顺利晋级了国赛。</p>
+<h5 id="软件杯or移动应用创新赛的想法"><a href="#软件杯or移动应用创新赛的想法" class="headerlink" title="软件杯or移动应用创新赛的想法"></a>软件杯or移动应用创新赛的想法</h5><p> 计算机大赛距离国赛有很长的一段时间，为了 准备国赛，我们去视觉传达学院找来了一个做UI设计的静姐帮我们重新设计UI界面，刚好暂时没我什么事，我就想自己去准备一个项目，于是去看了看软件杯的赛题，有个AR的赛题——采用AR技术的旅游APP,目的是解决使用AR技术去解决旅游地的痛点，我一看想了想，然后去查了查实现AR所需要的技术，发现所需要的ios开发，Unity3D，Unreal4引擎我不都刚好会嘛！，于是想用Unreal4去实现他，刚好用比赛促进我UE4的使用，岂不两全齐美？既然要参加的赛题决定了，就要开始想切入点了</p>
+<p><a href="http://yp.guohaonan.cn/unreal/180924/f8FDd39l9h.png?imageslim" target="_blank" rel="noopener"><img src="http://yp.guohaonan.cn/unreal/180924/f8FDd39l9h.png?imageslim" alt="mark"></a></p>
+<blockquote>
+<p>这是当时中国软件杯中国大学生软件设计大赛的赛题</p>
+</blockquote>
+<p> 我当时想了几天，总结总结了几个自己决定还行的想法，拿着这几个想法我去和指导老师洪蕾老师交流了下，（老师对于这方面很有经验）老师说尽量把旅游的痛点做的精细化，经过一番交流，我觉得应该和现有的公共设施相结合，拍脑袋一想突然想到了我们可以将AR技术运用在路牌上，当想出这个点子的时候我觉的很不错，然后就决定做这个方向了，然后我们觉得这个想法创新点也很好，修改下功能与需求也就连着苹果公司与浙江大学的”中国高校计算机大赛-移动应用创新赛“也一起申报了。</p>
+<h5 id="开发的过程"><a href="#开发的过程" class="headerlink" title="开发的过程"></a>开发的过程</h5><p> 当我正式开始做的时候才发现有各种各样的突发困难，之前打算用UE4做AR的结果这个项目，因为用到了iphone的各种定位，与识别技术，所以只能使用iOS原生框架AR Kit去开发它，而且这一技术框架是半年前苹果公司才发布的，网上的学习资料特别的少，原理的学习基本只能看官方文档，功能的学习基本只能去github看别人的源码，当时github上star数比较多的ARKit库基本都看了个遍（当时明显觉得自己读源码的速度快了非常多），而且既然要参加一起参加移动应用创新赛就要使用swift语言开发，我之前一直都使用OC语言开发的，没有办法只能硬着头皮上，开心的是做AR开发还是很有趣的，我还在闲暇时实现了一些其他有趣的功能。</p>
+<p><a href="http://yp.guohaonan.cn/unreal/180923/lh6hhf0fA7.PNG" target="_blank" rel="noopener"><img src="http://yp.guohaonan.cn/unreal/180923/lh6hhf0fA7.PNG" alt="mark"></a></p>
+<blockquote>
+<p>当时第一次把基本功能验证成功截得图，当时被BUG困扰了很久，终于成功十分激动！</p>
+</blockquote>
+<p> 在我把功能的可行性验证成功之后，决定去组建一个团队，找到了实验室做前端开发的浩楠来做后台的数据传输，和做交互设计的同学对软件进行交互设计和文档的编写，我们一起讨论了许多需求，和功能解决方案，编写了需求规格说明书，详细设计说明书，算法描述和软件说明书，测试文档，制作介绍PPT，介绍视屏等，为了测试旅游地路口多路牌识别的实际效果，还专门去了学校附近的方山景区测试实验，现场调试BUG，当成品完成已经1个月后了，刚好到了我为这个项目设定的事件，因为8月份之后就要准备考试，考完试就马上要去公司实习了，我已经做了很完整的准备，对这个项目很有信心，之后这个项目的两个比赛也顺利的通过初赛，复赛进入国赛。</p>
+<h5 id="决赛前的准备"><a href="#决赛前的准备" class="headerlink" title="决赛前的准备"></a>决赛前的准备</h5><p> 在比赛前并没想那么多，做的时候也只是想着如何完善这个作品，之后晋级了他突然发通知来能够去公费清华大学参加沙龙讲座，去浙江大学参加暑假集训营培训，因为高校计算机大赛的暑假集训营和中国大学生计算机大赛决赛事件重了，就让我们组的两个队员去了，然后我去参加计算机大赛的决赛，不过清华大学的沙龙讲座我是去了的，当我们做了5个小时的高铁，进入清华校园时立即就感受到了满满的人文气息，跟如今各种在郊区扩建的空旷大学城完全不同，虽然只在清华经管院开了1天的沙龙讲座，但是其中的质量很高啊，专业创新团队告诉了我们创新的出发点，如何有目规范的去培养创新思维，创投公司创投人让我们认识到了创业的残忍，苹果公司中国区负责人让我们了解到一个优秀的产品应该具有什么样的特质，如何去完善自己的作品。在参加完沙龙讲座，那肯定是在畅游首都北京啊！在短短了两天里我们去了充满艺术美感的天坛，威严壮观的天安门，源远流长的故宫，万园之园的圆明园等，在觉得赞叹的同时不仅感叹幸好之前一激动就参加了这些比赛，感觉乘年轻学生票还半价的时候就应该多尝试，多看看，多学学。</p>
+<p><a href="http://yp.guohaonan.cn/unreal/180923/kBic6cAL42.png?imageslim" target="_blank" rel="noopener"><img src="http://yp.guohaonan.cn/unreal/180923/kBic6cAL42.png?imageslim" alt="mark"></a></p>
+<blockquote>
+<p>参加培训时的合影</p>
+</blockquote>
+<h4 id="实习的过程"><a href="#实习的过程" class="headerlink" title="实习的过程"></a>实习的过程</h4><p> 因为是第一次找实习，还不知道自己的技术处于什么水平，而且自己也才大二，投简历的时候就投了一个离学校较近的小公司，（还想着没有那么容易通过）结果第一份简历就通知我去面试了，面试也很顺利的通过了，之后就签订了实习协议，进入公司之后发现这个公司是大公司的子公司，我们这个项目组是用画面较高的UE4引擎为军方做3D化作战平台模拟的，给我印象深刻的是老板的个人能力非常强，果然得出来才能看到更多厉害的人啊，才能认识到自己的弱小。</p>
+<p> 因为刚进入公司的时候觉得自己水平菜，也才大二，其他同时进入的实习生都是985大学的应届生，整个暑假实习阶段都十分认真的上班，6点下班回来基本也都整理一天所做的东西或者思考在上班时没解决的BUG到10点半才从实验室回宿舍，由于UE4是个2015年才新开源的游戏引擎，学习资料少，学习成本高，开发人员少，所以项目负责人伟哥叫我写的各种功能模块基本没有借鉴的，基本就啃着源码，根据自己的底层的理解器去实现他，出现问题和BUG也基本在国内浏览器找不到解决方法，只能去国外论坛找相似的经验，实在不行也只好请问伟哥，伟哥虽然挑起整个项目的重担，能力很强但是有些问题也属于不可预期性的而且UE4引擎系统也比Unity3D复杂很多，也没有解决的方法，只能自己换种实现方式，或者回去之后慢慢排错。</p>
+<p> 在这种每天不停思考的日子，了解被UE4魔改的C++的各种用法，C++与蓝图之间的互相联系，转换等等。我自己感觉进步飞快，从刚开始实习时，蓝图C++之间使用不是很熟练的状态变成了想写什么功能，解决BUG都总有办法的状态，之前虽然学习了UE4和Unity的各个模块功能的使用与编写，但是叫我去随便写一个功能是做不到的，感觉这次实习就像把学校关门造车的浅水区突然丢到了你去给我实现某个功能的深水区，加深了 自己对UE4整个游戏引擎的理解性与联系性，增强了自己的开发信心。</p>
+<p> 公司由于是个军方出资的企业，也没有游戏公司上线的压力，做的是整体的规划，整个公司氛围也是很好了，基本每个星期都有活动，或是打羽毛球，或是游泳，或是吃饭，老板还鼓励我们去看科幻电影，玩军事游戏来提高自己去实现功能的想像力，还在我们办公室专门安装了几台显示器来在下午累的时候看看科幻电影，公司还养了只猫，大家累时候都喜欢撸猫，暑假实习的2个月很快就过去了，不过我签的是1年的合同，上学没课的时间也会去公司上班。</p>
+<p><a href="http://yp.guohaonan.cn/unreal/180924/038bCgdE3F.png?imageslim" target="_blank" rel="noopener"><img src="http://yp.guohaonan.cn/unreal/180924/038bCgdE3F.png?imageslim" alt="mark"></a></p>
+<blockquote>
+<p>在我暑期实习阶段出生的一群可爱的小猫</p>
+</blockquote>
+<h5 id="最终的决赛"><a href="#最终的决赛" class="headerlink" title="最终的决赛"></a>最终的决赛</h5><p> 中国大学生计算机大赛的决赛是是先在上海东华大学进行，我们就感受到了满满的教育部直属比赛的风格，处于郊区的校区，不统一安排住宿，很远才能有酒店，吃的只有食堂的快餐，底下一堆资历深的老教授评委，我们一到上海就一遍一遍的背稿，改稿，想评委会提出的问题，到我们答辩的时候已经是当天晚上的最后一场了，当时评委老师已经评审了20多组作品了，已经很累了。</p>
+<p> 我们答辩的时候多的PPT因为是我们组产品经理家威做的，他个人十分喜好欧美的风格，做的APP也是全英文，做的PPT也是苹果三星风格，他也很用心的去做，我们年轻人觉得非常棒，甚至我们觉得这比赛没有人比我们的PPT做的更好的，到答辩的时候，因为教授是技术出身的，更愿意看到PPT展示跟多的技术的东西，而不是想苹果产品发布会的形式，导致减分不少，最后拿了个国赛三等奖，而软件杯这一届决赛竟然也直接缩水，决赛只有1,2等奖才能去现场赛，本来比赛本来就参赛人数多多，足足有4000多只队，进决赛的只有200多只队伍，我们那组别只有7支队能参加现场决赛角逐1,2等奖，可能是自己的作品不够优秀脱颖而出吧。</p>
+<p> 而中国高校计算机大赛移动应用创新赛因为是跟清华大学，浙江大学，苹果公司合作的缘故，就要友好的多了，虽然这些比赛的晋级率都差不多，而这个比赛就用心多了，不仅公费报销北京，杭州的沙龙，集训营，住的酒店也是4星的，送了不少纪念品，还拍了集体合照，也有很多香港，台湾那边的名校来参加比赛，全程志愿者引导，每次晋级都会告诉你评委的打分资料。</p>
+<p><a href="http://yp.guohaonan.cn/unreal/180924/CL0IL3j5Ll.png?imageslim" target="_blank" rel="noopener"><img src="http://yp.guohaonan.cn/unreal/180924/CL0IL3j5Ll.png?imageslim" alt="mark"></a></p>
+<blockquote>
+<p>评委当时晋级比赛的打分材料，本来我还对自己的作品有点犹豫，清一色的好评让我坚信只要你的作品足够优秀，是大家都看的到的。</p>
+</blockquote>
+<p> 答辩的形式是我比较喜欢的布展答辩的形式，评委会轮流来到你的展位，你要向评委去展示你的作品，也可以去观摩别人组别的答辩，也可与自己去其他组的作品展位上了解别人的作品，每个人都很乐意向你展示他们的作品的(有一个台湾的小哥对我们的作品，来我们展台交流了很多次），我也去观摩了下别人的答辩，有不少组的答辩的表达能力是真的很强，非常自信的向评委们介绍自己的产品，一点也不怯场，我看了两场就赶紧回到自己的展位，暗自学习别人好的表他能力，不断的改进自己所要表达的内容，指导老师洪蕾老师也在用他的多年经验不断的指出我们的问题，给了我们很多的改进意见。</p>
+<p> 当我们准备的差不多的时候，评委也就来到了我们的展位，刚开始一堆评委围到我们展位时，是蛮紧张的，我们配合着视频，PPT,实机演示，一起在10分钟之内顺利的讲解完了我们的项目，评委听完我们的讲解也没有什么大的问题，而是给了我们一些建议他建议我们去用AR多实现一些路牌更多展示不了的信息，更多的路牌实现不了的功能那就很好了。</p>
+<p> 后面想想其实也是，因为这是创新赛他们可能跟愿意看到更多的创新点，虽然这个项目的想法很好，但是AR在这个项目实现的效果不是很出众，因为现阶段的所有AR的实时定位技术都不是很稳定， 最后只拿了个国赛3等奖（已经拿了3个国赛三等奖了。。。）不过前两次，我这次是看到了别人的作品的，其他组的AR作品我都去他们展位上实际了解了下，发现他们运用的技术也很简单，从创意上和技术上也比不过我们，不过他们做的比较小巧精致挺有趣的，最后有前9名逐出一，二等奖，是公开演讲答辩。</p>
+<p> 看了他们的作品，还是比较服气的，他们都是做的一个很小的切入点，然后把他实现的很完整，还有一个已经上线了一整子了，从整体UI风格，完整度，我的都要差不少，AR的作品想要实现的完整，效果好也比常规的软件难太多了，常规的软件之前大一的时候我就写过一个很完整的，而暑假每天沉迷在UE4的学习中，个人也比较喜欢游戏开发也就没怎么去迭代这个作品，没有进一度取得更好的成绩我心里也是有数的，不过我在路演前就对洪蕾老师说过我们的作品可能想要脱颖而出可能有些困难，洪蕾老师却说“没有关系，最重要是你在这个比赛中学习到多少东西”让我很感动，这些比赛，培训，以及去与其他高校学生的交流让我学到了很多。</p>
+<p><a href="http://yp.guohaonan.cn/unreal/180924/5id7JHd0if.png?imageslim" target="_blank" rel="noopener"><img src="http://yp.guohaonan.cn/unreal/180924/5id7JHd0if.png?imageslim" alt="mark"></a></p>
+<blockquote>
+<p>我们组在自己的展台的合影，我个人是很喜欢这样的比赛形式的，多了很多的交流与了解</p>
+</blockquote>
+<h3 id="总结or经验"><a href="#总结or经验" class="headerlink" title="总结or经验"></a>总结or经验</h3><h5 id="1-做一个产品细节和完整度一定要做好，无数的细节积累打磨出来，就会产生使得用户体验做的很好"><a href="#1-做一个产品细节和完整度一定要做好，无数的细节积累打磨出来，就会产生使得用户体验做的很好" class="headerlink" title="1.做一个产品细节和完整度一定要做好，无数的细节积累打磨出来，就会产生使得用户体验做的很好"></a>1.做一个产品细节和完整度一定要做好，无数的细节积累打磨出来，就会产生使得用户体验做的很好</h5><h5 id="2-要学会针对不同的比赛方，甲方做不同的方案，就像计算机大赛那边评委都是老教授，老教授对你的技术框架，作品的规范，完整度要求比较高，而创新比赛更加注重你的创新点"><a href="#2-要学会针对不同的比赛方，甲方做不同的方案，就像计算机大赛那边评委都是老教授，老教授对你的技术框架，作品的规范，完整度要求比较高，而创新比赛更加注重你的创新点" class="headerlink" title="2.要学会针对不同的比赛方，甲方做不同的方案，就像计算机大赛那边评委都是老教授，老教授对你的技术框架，作品的规范，完整度要求比较高，而创新比赛更加注重你的创新点"></a>2.要学会针对不同的比赛方，甲方做不同的方案，就像计算机大赛那边评委都是老教授，老教授对你的技术框架，作品的规范，完整度要求比较高，而创新比赛更加注重你的创新点</h5><h5 id="3-表达能力非常重要，特别是在一个限定的时间内，怎么样去展示你的作品？展示的侧重点是什么？他们感兴趣的内容是那些？这些都是指的思考与学习的。"><a href="#3-表达能力非常重要，特别是在一个限定的时间内，怎么样去展示你的作品？展示的侧重点是什么？他们感兴趣的内容是那些？这些都是指的思考与学习的。" class="headerlink" title="3.表达能力非常重要，特别是在一个限定的时间内，怎么样去展示你的作品？展示的侧重点是什么？他们感兴趣的内容是那些？这些都是指的思考与学习的。"></a>3.表达能力非常重要，特别是在一个限定的时间内，怎么样去展示你的作品？展示的侧重点是什么？他们感兴趣的内容是那些？这些都是指的思考与学习的。</h5><h5 id="4-参加这些比赛，还是小而精的作品更容易收到青睐，去解决一些特定人群的特定需求跟容易的得奖"><a href="#4-参加这些比赛，还是小而精的作品更容易收到青睐，去解决一些特定人群的特定需求跟容易的得奖" class="headerlink" title="4.参加这些比赛，还是小而精的作品更容易收到青睐，去解决一些特定人群的特定需求跟容易的得奖"></a>4.参加这些比赛，还是小而精的作品更容易收到青睐，去解决一些特定人群的特定需求跟容易的得奖</h5><h5 id="5-对任何技术不要惧怕，硬着头皮上，当你闷着头一直做并坚持下去的时候你会突然发现之前的一切都变简单了，比赛如此，实习亦如此。"><a href="#5-对任何技术不要惧怕，硬着头皮上，当你闷着头一直做并坚持下去的时候你会突然发现之前的一切都变简单了，比赛如此，实习亦如此。" class="headerlink" title="5.对任何技术不要惧怕，硬着头皮上，当你闷着头一直做并坚持下去的时候你会突然发现之前的一切都变简单了，比赛如此，实习亦如此。"></a>5.对任何技术不要惧怕，硬着头皮上，当你闷着头一直做并坚持下去的时候你会突然发现之前的一切都变简单了，比赛如此，实习亦如此。</h5><h2 id="尾语"><a href="#尾语" class="headerlink" title="尾语"></a>尾语</h2><p> 比赛与实习让我新认识了许多的小伙伴，在实习中认识了许多硬核的玩家与开发者，在比赛中有提交截止日通宵修改代码，完善作品，有一起相伴看遍北京，上海，杭州的景色，骑着小黄车在南京狂奔等等，我非常感谢互相努力的小伙伴们与指导老师们，我们一起分析需求，撰写文档，对接数据接口，修改视频，完善答辩技巧等，都是一篇绚丽的回忆，对于我来说报名参加一堆比赛的阶段已经过去了，之后也不会参加这类比赛了，我将会利用这些经验运用在之后的工作和独立游戏作品中。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/杂记/" rel="tag"># 杂记</a>
+          
+            <a href="/tags/参赛/" rel="tag"># 参赛</a>
+          
+            <a href="/tags/实习/" rel="tag"># 实习</a>
+          
+            <a href="/tags/中国大学生计算机大赛/" rel="tag"># 中国大学生计算机大赛</a>
+          
+            <a href="/tags/中国软件杯/" rel="tag"># 中国软件杯</a>
+          
+            <a href="/tags/移动应用创新赛/" rel="tag"># 移动应用创新赛</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/28/EffectiveC++理解/" rel="next" title="EffectiveC++理解">
+                <i class="fa fa-chevron-left"></i> EffectiveC++理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/16/UE4碰撞解析/" rel="prev" title="UE4碰撞解析">
+                UE4碰撞解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#参赛缘由"><span class="nav-number">1.</span> <span class="nav-text">参赛缘由:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参赛过程"><span class="nav-number">2.</span> <span class="nav-text">参赛过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#中国大学生计算机大赛省赛开始"><span class="nav-number">2.1.</span> <span class="nav-text">中国大学生计算机大赛省赛开始</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#软件杯or移动应用创新赛的想法"><span class="nav-number">2.2.</span> <span class="nav-text">软件杯or移动应用创新赛的想法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开发的过程"><span class="nav-number">2.3.</span> <span class="nav-text">开发的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#决赛前的准备"><span class="nav-number">2.4.</span> <span class="nav-text">决赛前的准备</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实习的过程"><span class="nav-number">3.</span> <span class="nav-text">实习的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#最终的决赛"><span class="nav-number">3.1.</span> <span class="nav-text">最终的决赛</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#总结or经验"><span class="nav-number"></span> <span class="nav-text">总结or经验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-做一个产品细节和完整度一定要做好，无数的细节积累打磨出来，就会产生使得用户体验做的很好"><span class="nav-number">0.1.</span> <span class="nav-text">1.做一个产品细节和完整度一定要做好，无数的细节积累打磨出来，就会产生使得用户体验做的很好</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-要学会针对不同的比赛方，甲方做不同的方案，就像计算机大赛那边评委都是老教授，老教授对你的技术框架，作品的规范，完整度要求比较高，而创新比赛更加注重你的创新点"><span class="nav-number">0.2.</span> <span class="nav-text">2.要学会针对不同的比赛方，甲方做不同的方案，就像计算机大赛那边评委都是老教授，老教授对你的技术框架，作品的规范，完整度要求比较高，而创新比赛更加注重你的创新点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-表达能力非常重要，特别是在一个限定的时间内，怎么样去展示你的作品？展示的侧重点是什么？他们感兴趣的内容是那些？这些都是指的思考与学习的。"><span class="nav-number">0.3.</span> <span class="nav-text">3.表达能力非常重要，特别是在一个限定的时间内，怎么样去展示你的作品？展示的侧重点是什么？他们感兴趣的内容是那些？这些都是指的思考与学习的。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-参加这些比赛，还是小而精的作品更容易收到青睐，去解决一些特定人群的特定需求跟容易的得奖"><span class="nav-number">0.4.</span> <span class="nav-text">4.参加这些比赛，还是小而精的作品更容易收到青睐，去解决一些特定人群的特定需求跟容易的得奖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-对任何技术不要惧怕，硬着头皮上，当你闷着头一直做并坚持下去的时候你会突然发现之前的一切都变简单了，比赛如此，实习亦如此。"><span class="nav-number">0.5.</span> <span class="nav-text">5.对任何技术不要惧怕，硬着头皮上，当你闷着头一直做并坚持下去的时候你会突然发现之前的一切都变简单了，比赛如此，实习亦如此。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾语"><span class="nav-number"></span> <span class="nav-text">尾语</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

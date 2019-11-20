@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Shadowsocks,VPS,服务器,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Shadowsocks是一个轻量级socks5代理插件，最初用 Python 编写,主要用于翻越GFW(中国国家防火墙),ShadowSocks支持远程DNS解析，可以防止DNS污染。所有数据流量全部经过加密，加密算法可选并支持自定义算法，隐蔽性很强， 相比于传统的VPN方式，ShadowSocks支持PAC列表，根据PAC中的规则进行智能切换，兼顾了访问速度与访问效率。">
+<meta name="keywords" content="Shadowsocks,VPS,服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shadowsocks原理和通过VPS自搭代理服务器">
+<meta property="og:url" content="http://yoursite.com/2017/11/11/Shadowsocks原理和通过VPS自搭代理服务器/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="Shadowsocks是一个轻量级socks5代理插件，最初用 Python 编写,主要用于翻越GFW(中国国家防火墙),ShadowSocks支持远程DNS解析，可以防止DNS污染。所有数据流量全部经过加密，加密算法可选并支持自定义算法，隐蔽性很强， 相比于传统的VPN方式，ShadowSocks支持PAC列表，根据PAC中的规则进行智能切换，兼顾了访问速度与访问效率。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yp.guohaonan.cn/Shadowsocks%E5%8E%9F%E7%90%86tu.jpg">
+<meta property="og:image" content="http://yp.guohaonan.cn/ping.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/86D4C942-9CD4-472B-89FD-3EAD49837CB0.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/Xshell.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/putty.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%A3%80%E6%9F%A5%E7%AB%AF%E5%8F%A3.png">
+<meta property="og:updated_time" content="2019-11-20T01:01:23.756Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shadowsocks原理和通过VPS自搭代理服务器">
+<meta name="twitter:description" content="Shadowsocks是一个轻量级socks5代理插件，最初用 Python 编写,主要用于翻越GFW(中国国家防火墙),ShadowSocks支持远程DNS解析，可以防止DNS污染。所有数据流量全部经过加密，加密算法可选并支持自定义算法，隐蔽性很强， 相比于传统的VPN方式，ShadowSocks支持PAC列表，根据PAC中的规则进行智能切换，兼顾了访问速度与访问效率。">
+<meta name="twitter:image" content="http://yp.guohaonan.cn/Shadowsocks%E5%8E%9F%E7%90%86tu.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/11/Shadowsocks原理和通过VPS自搭代理服务器/">
+
+
+
+
+
+  <title>Shadowsocks原理和通过VPS自搭代理服务器 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/Shadowsocks原理和通过VPS自搭代理服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shadowsocks原理和通过VPS自搭代理服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-11T19:33:21+08:00">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Shadowsocks/" itemprop="url" rel="index">
+                    <span itemprop="name">Shadowsocks</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://github.com/clowwindy/shadowsocks/" target="_blank" rel="noopener">Shadowsocks</a>是一个轻量级<a href="https://en.wikipedia.org/wiki/SOCKS_%28protocol%29#SOCKS5" target="_blank" rel="noopener">socks5</a>代理插件，最初用 Python 编写,主要用于翻越GFW(中国国家防火墙),ShadowSocks支持远程DNS解析，可以防止DNS污染。所有数据流量全部经过加密，加密算法可选并支持自定义算法，隐蔽性很强， 相比于传统的VPN方式，ShadowSocks支持PAC列表，根据PAC中的规则进行智能切换，兼顾了访问速度与访问效率。</p>
+<a id="more"></a>
+<h4 id="1-1Shadowsocks的翻墙原理："><a href="#1-1Shadowsocks的翻墙原理：" class="headerlink" title="1.1Shadowsocks的翻墙原理："></a>1.1Shadowsocks的翻墙原理：</h4><h6 id="天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如-HTTP-HTTPS-这类请求，会很明确地告诉-GFW-它们要请求哪个域名；再比如-TCP-请求，它只会告诉-GFW-它们要请求哪个-IP。-GFW-封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP-黑白名单也是这个道理。如果你有一台国外服务器不在-GFW-的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被-GFW-怀疑和窃听"><a href="#天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如-HTTP-HTTPS-这类请求，会很明确地告诉-GFW-它们要请求哪个域名；再比如-TCP-请求，它只会告诉-GFW-它们要请求哪个-IP。-GFW-封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP-黑白名单也是这个道理。如果你有一台国外服务器不在-GFW-的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被-GFW-怀疑和窃听" class="headerlink" title="天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如 HTTP/HTTPS 这类请求，会很明确地告诉 GFW 它们要请求哪个域名；再比如 TCP 请求，它只会告诉 GFW 它们要请求哪个 IP。 GFW 封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP 黑白名单也是这个道理。如果你有一台国外服务器不在 GFW 的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被 GFW 怀疑和窃听"></a>天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如 HTTP/HTTPS 这类请求，会很明确地告诉 GFW 它们要请求哪个域名；再比如 TCP 请求，它只会告诉 GFW 它们要请求哪个 IP。 GFW 封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP 黑白名单也是这个道理。如果你有一台国外服务器不在 GFW 的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被 GFW 怀疑和窃听</h6><h4 id="原理图："><a href="#原理图：" class="headerlink" title="原理图："></a>原理图：</h4><p><img src="http://yp.guohaonan.cn/Shadowsocks%E5%8E%9F%E7%90%86tu.jpg" alt="原理"><br><strong>在我们和目标地址之间有一个代理服务器，这个VPS一定是要能访问到，并且可以访问目标网站的，所以一般VPS选择国外</strong>的。</p>
+<ol>
+<li>我们首先通过SS Local和VPS进行通信，通过Socks5协议进行通信。</li>
+<li>SS Local连接到VPS， 并对Socks5中传输的数据进行对称加密传输，传输的数据格式是SS的协议。</li>
+<li>SS Server收到请求后，对数据解密，按照SS协议来解析数据。</li>
+<li>SS Server根据协议内容转发请求。</li>
+<li>SS Server获取请求结果后回传给SS Local</li>
+<li>SS Local获取结果回传给应用程序</li>
+</ol>
+<h4 id="VPN-与-Shadowsocks-的区别："><a href="#VPN-与-Shadowsocks-的区别：" class="headerlink" title="VPN 与 Shadowsocks 的区别："></a>VPN 与 Shadowsocks 的区别：</h4><p><strong>VPN</strong>顾名思义，虚拟专网，你接入VPN就是接入了一个专有网络，那么你访问网络都是从这个专有网络的出口出去，好比你在家，你家路由器后面的网络设备是在同一个网络，而VPN则是让你的设备进入了另一个网络。同时你的IP地址也变成了由VPN分配的一个IP地址。通常是一个私网地址。你和VPN服务器之间的通信是否加密取决于连接VPN的具体方式/协议。</p>
+<p><strong>Shadowsocks</strong>的Sock5代理服务器则是把你的网络数据请求通过一条连接你和代理服务器之间的通道，由服务器转发到目的地。你没有加入任何新的网络，只是http/socks数据经过代理服务器的转发送出，并从代理服务器接收回应。你与代理服务器通信过程不会被额外处理，如果你用https，那本身就是加密的。</p>
+<h4 id="Shadowsocks中全局模式与PAC模式之间的区别："><a href="#Shadowsocks中全局模式与PAC模式之间的区别：" class="headerlink" title="Shadowsocks中全局模式与PAC模式之间的区别："></a>Shadowsocks中全局模式与PAC模式之间的区别：</h4><p><strong>PAC模式</strong>就是会在你连接网站的时候读取PAC文件里的规则，来确定你访问的网站有没有被墙，如果符合，那就会使用代理服务器连接网站，而PAC列表一般都是从GFWList更新的。GFWList定期会更新被墙的网站（不过一般挺慢的）。</p>
+<p><strong>全局模式</strong>下，所有网站默认走代理。而PAC模式是只有被墙的才会走代理，推荐PAC模式，如果PAC模式无法访问一些网站，就换全局模式试试，一般是因为PAC更新不及时（也可能是GFWList更新不及时）导致的。</p>
+<hr>
+<p>根据以上的原理，我们需要一个VPS,在这里我选择tultr的VPS,由于只有tultr，搬瓦工，香港阿里云的支付方式支持支付宝，无奈学生党只有支付宝，而tultr又较为优惠。</p>
+<p>依次点击</p>
+<blockquote>
+<p>Servers</p>
+<p>Deploy New Servers (那个加号).</p>
+<p>Server Location: 就选你要选的机房（日本，或者美国旧金山的网络较好）</p>
+<p>Server Type: CentOS或者Ubuntu（国内这两个的教程最多出现了错误方便查找）</p>
+<p>Server Size: 最低配就可以</p>
+<p>其它的不用填写也可以</p>
+<p>Deploy Now</p>
+</blockquote>
+<h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>创建好服务器之后，先打开电脑控制台ping一下ip地址,当ping成功之后在进行其他的操作（我就由于日本的机房没ping就配置服务器导致配置好之后连不上，检查了半天发现那边的机房是连不了的，浪费了许多时间。<br><img src="http://yp.guohaonan.cn/ping.png" alt="ping"></p>
+<h5 id="CentOS系统建立完成之后进入到server-Inormation界面，单击右上角一个像显示器的图标“View-Console”即可进入控制台"><a href="#CentOS系统建立完成之后进入到server-Inormation界面，单击右上角一个像显示器的图标“View-Console”即可进入控制台" class="headerlink" title="CentOS系统建立完成之后进入到server Inormation界面，单击右上角一个像显示器的图标“View Console”即可进入控制台"></a>CentOS系统建立完成之后进入到server Inormation界面，单击右上角一个像显示器的图标“View Console”即可进入控制台</h5><p><img src="http://yp.guohaonan.cn/86D4C942-9CD4-472B-89FD-3EAD49837CB0.png" alt="面板"></p>
+<p>进入后，输入“root“，并输入服务器状态页面显示的密码即登陆成功</p>
+<p>如果嫌密码不好记可以在这里输入”Passwd”，即可修改密码</p>
+<p>但是以上通过view Console的方式配置服务器比较麻烦，多次配置出现错误就换了了安全终端模拟软件</p>
+<hr>
+<h4 id="安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接"><a href="#安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接" class="headerlink" title="安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接"></a>安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接</h4><blockquote>
+<p>常用的有两种一是putty一个是Xshell5，而在使用Xshell5的时候不知为什么就是连不上服务器。</p>
+</blockquote>
+<p>在软件只填主机ip地址，端口号不用动，因为经过测试刚开的服务器只开通了22端口连接进入后在以下窗口输入账号密码（在server information界面都有)<br><img src="http://yp.guohaonan.cn/Xshell.png" alt="Xshell5"></p>
+<p>而使用putty就连上了：<br><img src="http://yp.guohaonan.cn/putty.png" alt="putty"></p>
+<h4 id="配置环景："><a href="#配置环景：" class="headerlink" title="配置环景："></a>配置环景：</h4><blockquote>
+<p>pip是 python 的包管理工具。在本文中将使用 python 版本的 shadowsocks，此版本的 shadowsocks 已发布到 pip 上，因此我们需要通过 pip 命令来安装.</p>
+</blockquote>
+<p><img src="http://yp.guohaonan.cn/%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83.png" alt="搭建环境"></p>
+<h5 id="输入一下命令"><a href="#输入一下命令" class="headerlink" title="输入一下命令"></a>输入一下命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install python-setuptools &amp;&amp; easy_install pip</span><br></pre></td></tr></table></figure>
+<h5 id="接着会询问你是否安装，输入："><a href="#接着会询问你是否安装，输入：" class="headerlink" title="接着会询问你是否安装，输入："></a>接着会询问你是否安装，输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y</span><br></pre></td></tr></table></figure>
+<h4 id="安装shadowsocks"><a href="#安装shadowsocks" class="headerlink" title="安装shadowsocks"></a>安装shadowsocks</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<h5 id="接着，创建一个Shadowsocks配置文件-输入以下命令："><a href="#接着，创建一个Shadowsocks配置文件-输入以下命令：" class="headerlink" title="接着，创建一个Shadowsocks配置文件,输入以下命令："></a>接着，创建一个Shadowsocks配置文件,输入以下命令：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
+<h5 id="然后进入文件编辑界面，按i开始编辑，输入："><a href="#然后进入文件编辑界面，按i开始编辑，输入：" class="headerlink" title="然后进入文件编辑界面，按i开始编辑，输入："></a>然后进入文件编辑界面，按i开始编辑，输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;server&quot;:&quot;your_server_ip&quot;, //你的ip地址</span><br><span class="line">&quot;server_port&quot;:5656, //你的登录端口</span><br><span class="line">&quot;password&quot;:&quot;your_password&quot;, //你自己设置的一个密码，用于终端登录</span><br><span class="line">&quot;method&quot;:&quot;aes-256-cfb&quot;, //加密方式</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编辑完成之后按esc然后打 ：wq 退出并保存文件</p>
+<h4 id="开通你的登录端口："><a href="#开通你的登录端口：" class="headerlink" title="开通你的登录端口："></a>开通你的登录端口：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=5656/tcp --permanent</span><br></pre></td></tr></table></figure>
+<p>着这里可以通过站长工具网站检查站点是否开通，开启前：<br><img src="http://yp.guohaonan.cn/%E5%BC%80%E5%90%AF%E7%AB%AF%E5%8F%A3.png" alt="开启端口"><br>开启后：<br><img src="http://yp.guohaonan.cn/%E6%A3%80%E6%9F%A5%E7%AB%AF%E5%8F%A3.png" alt="开启站点"></p>
+<h4 id="启动shadowsocs"><a href="#启动shadowsocs" class="headerlink" title="启动shadowsocs"></a>启动shadowsocs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+<h5 id="如果需要关闭就输入："><a href="#如果需要关闭就输入：" class="headerlink" title="如果需要关闭就输入："></a>如果需要关闭就输入：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
+<h3 id="至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"><a href="#至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了" class="headerlink" title="至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"></a><strong>至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了</strong></h3><hr>
+<h4 id="涉及的知识："><a href="#涉及的知识：" class="headerlink" title="涉及的知识："></a>涉及的知识：</h4><h5 id="Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98"><a href="#Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98" class="headerlink" title="Shadowsocks原理和搭建 :     http://blog.021xt.cc/archives/98"></a>Shadowsocks原理和搭建 :     <a href="http://blog.021xt.cc/archives/98" target="_blank" rel="noopener">http://blog.021xt.cc/archives/98</a></h5><h5 id="Vim入门基础-www-jianshu-com-p-bcbe916f97e1"><a href="#Vim入门基础-www-jianshu-com-p-bcbe916f97e1" class="headerlink" title="Vim入门基础:       www.jianshu.com/p/bcbe916f97e1"></a>Vim入门基础:      <a href="http://www.jianshu.com/p/bcbe916f97e1" target="_blank" rel="noopener"> www.jianshu.com/p/bcbe916f97e1</a></h5><h5 id="CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html"><a href="#CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html" class="headerlink" title="CentOS7使用firewalld打开关闭防火墙与端口:     http://www.cnblogs.com/moxiaoan/p/5683743.html"></a>CentOS7使用firewalld打开关闭防火墙与端口:     <a href="http://www.cnblogs.com/moxiaoan/p/5683743.html" target="_blank" rel="noopener">http://www.cnblogs.com/moxiaoan/p/5683743.html</a></h5>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Shadowsocks/" rel="tag"># Shadowsocks</a>
+          
+            <a href="/tags/VPS/" rel="tag"># VPS</a>
+          
+            <a href="/tags/服务器/" rel="tag"># 服务器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/06/property的参数分析/" rel="next" title="ios中property的参数分析">
+                <i class="fa fa-chevron-left"></i> ios中property的参数分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/08/Unity动画插件DoTween/" rel="prev" title="Unity 动画插件DoTween">
+                Unity 动画插件DoTween <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1Shadowsocks的翻墙原理："><span class="nav-number">1.</span> <span class="nav-text">1.1Shadowsocks的翻墙原理：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如-HTTP-HTTPS-这类请求，会很明确地告诉-GFW-它们要请求哪个域名；再比如-TCP-请求，它只会告诉-GFW-它们要请求哪个-IP。-GFW-封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP-黑白名单也是这个道理。如果你有一台国外服务器不在-GFW-的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被-GFW-怀疑和窃听"><span class="nav-number">1.0.1.</span> <span class="nav-text">天朝局域网通过GFW隔离了我们与外界的交流，当然，这个隔离并非完全隔离，而是选择性的，天朝不希望你上的网站就直接阻断。每一个网络请求都是有数据特征的，不同的协议具备不同的特征，比如 HTTP/HTTPS 这类请求，会很明确地告诉 GFW 它们要请求哪个域名；再比如 TCP 请求，它只会告诉 GFW 它们要请求哪个 IP。 GFW 封锁包含多种方式，最容易操作也是最基础的方式便是域名黑白名单，在黑名单内的域名不让通过，IP 黑白名单也是这个道理。如果你有一台国外服务器不在 GFW 的黑名单内，天朝局域网的机器就可以跟这一台机器通讯。那么一个翻墙的方案就出来了：境内设备与境外机器通讯，境内想看什么网页，就告诉境外的机器，让境外机器代理抓取，然后送回来，我们要做的就是保证境内设备与境外设备通讯时不被 GFW 怀疑和窃听</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#原理图："><span class="nav-number">2.</span> <span class="nav-text">原理图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VPN-与-Shadowsocks-的区别："><span class="nav-number">3.</span> <span class="nav-text">VPN 与 Shadowsocks 的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shadowsocks中全局模式与PAC模式之间的区别："><span class="nav-number">4.</span> <span class="nav-text">Shadowsocks中全局模式与PAC模式之间的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意："><span class="nav-number">5.</span> <span class="nav-text">注意：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CentOS系统建立完成之后进入到server-Inormation界面，单击右上角一个像显示器的图标“View-Console”即可进入控制台"><span class="nav-number">5.1.</span> <span class="nav-text">CentOS系统建立完成之后进入到server Inormation界面，单击右上角一个像显示器的图标“View Console”即可进入控制台</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接"><span class="nav-number">6.</span> <span class="nav-text">安全终端模拟软件：可以远程浏览服务器系统的终端，通过SHH协议链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置环景："><span class="nav-number">7.</span> <span class="nav-text">配置环景：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输入一下命令"><span class="nav-number">7.1.</span> <span class="nav-text">输入一下命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接着会询问你是否安装，输入："><span class="nav-number">7.2.</span> <span class="nav-text">接着会询问你是否安装，输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装shadowsocks"><span class="nav-number">8.</span> <span class="nav-text">安装shadowsocks</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#接着，创建一个Shadowsocks配置文件-输入以下命令："><span class="nav-number">8.1.</span> <span class="nav-text">接着，创建一个Shadowsocks配置文件,输入以下命令：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#然后进入文件编辑界面，按i开始编辑，输入："><span class="nav-number">8.2.</span> <span class="nav-text">然后进入文件编辑界面，按i开始编辑，输入：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开通你的登录端口："><span class="nav-number">9.</span> <span class="nav-text">开通你的登录端口：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动shadowsocs"><span class="nav-number">10.</span> <span class="nav-text">启动shadowsocs</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果需要关闭就输入："><span class="nav-number">10.1.</span> <span class="nav-text">如果需要关闭就输入：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了"><span class="nav-number"></span> <span class="nav-text">至此就安装完成了，就可以通过github上下载的shadowsocks终端进行登录翻墙了</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#涉及的知识："><span class="nav-number">1.</span> <span class="nav-text">涉及的知识：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Shadowsocks原理和搭建-http-blog-021xt-cc-archives-98"><span class="nav-number">1.1.</span> <span class="nav-text">Shadowsocks原理和搭建 :     http://blog.021xt.cc/archives/98</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vim入门基础-www-jianshu-com-p-bcbe916f97e1"><span class="nav-number">1.2.</span> <span class="nav-text">Vim入门基础:       www.jianshu.com/p/bcbe916f97e1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CentOS7使用firewalld打开关闭防火墙与端口-http-www-cnblogs-com-moxiaoan-p-5683743-html"><span class="nav-number">1.3.</span> <span class="nav-text">CentOS7使用firewalld打开关闭防火墙与端口:     http://www.cnblogs.com/moxiaoan/p/5683743.html</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

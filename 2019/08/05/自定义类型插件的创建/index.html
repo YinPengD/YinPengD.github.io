@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="UE4,插件,自定义资源,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="除了虚幻4官方为我们提供的几种创建插件的模板类型，我们还可以根据自己的需要来定制化一些插件类型，这里介绍的就是一种自定义资源类型的插件的创建方法。">
+<meta name="keywords" content="UE4,插件,自定义资源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义类型插件的创建">
+<meta property="og:url" content="http://yoursite.com/2019/08/05/自定义类型插件的创建/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="除了虚幻4官方为我们提供的几种创建插件的模板类型，我们还可以根据自己的需要来定制化一些插件类型，这里介绍的就是一种自定义资源类型的插件的创建方法。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-31d2930ebbc37cc4441c8dbcbb158ad1_hd.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190813/TQQRqM2RDzJg.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190813/TuWk1jmRxSCo.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190813/RIBMejTOvH8S.png?imageslim">
+<meta property="og:image" content="http://yp.guohaonan.cn/unreal/20190813/0dvwbA7w8u3a.png?imageslim">
+<meta property="og:updated_time" content="2019-11-20T01:01:23.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义类型插件的创建">
+<meta name="twitter:description" content="除了虚幻4官方为我们提供的几种创建插件的模板类型，我们还可以根据自己的需要来定制化一些插件类型，这里介绍的就是一种自定义资源类型的插件的创建方法。">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-31d2930ebbc37cc4441c8dbcbb158ad1_hd.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/05/自定义类型插件的创建/">
+
+
+
+
+
+  <title>自定义类型插件的创建 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/自定义类型插件的创建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义类型插件的创建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-05T20:33:21+08:00">
+                2019-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UE4/" itemprop="url" rel="index">
+                    <span itemprop="name">UE4</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>除了虚幻4官方为我们提供的几种创建插件的模板类型，我们还可以根据自己的需要来定制化一些插件类型，这里介绍的就是一种自定义资源类型的插件的创建方法。</p>
+<a id="more"></a>
+<h3 id="基本的插件类型"><a href="#基本的插件类型" class="headerlink" title="基本的插件类型"></a>基本的插件类型</h3><ul>
+<li>Blank：原始的插件，只提供最基础的目录与文件创建，可以是任何内容插件。</li>
+<li>Content Ony ：只能在Content目录的插件，通常是给美术资源之类做的插件。</li>
+<li>Blueprint Library：蓝图库，如其名，就是一些比较独立蓝图库，封装好给不同游戏用，比如A星寻路算法</li>
+<li>Editor Toolbar Button：创建一个在编辑器上面的按钮插件，创建在如下图位置。</li>
+</ul>
+<p><img src="https://pic2.zhimg.com/80/v2-31d2930ebbc37cc4441c8dbcbb158ad1_hd.png" alt="toolbar"></p>
+<ul>
+<li>Editor Standalone Window：独立窗体，创建一个独立界面的编辑器，通常和Slate搭配使用。</li>
+<li>Editor Mode：创建一个在下面位置的插件</li>
+</ul>
+<p><img src="http://yp.guohaonan.cn/unreal/20190813/TQQRqM2RDzJg.png?imageslim" alt="mark"></p>
+<p>除了上面的官方自定义的插件类型，我还可以自定义一些其他的类型，我就来介绍一种自定义插件类型</p>
+<h3 id="自定义资源类型插件创建过程"><a href="#自定义资源类型插件创建过程" class="headerlink" title="自定义资源类型插件创建过程"></a>自定义资源类型插件创建过程</h3><p>要在虚幻4创建一个自定义的编辑器资源类型，其中创建的过程：</p>
+<ul>
+<li><h4 id="声明资源类型的C-类"><a href="#声明资源类型的C-类" class="headerlink" title="声明资源类型的C++类"></a>声明资源类型的C++类</h4><blockquote>
+<p>虚幻4中有很多的资源类型，例如材质，贴图，蓝图，数据，纹理等，我们可以根据自己的需要继承相对应资源的类</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="数据类"><a href="#数据类" class="headerlink" title="数据类"></a>数据类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">UCLASS()</span><br><span class="line">class CUSTOMASSET_API UMyDataAsset : public UDataAsset</span><br><span class="line">&#123;</span><br><span class="line">	GENERATED_BODY()</span><br><span class="line"></span><br><span class="line">		UPROPERTY(EditAnywhere, Category = &quot;MyDataAsset&quot;)</span><br><span class="line">		FString StrProperty;</span><br><span class="line"></span><br><span class="line">	UPROPERTY(EditAnywhere, Category = &quot;MyDataAsset&quot;)</span><br><span class="line">		float NumProperty;</span><br><span class="line">	</span><br><span class="line">	UPROPERTY(EditAnywhere,meta = (DisplayName = &quot;IsActive?&quot;), Category = &quot;MyDataAsset&quot;)</span><br><span class="line">		bool bIsActive;</span><br><span class="line">	</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="原始类"><a href="#原始类" class="headerlink" title="原始类"></a>原始类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UCLASS()</span><br><span class="line">class MYTEST_API UMyObject : public UObject</span><br><span class="line">&#123;</span><br><span class="line">	GENERATED_BODY()</span><br><span class="line"> </span><br><span class="line">public:</span><br><span class="line">	UPROPERTY(EditAnywhere)</span><br><span class="line">		int A;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="实现资源创建工厂"><a href="#实现资源创建工厂" class="headerlink" title="实现资源创建工厂"></a>实现资源创建工厂</h4><blockquote>
+<p>即让用户可以创建这个资源的实例（让它出现在Content Browser）</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">UCLASS()</span><br><span class="line">class GENERICGRAPHEDITOR_API UGenericGraphFactory : public UFactory</span><br><span class="line">&#123;</span><br><span class="line">	GENERATED_BODY()</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	UGenericGraphFactory();</span><br><span class="line">	virtual ~UGenericGraphFactory();</span><br><span class="line"></span><br><span class="line">	virtual UObject* FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>实现两个方法：</p>
+<ol>
+<li><h5 id="构造函数指定当前工厂类创建的实例是是什么类型"><a href="#构造函数指定当前工厂类创建的实例是是什么类型" class="headerlink" title="构造函数指定当前工厂类创建的实例是是什么类型"></a>构造函数指定当前工厂类创建的实例是是什么类型</h5></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UGenericGraphFactory::UGenericGraphFactory()</span><br><span class="line">&#123;</span><br><span class="line">	bCreateNew = true;</span><br><span class="line">	bEditAfterNew = true;</span><br><span class="line">	SupportedClass = UGenericGraph::StaticClass();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><h5 id="重载工厂类的创建函数"><a href="#重载工厂类的创建函数" class="headerlink" title="重载工厂类的创建函数"></a>重载工厂类的创建函数</h5></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UObject* UGenericGraphFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)</span><br><span class="line">&#123;</span><br><span class="line">	return NewObject&lt;UObject&gt;(InParent, Class, Name, Flags | RF_Transactional);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建了工厂类之后，UE4就会自动去识别这个资源类了，但是这个资源类还有很多的细节没有实现。</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190813/TuWk1jmRxSCo.png?imageslim" alt="mark"></p>
+<h5 id="注意：继承的Factory类是UnrealEd模块的，所以在-cs配置文件要添加UnreaEd模块"><a href="#注意：继承的Factory类是UnrealEd模块的，所以在-cs配置文件要添加UnreaEd模块" class="headerlink" title="注意：继承的Factory类是UnrealEd模块的，所以在.cs配置文件要添加UnreaEd模块"></a>注意：继承的Factory类是UnrealEd模块的，所以在.cs配置文件要添加UnreaEd模块</h5><ul>
+<li><h4 id="绑定资源响应事件"><a href="#绑定资源响应事件" class="headerlink" title="绑定资源响应事件"></a>绑定资源响应事件</h4><blockquote>
+<p>Asset文件需要绑定一个FAssetTypeActions_ClassTypeBase类, 作为一些基本操作的响应, 例如打开、合并和差异化比较等</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="创建Actions操作"><a href="#创建Actions操作" class="headerlink" title="创建Actions操作"></a>创建Actions操作</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">class FAssetTypeActions_GenericGraph : public FAssetTypeActions_Base</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">	FAssetTypeActions_GenericGraph(EAssetTypeCategories::Type InAssetCategory);</span><br><span class="line"></span><br><span class="line">	virtual FText GetName() const override;</span><br><span class="line">	virtual FColor GetTypeColor() const override;</span><br><span class="line">	virtual UClass* GetSupportedClass() const override;</span><br><span class="line">	virtual void OpenAssetEditor(const TArray&lt;UObject*&gt;&amp; InObjects, TSharedPtr&lt;class IToolkitHost&gt; EditWithinLevelEditor = TSharedPtr&lt;IToolkitHost&gt;()) override;</span><br><span class="line">	virtual uint32 GetCategories() override;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">	EAssetTypeCategories::Type MyAssetCategory;</span><br><span class="line">&#125;;</span><br><span class="line">//////////////</span><br><span class="line">FText FMyObjectTypeAction::GetName() const</span><br><span class="line">&#123;</span><br><span class="line">	return FText::FromString(&quot;MyObject&quot;);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">uint32 FMyObjectTypeAction::GetCategories()</span><br><span class="line">&#123;</span><br><span class="line">	return MyCustomCategory;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">FColor FMyObjectTypeAction::GetTypeColor() const</span><br><span class="line">&#123;</span><br><span class="line">	return FColor(255, 0, 0, 255);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">FText FMyObjectTypeAction::GetAssetDescription(const FAssetData&amp; AssetData) const</span><br><span class="line">&#123;</span><br><span class="line">	return FText::FromString(&quot;MyObjectDes&quot;);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">UClass* FMyObjectTypeAction::GetSupportedClass() const</span><br><span class="line">&#123;</span><br><span class="line">	return UMyObject::StaticClass();</span><br></pre></td></tr></table></figure>
+<h5 id="注册资源文件进行注册"><a href="#注册资源文件进行注册" class="headerlink" title="注册资源文件进行注册"></a>注册资源文件进行注册</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/* 模块开始时调用 */</span><br><span class="line">void FGenericGraphEditor::StartupModule()</span><br><span class="line">&#123;</span><br><span class="line">	// 获取资产管理工具</span><br><span class="line">	IAssetTools&amp; AssetTools = FModuleManager::LoadModuleChecked&lt;FAssetToolsModule&gt;(&quot;AssetTools&quot;).Get();</span><br><span class="line">	// 初始化一种资源类型</span><br><span class="line">	GenericGraphAssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT(&quot;GenericGraph&quot;)), LOCTEXT(&quot;GenericGraphAssetCategory&quot;, &quot;GenericGraph&quot;));</span><br><span class="line">	// 向注册这种资源类型</span><br><span class="line">	RegisterAssetTypeAction(AssetTools, MakeShareable(new FAssetTypeActions_GenericGraph(GenericGraphAssetCategoryBit)));</span><br><span class="line">&#125;</span><br><span class="line">// 向资源工具绑定创建事件</span><br><span class="line">void FGenericGraphEditor::RegisterAssetTypeAction(IAssetTools&amp; AssetTools, TSharedRef&lt;IAssetTypeActions&gt; Action)</span><br><span class="line">&#123;</span><br><span class="line">	AssetTools.RegisterAssetTypeActions(Action);</span><br><span class="line">	CreatedAssetTypeActions.Add(Action);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="自定义资源在编辑器中的样式"><a href="#自定义资源在编辑器中的样式" class="headerlink" title="自定义资源在编辑器中的样式"></a>自定义资源在编辑器中的样式</h4><blockquote>
+<p>我们可以自定义调整缩略图，颜色，细节自定义，过滤器，分类等。</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="设置缩略图"><a href="#设置缩略图" class="headerlink" title="设置缩略图"></a>设置缩略图</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void FOrfeasPluginModule::StartupModule()</span><br><span class="line">&#123;</span><br><span class="line">TSharedPtr StyleSet;</span><br><span class="line">  StyleSet = MakeShareable(new FSlateStyleSet(&quot;OrfeasStyle&quot;));</span><br><span class="line"> </span><br><span class="line">    // 这个插件的内容路径</span><br><span class="line">    FString ContentDir = IPluginManager::Get().FindPlugin(&quot;OrfeasPlugin&quot;)-&gt;GetBaseDir();</span><br><span class="line">    StyleSet-&gt;SetContentRoot(ContentDir);</span><br><span class="line">    //从图标创建一个笔刷</span><br><span class="line">    FSlateImageBrush* ThumbnailBrush = new FSlateImageBrush(StyleSet-&gt;RootToContentDir(TEXT(&quot;Resources/Icon128&quot;), TEXT(&quot;.png&quot;)), FVector2D(128.f, 128.f));</span><br><span class="line">    if (ThumbnailBrush)</span><br><span class="line">    &#123;</span><br><span class="line">        StyleSet-&gt;Set(&quot;ClassThumbnail.OrfeasCustomAsset&quot;, ThumbnailBrush);</span><br><span class="line">        //注册类型</span><br><span class="line">        FSlateStyleRegistry::RegisterSlateStyle(*StyleSet);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用IPluginManager.h头文件你需要在你的插件的依赖中添加 “Projects” 依赖</p>
+<h5 id="设置过滤器与分类"><a href="#设置过滤器与分类" class="headerlink" title="设置过滤器与分类"></a>设置过滤器与分类</h5><p>在注册资源类型的时候就设置了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 初始化一种资源类型</span><br><span class="line">GenericGraphAssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT(&quot;GenericGraph&quot;)), LOCTEXT(&quot;GenericGraphAssetCategory&quot;, &quot;GenericGraph&quot;));</span><br><span class="line">// 注册这种资源类型，设置分类与过滤类型</span><br><span class="line">RegisterAssetTypeAction(AssetTools, MakeShareable(new FAssetTypeActions_GenericGraph(GenericGraphAssetCategoryBit)));</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4 id="高级部分：自定义资源编辑器UI"><a href="#高级部分：自定义资源编辑器UI" class="headerlink" title="高级部分：自定义资源编辑器UI"></a>高级部分：自定义资源编辑器UI</h4><blockquote>
+<p>适用于复杂的资源类型</p>
+</blockquote>
+</li>
+</ul>
+<p>在打开资源的事件中，我们可以给打开事件绑定一个自定义的资源编辑器</p>
+<p><img src="http://yp.guohaonan.cn/unreal/20190813/RIBMejTOvH8S.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>绑定了一个自定义的编辑器类型,你需要什么样的编辑器就需要你自己去自定义了，这里主要针对自定义资源插件，就不详细解释自定义编辑器的实现了</p>
+</blockquote>
+<h5 id="自定义编辑器界面"><a href="#自定义编辑器界面" class="headerlink" title="自定义编辑器界面"></a>自定义编辑器界面</h5><p><img src="http://yp.guohaonan.cn/unreal/20190813/0dvwbA7w8u3a.png?imageslim" alt="mark"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UE4/" rel="tag"># UE4</a>
+          
+            <a href="/tags/插件/" rel="tag"># 插件</a>
+          
+            <a href="/tags/自定义资源/" rel="tag"># 自定义资源</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/24/Windows编程基础及消息循环详解/" rel="next" title="Windows编程基础及消息循环详解">
+                <i class="fa fa-chevron-left"></i> Windows编程基础及消息循环详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/13/从源码剖析虚幻引擎编译原理/" rel="prev" title="从源码剖析虚幻引擎编译原理">
+                从源码剖析虚幻引擎编译原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本的插件类型"><span class="nav-number">1.</span> <span class="nav-text">基本的插件类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义资源类型插件创建过程"><span class="nav-number">2.</span> <span class="nav-text">自定义资源类型插件创建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明资源类型的C-类"><span class="nav-number">2.1.</span> <span class="nav-text">声明资源类型的C++类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#数据类"><span class="nav-number">2.1.1.</span> <span class="nav-text">数据类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#原始类"><span class="nav-number">2.1.2.</span> <span class="nav-text">原始类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现资源创建工厂"><span class="nav-number">2.2.</span> <span class="nav-text">实现资源创建工厂</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#构造函数指定当前工厂类创建的实例是是什么类型"><span class="nav-number">2.2.1.</span> <span class="nav-text">构造函数指定当前工厂类创建的实例是是什么类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重载工厂类的创建函数"><span class="nav-number">2.2.2.</span> <span class="nav-text">重载工厂类的创建函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意：继承的Factory类是UnrealEd模块的，所以在-cs配置文件要添加UnreaEd模块"><span class="nav-number">2.2.3.</span> <span class="nav-text">注意：继承的Factory类是UnrealEd模块的，所以在.cs配置文件要添加UnreaEd模块</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绑定资源响应事件"><span class="nav-number">2.3.</span> <span class="nav-text">绑定资源响应事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建Actions操作"><span class="nav-number">2.3.1.</span> <span class="nav-text">创建Actions操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注册资源文件进行注册"><span class="nav-number">2.3.2.</span> <span class="nav-text">注册资源文件进行注册</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义资源在编辑器中的样式"><span class="nav-number">2.4.</span> <span class="nav-text">自定义资源在编辑器中的样式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#设置缩略图"><span class="nav-number">2.4.1.</span> <span class="nav-text">设置缩略图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置过滤器与分类"><span class="nav-number">2.4.2.</span> <span class="nav-text">设置过滤器与分类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高级部分：自定义资源编辑器UI"><span class="nav-number">2.5.</span> <span class="nav-text">高级部分：自定义资源编辑器UI</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义编辑器界面"><span class="nav-number">2.5.1.</span> <span class="nav-text">自定义编辑器界面</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Anto:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Unity3D,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="不属于3d环境中的时刻显示在屏幕上的，用于游戏的开始菜单，RPG游戏的菜单栏，侧边栏与功能栏比如背包系统，任务列表，设计用来控制移动的虚拟杆和攻击的攻击按钮">
+<meta name="keywords" content="Unity3D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity UGUI界面">
+<meta property="og:url" content="http://yoursite.com/2017/10/02/UGUI/index.html">
+<meta property="og:site_name" content="Roc Ying">
+<meta property="og:description" content="不属于3d环境中的时刻显示在屏幕上的，用于游戏的开始菜单，RPG游戏的菜单栏，侧边栏与功能栏比如背包系统，任务列表，设计用来控制移动的虚拟杆和攻击的攻击按钮">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%8F%96%E6%B6%88%E5%8B%BE%E9%80%89.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%88%9B%E5%BB%BATxt.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0ScollRect.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0Mash.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0Scrollbar.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/note%E6%95%88%E6%9E%9C.gif">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E7%82%B9%E5%87%BB%E5%AE%9E%E7%8E%B0.gif">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0slider.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E4%BF%AE%E6%94%B9%E5%9B%BE%E7%89%87.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E8%A1%80%E6%9D%A1%E5%AE%9E%E7%8E%B0.gif">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%88%9B%E5%BB%BA%E8%84%9A%E6%9C%AC.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%88%9B%E5%BB%BA%E5%8A%A0%E8%BD%BD%E8%84%9A%E6%9C%AC.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%BC%80%E5%90%AF%E7%9B%91%E6%8E%A7.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%8A%80%E8%83%BD%E5%AE%9E%E7%8E%B0.gif">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0Toggel.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/t%E6%B7%BB%E5%8A%A0Group.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E4%B8%AD%E9%97%B4%E7%89%A9%E4%BD%93.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E7%89%A9%E5%93%81%E9%9D%A2%E6%9D%BF%E6%A0%8F.gif">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E7%82%B9%E5%87%BB%E6%8C%89%E9%92%AE.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%85%B3%E5%8D%A1%E9%80%89%E6%8B%A9%E5%AE%9E%E7%8E%B0.gif">
+<meta property="og:image" content="http://yp.guohaonan.cn/Toggle%E7%BB%84%E4%BB%B6.png">
+<meta property="og:image" content="http://yp.guohaonan.cn/%E5%AE%9E%E7%8E%B0%E8%AE%BE%E8%AE%A1%E9%9D%A2%E6%9D%BF.gif">
+<meta property="og:updated_time" content="2019-11-20T01:01:23.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity UGUI界面">
+<meta name="twitter:description" content="不属于3d环境中的时刻显示在屏幕上的，用于游戏的开始菜单，RPG游戏的菜单栏，侧边栏与功能栏比如背包系统，任务列表，设计用来控制移动的虚拟杆和攻击的攻击按钮">
+<meta name="twitter:image" content="http://yp.guohaonan.cn/%E5%8F%96%E6%B6%88%E5%8B%BE%E9%80%89.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/02/UGUI/">
+
+
+
+
+
+  <title>Unity UGUI界面 | Roc Ying</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Roc Ying</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">凡心所向，素履以往</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/UGUI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YinPengD">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/icon.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roc Ying">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unity UGUI界面</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-02T20:58:56+08:00">
+                2017-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unit-UGUI界面/" itemprop="url" rel="index">
+                    <span itemprop="name">unit UGUI界面</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不属于3d环境中的时刻显示在屏幕上的，用于游戏的开始菜单，RPG游戏的菜单栏，侧边栏与功能栏比如背包系统，任务列表，设计用来控制移动的虚拟杆和攻击的攻击按钮</p>
+<a id="more"></a>
+<hr>
+<h2 id="创建一个公告的文本列表"><a href="#创建一个公告的文本列表" class="headerlink" title="创建一个公告的文本列表"></a>创建一个公告的文本列表</h2><blockquote>
+<p> 游戏内的公告板用于对玩家的提示，或者是任务的了解</p>
+</blockquote>
+<h5 id="1-创建一个UI的image"><a href="#1-创建一个UI的image" class="headerlink" title="1.创建一个UI的image"></a>1.创建一个UI的image</h5><h5 id="2-只能上下拖动就要取消勾选以下按钮："><a href="#2-只能上下拖动就要取消勾选以下按钮：" class="headerlink" title="2.只能上下拖动就要取消勾选以下按钮："></a>2.只能上下拖动就要取消勾选以下按钮：</h5><p><img src="http://yp.guohaonan.cn/%E5%8F%96%E6%B6%88%E5%8B%BE%E9%80%89.png" alt></p>
+<h5 id="3-在刚创建的image下创建一个text"><a href="#3-在刚创建的image下创建一个text" class="headerlink" title="3. 在刚创建的image下创建一个text"></a>3. 在刚创建的image下创建一个text</h5><p><img src="http://yp.guohaonan.cn/%E5%88%9B%E5%BB%BATxt.png" alt></p>
+<h5 id="4。为了只显示在框内要添加Scoll-Rect组件"><a href="#4。为了只显示在框内要添加Scoll-Rect组件" class="headerlink" title="4。为了只显示在框内要添加Scoll Rect组件"></a>4。为了只显示在框内要添加Scoll Rect组件</h5><p><img src="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0ScollRect.png" alt></p>
+<h5 id="5-为了消除白板要添加Mash组件"><a href="#5-为了消除白板要添加Mash组件" class="headerlink" title="5.为了消除白板要添加Mash组件"></a>5.为了消除白板要添加Mash组件</h5><p><img src="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0Mash.png" alt></p>
+<h5 id="6-添加Scrollbar滑动组件"><a href="#6-添加Scrollbar滑动组件" class="headerlink" title="6.添加Scrollbar滑动组件"></a>6.添加Scrollbar滑动组件</h5><h5 id="7-把Scrollbar组件添加到被滑动的Image上"><a href="#7-把Scrollbar组件添加到被滑动的Image上" class="headerlink" title="7.把Scrollbar组件添加到被滑动的Image上"></a>7.把Scrollbar组件添加到被滑动的Image上</h5><p><img src="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0Scrollbar.png" alt></p>
+<h5 id="最终实现的效果："><a href="#最终实现的效果：" class="headerlink" title="最终实现的效果："></a>最终实现的效果：</h5><p><img src="http://yp.guohaonan.cn/note%E6%95%88%E6%9E%9C.gif" alt></p>
+<hr>
+<h2 id="监控UI界面的按钮点击事件（点击开始按钮开始游戏）"><a href="#监控UI界面的按钮点击事件（点击开始按钮开始游戏）" class="headerlink" title="监控UI界面的按钮点击事件（点击开始按钮开始游戏）"></a>监控UI界面的按钮点击事件（点击开始按钮开始游戏）</h2><blockquote>
+<p> 用于游戏中场景的切换</p>
+</blockquote>
+<h5 id="1-按钮上的点击事件："><a href="#1-按钮上的点击事件：" class="headerlink" title="1.按钮上的点击事件："></a>1.按钮上的点击事件：</h5><p><img src="http://yp.guohaonan.cn/%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6.png" alt></p>
+<h5 id="2-脚本代码："><a href="#2-脚本代码：" class="headerlink" title="2.脚本代码："></a>2.脚本代码：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine.SceneManagement;</span><br><span class="line"></span><br><span class="line">public class StartGame : MonoBehaviour &#123;</span><br><span class="line"></span><br><span class="line">public void OnClick(string sceneName)</span><br><span class="line">&#123;</span><br><span class="line">SceneManager.LoadScene(sceneName);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h5><p><img src="http://yp.guohaonan.cn/%E7%82%B9%E5%87%BB%E5%AE%9E%E7%8E%B0.gif" alt></p>
+<hr>
+<h2 id="制作一个显示血条的UI"><a href="#制作一个显示血条的UI" class="headerlink" title="制作一个显示血条的UI:"></a>制作一个显示血条的UI:</h2><blockquote>
+<p> 血条的增减是游戏中的基本</p>
+</blockquote>
+<h5 id="1-添加一个slider的组件："><a href="#1-添加一个slider的组件：" class="headerlink" title="1.添加一个slider的组件："></a>1.添加一个slider的组件：</h5><p><img src="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0slider.png" alt></p>
+<h5 id="2-修改图片的类型"><a href="#2-修改图片的类型" class="headerlink" title="2.修改图片的类型:"></a>2.修改图片的类型:</h5><p><img src="http://yp.guohaonan.cn/%E4%BF%AE%E6%94%B9%E5%9B%BE%E7%89%87.png" alt></p>
+<h5 id="实现：-1"><a href="#实现：-1" class="headerlink" title="实现："></a>实现：</h5><p><img src="http://yp.guohaonan.cn/%E8%A1%80%E6%9D%A1%E5%AE%9E%E7%8E%B0.gif" alt></p>
+<hr>
+<h2 id="制做一个技能"><a href="#制做一个技能" class="headerlink" title="制做一个技能"></a>制做一个技能</h2><blockquote>
+<p> 对于一个游戏角色来说，多变的技能必不可少，这里主要简单的实现了技能UI的检测，与触发</p>
+</blockquote>
+<h5 id="1-创建一个鼠标点击事件和检测按钮按下脚本"><a href="#1-创建一个鼠标点击事件和检测按钮按下脚本" class="headerlink" title="1.创建一个鼠标点击事件和检测按钮按下脚本"></a>1.创建一个鼠标点击事件和检测按钮按下脚本</h5><p><img src="http://yp.guohaonan.cn/%E5%88%9B%E5%BB%BA%E8%84%9A%E6%9C%AC.png" alt></p>
+<h5 id="2-创建被技能加载的图片"><a href="#2-创建被技能加载的图片" class="headerlink" title="2.创建被技能加载的图片"></a>2.创建被技能加载的图片</h5><p><img src="http://yp.guohaonan.cn/%E5%88%9B%E5%BB%BA%E5%8A%A0%E8%BD%BD%E8%84%9A%E6%9C%AC.png" alt></p>
+<h5 id="3-脚本代码："><a href="#3-脚本代码：" class="headerlink" title="3.脚本代码："></a>3.脚本代码：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.UI; //添加UI</span><br><span class="line"></span><br><span class="line">public class skill1 : MonoBehaviour &#123;</span><br><span class="line">public float timer = 0;</span><br><span class="line">public bool isStartTimer = false;</span><br><span class="line">public float coldTimer = 2;</span><br><span class="line">public Image Imageskill1;</span><br><span class="line">public KeyCode keyCode1;</span><br><span class="line">// Use this for initialization</span><br><span class="line">void Start () &#123;</span><br><span class="line">Imageskill1 = transform.Find(&quot;load&quot;).GetComponent&lt;Image&gt;(); //寻找图片下的Image组件</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Update is called once per frame</span><br><span class="line">void Update () &#123;</span><br><span class="line">if (Input.GetKeyDown(keyCode1)) //监控按钮时间</span><br><span class="line">&#123;</span><br><span class="line">isStartTimer = true;</span><br><span class="line">&#125;</span><br><span class="line">if (isStartTimer)</span><br><span class="line">&#123;</span><br><span class="line">timer += Time.deltaTime; //开始计时</span><br><span class="line">Imageskill1.fillAmount = (coldTimer - timer) / coldTimer; //把得到的时间的比例传递个Image组件</span><br><span class="line">if(timer &gt;= coldTimer)</span><br><span class="line">&#123;</span><br><span class="line">timer = 0;</span><br><span class="line">isStartTimer = false;</span><br><span class="line">Imageskill1.fillAmount = 0;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">public void OnClick() //监控点击事件</span><br><span class="line">&#123;</span><br><span class="line">isStartTimer = true;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-开启监控："><a href="#4-开启监控：" class="headerlink" title="4.开启监控："></a>4.开启监控：</h5><p><img src="http://yp.guohaonan.cn/%E5%BC%80%E5%90%AF%E7%9B%91%E6%8E%A7.png" alt></p>
+<h5 id="最终实现："><a href="#最终实现：" class="headerlink" title="最终实现："></a>最终实现：</h5><p><img src="http://yp.guohaonan.cn/%E6%8A%80%E8%83%BD%E5%AE%9E%E7%8E%B0.gif" alt></p>
+<hr>
+<h2 id="制作一个角色的物品栏面板"><a href="#制作一个角色的物品栏面板" class="headerlink" title="制作一个角色的物品栏面板"></a>制作一个角色的物品栏面板</h2><blockquote>
+<p>游戏中的物品栏面板用于玩家对自己已获得物品的了解</p>
+</blockquote>
+<h5 id="1-为不同的物品栏面板添加toggel选项卡组件"><a href="#1-为不同的物品栏面板添加toggel选项卡组件" class="headerlink" title="1.为不同的物品栏面板添加toggel选项卡组件"></a>1.为不同的物品栏面板添加toggel选项卡组件</h5><p><img src="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0Toggel.png" alt></p>
+<h5 id="2-添加Togger-Group组件使选项卡只能选择一个："><a href="#2-添加Togger-Group组件使选项卡只能选择一个：" class="headerlink" title="2.添加Togger Group组件使选项卡只能选择一个："></a>2.添加Togger Group组件使选项卡只能选择一个：</h5><p><img src="http://yp.guohaonan.cn/t%E6%B7%BB%E5%8A%A0Group.png" alt></p>
+<h5 id="3-为面板添加自动布局"><a href="#3-为面板添加自动布局" class="headerlink" title="3.为面板添加自动布局"></a>3.为面板添加自动布局</h5><p><img src="http://yp.guohaonan.cn/%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80.png" alt></p>
+<h5 id="4-为了防止物体图片被自动布局影响，创建一个空的中间物体"><a href="#4-为了防止物体图片被自动布局影响，创建一个空的中间物体" class="headerlink" title="4.为了防止物体图片被自动布局影响，创建一个空的中间物体"></a>4.为了防止物体图片被自动布局影响，创建一个空的中间物体</h5><p><img src="http://yp.guohaonan.cn/%E4%B8%AD%E9%97%B4%E7%89%A9%E4%BD%93.png" alt></p>
+<h3 id="实现：-2"><a href="#实现：-2" class="headerlink" title="实现："></a>实现：</h3><p><img src="http://yp.guohaonan.cn/%E7%89%A9%E5%93%81%E9%9D%A2%E6%9D%BF%E6%A0%8F.gif" alt></p>
+<hr>
+<h2 id="制作一个关卡选择界面-实现关卡的拖动与选择）"><a href="#制作一个关卡选择界面-实现关卡的拖动与选择）" class="headerlink" title="制作一个关卡选择界面(实现关卡的拖动与选择）"></a>制作一个关卡选择界面(实现关卡的拖动与选择）</h2><blockquote>
+<p>便于玩家选择关卡</p>
+</blockquote>
+<h5 id="1-点击按钮实现关卡选择界面的切换："><a href="#1-点击按钮实现关卡选择界面的切换：" class="headerlink" title="1.点击按钮实现关卡选择界面的切换："></a>1.点击按钮实现关卡选择界面的切换：</h5><p><img src="http://yp.guohaonan.cn/%E7%82%B9%E5%87%BB%E6%8C%89%E9%92%AE.png" alt></p>
+<h5 id="2-拖动与点击跟随触发代码："><a href="#2-拖动与点击跟随触发代码：" class="headerlink" title="2.拖动与点击跟随触发代码："></a>2.拖动与点击跟随触发代码：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.EventSystems; //实现接口所需要引用的</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line"></span><br><span class="line">public class LevelButtonScroll : MonoBehaviour,IBeginDragHandler,IEndDragHandler &#123; //实现接口</span><br><span class="line">private ScrollRect scrollRect;</span><br><span class="line">private float[] pageArray = new float []&#123; 0, 0.5f, 1 &#125;;</span><br><span class="line">private float smoothing = 3; //滑动速度</span><br><span class="line">private float targetPosition;</span><br><span class="line">private bool isDragStart = false;</span><br><span class="line">public Toggle[] toggler; //创建跟随触发的toggle数组</span><br><span class="line">// Use this for initialization</span><br><span class="line">void Start () &#123;</span><br><span class="line">scrollRect = GetComponent&lt; ScrollRect &gt; (); //获得ScrollRect组件</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Update is called once per frame</span><br><span class="line">void Update () &#123;</span><br><span class="line">if(isDragStart ==false) //当开始拖动的时候才用这个方法赋予scrollRect值</span><br><span class="line">scrollRect.horizontalNormalizedPosition = Mathf.Lerp(scrollRect.horizontalNormalizedPosition, targetPosition, Time.deltaTime * smoothing);</span><br><span class="line">//缓慢的移动</span><br><span class="line">&#125;</span><br><span class="line">public void　OnBeginDrag(PointerEventData eventDate)</span><br><span class="line">&#123;</span><br><span class="line">isDragStart = true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void OnEndDrag(PointerEventData eventData)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">isDragStart = false;</span><br><span class="line">float posX = scrollRect.horizontalNormalizedPosition; //获取</span><br><span class="line">int index = 0;</span><br><span class="line">float offset = Mathf.Abs(pageArray[index] - posX); //初始化偏移量</span><br><span class="line">for(int i = 1; i &lt;pageArray.Length;i++)</span><br><span class="line">&#123;</span><br><span class="line">float offsetTemp = Mathf.Abs(pageArray[i] - posX); //拖动的位置更与不同页的位置差</span><br><span class="line">if (offsetTemp &lt; offset) // 比较偏移的值更接近哪个页数的值</span><br><span class="line">&#123;</span><br><span class="line">index = i;</span><br><span class="line">offset = offsetTemp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">targetPosition = pageArray[index];</span><br><span class="line">//scrollRect.horizontalNormalizedPosition = pageArray[index]; //返回接近的位置</span><br><span class="line">toggler[index].isOn = true; //跟随触发</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*************设置按钮开关的调用方法**********************/</span><br><span class="line">public void MoveTOPasage1( bool isOn) //当调用此方法时改变位置</span><br><span class="line">&#123;</span><br><span class="line">if (isOn)</span><br><span class="line">&#123;</span><br><span class="line">targetPosition = pageArray[0];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">public void MoveTOPasage2(bool isOn)</span><br><span class="line">&#123;</span><br><span class="line">if (isOn)</span><br><span class="line">&#123;</span><br><span class="line">targetPosition = pageArray[1];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">public void MoveTOPasage3(bool isOn)</span><br><span class="line">&#123;</span><br><span class="line">if (isOn)</span><br><span class="line">&#123;</span><br><span class="line">targetPosition = pageArray[2];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现：-3"><a href="#实现：-3" class="headerlink" title="实现："></a>实现：</h4><p><img src="http://yp.guohaonan.cn/%E5%85%B3%E5%8D%A1%E9%80%89%E6%8B%A9%E5%AE%9E%E7%8E%B0.gif" alt></p>
+<hr>
+<h2 id="制作一个设置界面（关于自定义Toggle组件）"><a href="#制作一个设置界面（关于自定义Toggle组件）" class="headerlink" title="制作一个设置界面（关于自定义Toggle组件）"></a>制作一个设置界面（关于自定义Toggle组件）</h2><blockquote>
+<p>设置界面便于玩家对游戏进行一些调整，这里重点实现了一个自定义Toggle开关的实现</p>
+</blockquote>
+<h5 id="1-创建一个Toggle组件："><a href="#1-创建一个Toggle组件：" class="headerlink" title="1.创建一个Toggle组件："></a>1.创建一个Toggle组件：</h5><p><img src="http://yp.guohaonan.cn/Toggle%E7%BB%84%E4%BB%B6.png" alt></p>
+<h5 id="2-重写Toggle调用代码"><a href="#2-重写Toggle调用代码" class="headerlink" title="2.重写Toggle调用代码"></a>2.重写Toggle调用代码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections;</span><br><span class="line">using System.Collections.Generic;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.UI;</span><br><span class="line"></span><br><span class="line">public class MyToggle : MonoBehaviour &#123;</span><br><span class="line">public GameObject switch1; //用于显示不同开关</span><br><span class="line">public GameObject switch2;</span><br><span class="line">private Toggle toggle;</span><br><span class="line">// Use this for initialization</span><br><span class="line">void Start () &#123;</span><br><span class="line">toggle = GetComponent&lt;Toggle&gt;(); //得到物体上的TOggle组件</span><br><span class="line">OnVlueChange(toggle.isOn); //初始化开关</span><br><span class="line">&#125;</span><br><span class="line">// Update is called once per frame</span><br><span class="line">void Update () &#123;</span><br><span class="line">&#125;</span><br><span class="line">public void OnVlueChange(bool isOn) //当按钮被点击时调用</span><br><span class="line">&#123;</span><br><span class="line">switch1.SetActive(isOn);</span><br><span class="line">switch2.SetActive(!isOn);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现：-4"><a href="#实现：-4" class="headerlink" title="实现："></a>实现：</h4><p><img src="http://yp.guohaonan.cn/%E5%AE%9E%E7%8E%B0%E8%AE%BE%E8%AE%A1%E9%9D%A2%E6%9D%BF.gif" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unity3D/" rel="tag"># Unity3D</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/25/unity常用API/" rel="next" title="unity3d常用API">
+                <i class="fa fa-chevron-left"></i> unity3d常用API
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/06/property的参数分析/" rel="prev" title="ios中property的参数分析">
+                ios中property的参数分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/icon.jpg" alt="YinPengD">
+            
+              <p class="site-author-name" itemprop="name">YinPengD</p>
+              <p class="site-description motion-element" itemprop="description">凡心所向，素履以往</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个公告的文本列表"><span class="nav-number">1.</span> <span class="nav-text">创建一个公告的文本列表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建一个UI的image"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1.创建一个UI的image</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-只能上下拖动就要取消勾选以下按钮："><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2.只能上下拖动就要取消勾选以下按钮：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-在刚创建的image下创建一个text"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3. 在刚创建的image下创建一个text</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4。为了只显示在框内要添加Scoll-Rect组件"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">4。为了只显示在框内要添加Scoll Rect组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-为了消除白板要添加Mash组件"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">5.为了消除白板要添加Mash组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-添加Scrollbar滑动组件"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">6.添加Scrollbar滑动组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-把Scrollbar组件添加到被滑动的Image上"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">7.把Scrollbar组件添加到被滑动的Image上</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最终实现的效果："><span class="nav-number">1.0.0.8.</span> <span class="nav-text">最终实现的效果：</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#监控UI界面的按钮点击事件（点击开始按钮开始游戏）"><span class="nav-number">2.</span> <span class="nav-text">监控UI界面的按钮点击事件（点击开始按钮开始游戏）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-按钮上的点击事件："><span class="nav-number">2.0.0.1.</span> <span class="nav-text">1.按钮上的点击事件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-脚本代码："><span class="nav-number">2.0.0.2.</span> <span class="nav-text">2.脚本代码：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现："><span class="nav-number">2.0.0.3.</span> <span class="nav-text">实现：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作一个显示血条的UI"><span class="nav-number">3.</span> <span class="nav-text">制作一个显示血条的UI:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-添加一个slider的组件："><span class="nav-number">3.0.0.1.</span> <span class="nav-text">1.添加一个slider的组件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-修改图片的类型"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">2.修改图片的类型:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现：-1"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">实现：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制做一个技能"><span class="nav-number">4.</span> <span class="nav-text">制做一个技能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建一个鼠标点击事件和检测按钮按下脚本"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">1.创建一个鼠标点击事件和检测按钮按下脚本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-创建被技能加载的图片"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">2.创建被技能加载的图片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-脚本代码："><span class="nav-number">4.0.0.3.</span> <span class="nav-text">3.脚本代码：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-开启监控："><span class="nav-number">4.0.0.4.</span> <span class="nav-text">4.开启监控：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最终实现："><span class="nav-number">4.0.0.5.</span> <span class="nav-text">最终实现：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作一个角色的物品栏面板"><span class="nav-number">5.</span> <span class="nav-text">制作一个角色的物品栏面板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-为不同的物品栏面板添加toggel选项卡组件"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">1.为不同的物品栏面板添加toggel选项卡组件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-添加Togger-Group组件使选项卡只能选择一个："><span class="nav-number">5.0.0.2.</span> <span class="nav-text">2.添加Togger Group组件使选项卡只能选择一个：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-为面板添加自动布局"><span class="nav-number">5.0.0.3.</span> <span class="nav-text">3.为面板添加自动布局</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-为了防止物体图片被自动布局影响，创建一个空的中间物体"><span class="nav-number">5.0.0.4.</span> <span class="nav-text">4.为了防止物体图片被自动布局影响，创建一个空的中间物体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现：-2"><span class="nav-number">5.1.</span> <span class="nav-text">实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作一个关卡选择界面-实现关卡的拖动与选择）"><span class="nav-number">6.</span> <span class="nav-text">制作一个关卡选择界面(实现关卡的拖动与选择）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-点击按钮实现关卡选择界面的切换："><span class="nav-number">6.0.0.1.</span> <span class="nav-text">1.点击按钮实现关卡选择界面的切换：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-拖动与点击跟随触发代码："><span class="nav-number">6.0.0.2.</span> <span class="nav-text">2.拖动与点击跟随触发代码：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现：-3"><span class="nav-number">6.0.1.</span> <span class="nav-text">实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作一个设置界面（关于自定义Toggle组件）"><span class="nav-number">7.</span> <span class="nav-text">制作一个设置界面（关于自定义Toggle组件）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建一个Toggle组件："><span class="nav-number">7.0.0.1.</span> <span class="nav-text">1.创建一个Toggle组件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-重写Toggle调用代码"><span class="nav-number">7.0.0.2.</span> <span class="nav-text">2.重写Toggle调用代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现：-4"><span class="nav-number">7.0.1.</span> <span class="nav-text">实现：</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YinPengD</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
